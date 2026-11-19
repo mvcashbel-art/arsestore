@@ -205,7 +205,14 @@ textarea{resize:vertical;min-height:84px}
 .scanbtn{padding:0 14px;min-width:52px}
 .scanbtn svg{width:22px;height:22px;display:block;margin:auto}
 @media print{
-  body>*:not(.scrim){display:none!important}
+  body:not(.pr-rpt)>*:not(.scrim){display:none!important}
+  body.pr-rpt{--paper:#fff;--card:#fff;--ink:#15203b;--muted:#5a6483;--line:#dde2f0;background:#fff!important;color:#15203b}
+  body.pr-rpt>*:not(.app){display:none!important}
+  body.pr-rpt .app>*:not(main){display:none!important}
+  body.pr-rpt main>*:not(#rptdoc){display:none!important}
+  body.pr-rpt .app{padding:0!important;max-width:none!important}
+  body.pr-rpt .card,body.pr-rpt .tile,body.pr-rpt .ledger{break-inside:avoid}
+  body.pr-rpt .bar-actions{break-after:avoid}
   .scrim{position:static!important;background:none!important;display:block!important}
   .sheet{box-shadow:none!important;max-height:none!important;overflow:visible!important;padding:0!important;background:#fff!important}
   .noprint,.grab{display:none!important}
@@ -239,6 +246,41 @@ textarea{resize:vertical;min-height:84px}
 .bc{width:100%;height:46px;display:block;background:#fff}
 @page{margin:8mm}
 @media print{.lblgrid{grid-template-columns:repeat(3,1fr)}}
+.rvl{display:flex;align-items:flex-end;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.rvl .ln{flex:1 1 100%;min-width:0}
+.rvl .ln b{display:block;overflow-wrap:anywhere}
+.rvl .ln small{color:var(--green);font-weight:700}
+.rvf{display:block;flex:1;min-width:0}
+.rvf span{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:2px}
+.rvf input{width:100%;min-height:44px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);padding:6px 10px;font:inherit}
+.rpt .rh{text-align:center;border-bottom:2px solid var(--line);padding-bottom:10px}
+.rpt .rh .dshop{font:20px/1.2 var(--display);overflow-wrap:anywhere}
+.rpt .rh .dt{font-weight:700;margin-top:4px}
+.rpt .rh .dd{font-size:13px;color:var(--muted)}
+.rpt .tiles{margin-top:12px}
+.mbars{display:flex;align-items:flex-end;gap:2px;height:90px;margin-top:10px}
+.mbars i{flex:1;background:var(--line);border-radius:3px 3px 0 0;min-height:2px}
+.mbars i.best{background:var(--sign);outline:1.5px solid var(--on-sign);outline-offset:-1.5px}
+.mlab{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.crow{display:grid;grid-template-columns:minmax(90px,1.1fr) minmax(60px,1fr) auto;align-items:center;gap:8px;padding:5px 0;font-size:14px}
+.crow .cn{overflow-wrap:anywhere}
+.crow .cb{height:10px;background:var(--paper);border-radius:99px;overflow:hidden}
+.crow .cb i{display:block;height:100%;background:var(--sign);border-radius:99px}
+.crow .cv{font-weight:700;text-align:right;white-space:nowrap}
+.crow .cv small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.vtog{display:flex;margin-bottom:12px}.vtog button{flex:1;min-height:44px;font-size:14px}
+.v3wrap{position:relative;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:#e5eaf1;height:min(58vh,520px)}
+.v3wrap.placing{border-color:var(--sign);box-shadow:0 0 0 3px var(--sign)}
+#v3d{position:absolute;inset:0}
+#v3d model-viewer{width:100%;height:100%;--poster-color:transparent;background:linear-gradient(#f3f6fa,#d5dde8)}
+.v3msg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-weight:700;color:#475569;padding:0 24px;pointer-events:none;z-index:1}
+.v3tools{flex-wrap:wrap}.v3tools .btn{white-space:nowrap}.v3tools>span{flex-wrap:wrap}
+.pin3d{position:relative;width:22px;height:22px;min-height:0;padding:0;border-radius:50%;border:3px solid #fff;background:var(--ink);box-shadow:0 1px 5px rgba(0,0,0,.55);cursor:pointer}
+.pin3d::before{content:'';position:absolute;inset:-12px}
+.pin3d .pl{display:none;position:absolute;left:50%;bottom:30px;transform:translateX(-50%);white-space:nowrap;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;pointer-events:none}
+.pin3d.hit,.pin3d.sel{background:var(--sign);width:26px;height:26px}
+.pin3d.hit .pl,.pin3d.sel .pl{display:block}
+.pin3d.dim{opacity:.35}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -412,6 +454,101 @@ bc_has:'This item already has a barcode',
 bc_dup:'That barcode is already used by {name}',
 lbl_nocode:'no code',
 lbl_pick_some:'Tick at least one item',
+receive_btn:'Receive delivery',
+rv_title:'Receive delivery',
+rv_supplier:'Supplier (optional)',
+rv_search:'Search an item to add',
+rv_qty:'Qty',
+rv_cost:'Cost each',
+rv_avg:'Average cost',
+rv_last:'Latest cost',
+rv_mode_hint:'Average blends the old and new cost. Latest uses only the new price.',
+rv_total:'Delivery total',
+rv_save:'Save delivery',
+rv_none:'Add at least one item with a quantity',
+rv_saved:'Delivery saved. Stock updated.',
+rv_newcost:'New cost {c}',
+rec_deliv:'Deliveries',
+no_deliv:'No deliveries yet',
+rv_detail:'Delivery',
+rec_report:'Report',
+rpt_title:'Monthly report',
+rpt_none:'No sales recorded this month.',
+rpt_generated:'Made on {d}',
+rpt_daily:'Sales by day',
+rpt_best_day:'Best day',
+rpt_money:'Utang, purchases and cash',
+rpt_given:'New utang given',
+rpt_collected:'Utang collected',
+rpt_owed:'Still owed to you (now)',
+rpt_purchases:'Purchases (deliveries)',
+rpt_short:'Cash short at closing',
+rpt_cats:'Sales by category',
+rpt_exp_cats:'Expenses by type',
+rpt_improve:'To improve',
+rpt_good:'Going well',
+rpt_pdf:'Print / PDF',
+rpt_vs_note:'Arrows compare with the same period of the month before.',rpt_vs_text:'Sales vs same period last month',
+cb_title:'Cloud backup (Google Drive)',
+cb_hint:'Your data lives on this phone. This also saves a copy in your Google Drive, so you can recover it if the phone is lost or reset.',
+cb_url:'Web app link',
+cb_key:'Secret key',
+cb_make_key:'Make a key',
+cb_auto:'Back up automatically',
+cb_on:'On',
+cb_off:'Off',
+cb_save_test:'Save and test',
+cb_now:'Back up now',
+cb_restore:'Restore the latest backup',
+cb_restore_arm:'Tap again. This replaces the data on this phone.',
+cb_last:'Last backup: {d}',
+cb_never:'No backup yet',
+cb_done:'Backed up to Google Drive',
+cb_fail:'Backup failed',
+cb_ok_test:'Connected',
+cb_setup:'How to set it up (one time)',
+cb_s1:'Tap Make a key, then Copy the script.',
+cb_s2:'Open script.google.com, tap New project, delete the sample code, paste the script and tap Save.',
+cb_s3:'Tap Deploy, then New deployment, then Web app. Set Execute as: Me and Who has access: Anyone. Tap Deploy and allow access.',
+cb_s4:'Copy the Web app link and paste it in the box above.',
+cb_s5:'Tap Save and test.',
+cb_copy_script:'Copy the script',
+cb_note:'Keep the link and key private. Anyone who has both can read your backups.',
+cb_need_key:'Tap Make a key first',
+cb_need_both:'Paste the Web app link (starts with https://script.google.com) and a key',
+mv_2d:'2D plan',
+mv_3d:'3D scan',
+mv_empty_t:'No 3D scan yet',
+mv_empty:'Scan the store with your iPhone (Polycam or Scaniverse), export it as a GLB file, then choose the file here. It is saved on this phone.',
+mv_choose:'Choose scan file (.glb)',
+mv_replace:'Replace file',
+mv_replace_arm:'Tap again (pins are cleared)',
+mv_remove:'Remove 3D',
+mv_remove_arm:'Tap again to remove',
+mv_loading:'Loading 3D...',
+mv_fail:'Could not load the 3D file',
+mv_engine_fail:'The 3D viewer could not load. Connect to the internet once, then try again.',
+mv_add_pin:'Add pin',
+mv_placing:'Tap the spot on the 3D model where the item is.',
+mv_placing_for:'Tap the spot on the model for: {name}',
+mv_cancel:'Cancel',
+mv_no_hit:'Tap on the model itself',
+mv_pick_title:'Which item is here?',
+mv_pins_n:'Pinned items ({n})',
+mv_no_pins:'No pins yet. Tap Add pin, then tap the shelf or spot on the model.',
+mv_reset:'Reset view',
+mv_del_pin:'Remove pin',
+mv_move_pin:'Move pin',
+mv_big:'Saved. This file is large ({mb} MB) and may be slow on the phone.',
+mv_pinned:'Pinned: {name}',
+mv_pinned_yes:'Pinned in 3D',
+mv_tap_to_pin:'Not pinned yet. Tap to pin it',
+mv_nopin_find:'Not pinned in 3D yet',
+mv_note:'The 3D file stays on this phone only. Pins are included in backups, the 3D file is not.',
+mv_saved:'3D scan saved',
+mv_need_glb:'Please choose a .glb file',
+mv_hint:'Drag to turn, pinch to zoom, two fingers to move. Search an item to fly to its pin.',
+
 cat_pick:'Pick an existing category, or type a new one above.',
 remove:'Remove',minus_one:'Take one off',clear_cart:'Clear cart',clear_arm:'Tap again to clear the cart',cart_cleared:'Cart cleared',
 rec_insights:'Insights',
@@ -606,6 +743,101 @@ bc_has:'Naa nay barcode kining item',
 bc_dup:'Gigamit na kini nga barcode sa {name}',
 lbl_nocode:'walay code',
 lbl_pick_some:'Pili bisan usa ka item',
+receive_btn:'Dawata ang deliver',
+rv_title:'Dawata ang deliver',
+rv_supplier:'Supplier (kung gusto)',
+rv_search:'Pangita og item nga idugang',
+rv_qty:'Gidaghanon',
+rv_cost:'Puhunan matag usa',
+rv_avg:'Average nga puhunan',
+rv_last:'Pinakabag-ong puhunan',
+rv_mode_hint:'Ang average magsagol sa daan ug bag-ong puhunan. Ang pinakabag-o mao ra ang bag-ong presyo.',
+rv_total:'Total sa deliver',
+rv_save:'Tipigi ang deliver',
+rv_none:'Butangi bisan usa ka item nga naay gidaghanon',
+rv_saved:'Natipigan ang deliver. Nadugangan ang stock.',
+rv_newcost:'Bag-ong puhunan {c}',
+rec_deliv:'Mga deliver',
+no_deliv:'Walay deliver pa',
+rv_detail:'Deliver',
+rec_report:'Report',
+rpt_title:'Report sa bulan',
+rpt_none:'Walay benta nga natala niining bulana.',
+rpt_generated:'Gihimo {d}',
+rpt_daily:'Benta matag adlaw',
+rpt_best_day:'Pinakamaayong adlaw',
+rpt_money:'Utang, pamalit ug kwarta',
+rpt_given:'Bag-ong gi-utang',
+rpt_collected:'Nabayran nga utang',
+rpt_owed:'Utang pa sa mga suki (karon)',
+rpt_purchases:'Pamalit (deliver)',
+rpt_short:'Kulang sa kwarta sa closing',
+rpt_cats:'Benta matag kategorya',
+rpt_exp_cats:'Gasto matag klase',
+rpt_improve:'Kinahanglan ayuhon',
+rpt_good:'Maayo ang lakaw',
+rpt_pdf:'Print / PDF',
+rpt_vs_note:'Ang udyon nagtandi sa parehas nga panahon sa miaging bulan.',rpt_vs_text:'Benta kumpara sa parehas nga panahon sa miaging bulan',
+cb_title:'Cloud backup (Google Drive)',
+cb_hint:'Ang imong datos naa sa telepono. Magtipig usab kini og kopya sa imong Google Drive, aron mabalik kung mawala o ma-reset ang telepono.',
+cb_url:'Link sa web app',
+cb_key:'Sekreto nga yawe',
+cb_make_key:'Paghimo og yawe',
+cb_auto:'Awtomatiko nga backup',
+cb_on:'Naka-on',
+cb_off:'Naka-off',
+cb_save_test:'Tipigi ug sulayi',
+cb_now:'Mag-backup karon',
+cb_restore:'Ibalik ang pinakabag-ong backup',
+cb_restore_arm:'Pislita pag-usab. Mapuli ang datos niining telepono.',
+cb_last:'Katapusang backup: {d}',
+cb_never:'Wala pay backup',
+cb_done:'Na-backup sa Google Drive',
+cb_fail:'Wala molampos ang backup',
+cb_ok_test:'Konektado na',
+cb_setup:'Unsaon pag-set up (usa ra)',
+cb_s1:'Pislita ang Paghimo og yawe, unya Kopyaha ang script.',
+cb_s2:'Ablihi ang script.google.com, pislita ang New project, papasa ang sample code, i-paste ang script ug pislita ang Save.',
+cb_s3:'Pislita ang Deploy, unya New deployment, unya Web app. I-set ang Execute as: Me ug Who has access: Anyone. Pislita ang Deploy ug i-allow ang access.',
+cb_s4:'Kopyaha ang Web app link ug i-paste sa kahon sa ibabaw.',
+cb_s5:'Pislita ang Tipigi ug sulayi.',
+cb_copy_script:'Kopyaha ang script',
+cb_note:'Ayaw ipakita ang link ug yawe. Kung naa kini sa uban, mabasa nila ang imong mga backup.',
+cb_need_key:'Paghimo una og yawe',
+cb_need_both:'I-paste ang Web app link (nagsugod sa https://script.google.com) ug yawe',
+mv_2d:'2D plano',
+mv_3d:'3D scan',
+mv_empty_t:'Wala pay 3D scan',
+mv_empty:'I-scan ang tindahan gamit ang imong iPhone (Polycam o Scaniverse), i-export isip GLB file, unya pilia ang file dinhi. Matipigan kini niining telepono.',
+mv_choose:'Pilia ang scan file (.glb)',
+mv_replace:'Ilisi ang file',
+mv_replace_arm:'Pislita pag-usab (mapapas ang mga pin)',
+mv_remove:'Kuhaa ang 3D',
+mv_remove_arm:'Pislita pag-usab aron kuhaon',
+mv_loading:'Gi-load ang 3D...',
+mv_fail:'Wala ma-load ang 3D file',
+mv_engine_fail:'Wala ma-load ang 3D viewer. Pag-connect sa internet kausa, unya sulayi pag-usab.',
+mv_add_pin:'Butang og pin',
+mv_placing:'Pislita ang lugar sa 3D model diin naa ang butang.',
+mv_placing_for:'Pislita ang lugar sa model para sa: {name}',
+mv_cancel:'Kanselahon',
+mv_no_hit:'Pislita ang mismong model',
+mv_pick_title:'Unsang butang ang naa dinhi?',
+mv_pins_n:'Mga butang nga naay pin ({n})',
+mv_no_pins:'Wala pay pin. Pislita ang Butang og pin, unya pislita ang estante o lugar sa model.',
+mv_reset:'Ibalik ang view',
+mv_del_pin:'Kuhaa ang pin',
+mv_move_pin:'Ibalhin ang pin',
+mv_big:'Natipigan. Dako ang file ({mb} MB) ug basin hinay sa telepono.',
+mv_pinned:'Napin na: {name}',
+mv_pinned_yes:'Naay pin sa 3D',
+mv_tap_to_pin:'Wala pay pin. Pislita aron butangan',
+mv_nopin_find:'Wala pay pin sa 3D',
+mv_note:'Ang 3D file naa ra niining telepono. Apil ang mga pin sa backup, apil dili ang 3D file.',
+mv_saved:'Natipigan ang 3D scan',
+mv_need_glb:'Pilia ang .glb file',
+mv_hint:'Ihakot aron mutuyok, i-pinch aron mag-zoom, duha ka tudlo aron mabalhin. Pangita og butang aron moadto sa pin niini.',
+
 cat_pick:'Pili og naa nang kategorya, o mag-type og bag-o sa taas.',
 remove:'Kuhaa',minus_one:'Kuhaa og usa',clear_cart:'Kuhaa ang tanan sa cart',clear_arm:'Pislita pag-usab aron kuhaon ang tanan',cart_cleared:'Nahawan ang cart',
 rec_insights:'Pagsusi',
@@ -684,18 +916,20 @@ const DEF_SHOP='ARSE STORE';
 /* ---------- Data ---------- */
 const KEY='hardware-tracker.v1';
 let mem=null;
+var cloudDirty=true;
 const lsOK=(()=>{try{localStorage.setItem('_t','1');localStorage.removeItem('_t');return true}catch(e){return false}})();
 function loadData(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);if(d&&d.v===1&&Array.isArray(d.products))return d}}catch(e){}return mem}
-function save(){mem=S;if(!lsOK)return true;try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){return false}}
+function save(){cloudDirty=true;mem=S;if(!lsOK)return true;try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){return false}}
 const blankMap=()=>({w:12,h:8,bg:null,bgOp:.5,shapes:[]});
-function blank(lang,shop){return {v:1,shop:shop||DEF_SHOP,lang:lang||'en',demo:false,products:[],customers:[],ledger:[],sales:[],moves:[],expenses:[],closings:[],quotes:[],staff:{pin:'',on:false},map:blankMap()}}
+function blank(lang,shop){return {v:1,shop:shop||DEF_SHOP,lang:lang||'en',demo:false,products:[],customers:[],ledger:[],sales:[],moves:[],expenses:[],closings:[],quotes:[],deliveries:[],staff:{pin:'',on:false},map:blankMap()}}
 function normalize(d){
   d.products.forEach(p=>{p.unit=p.unit||'pc';p.cat=p.cat||'';p.loc=p.loc||null;p.spot=p.spot||'';p.supplier=p.supplier||'';p.barcode=p.barcode||'';if(p.stock===undefined)p.stock=null;if(p.cost===undefined)p.cost=null;if(p.low===undefined)p.low=5});
-  ['moves','expenses','closings','quotes'].forEach(k=>{if(!Array.isArray(d[k]))d[k]=[]});
+  ['moves','expenses','closings','quotes','deliveries'].forEach(k=>{if(!Array.isArray(d[k]))d[k]=[]});
   d.bcNext=+d.bcNext||1;
   d.staff=d.staff&&typeof d.staff==='object'?d.staff:{pin:'',on:false};d.staff.pin=String(d.staff.pin||'');d.staff.on=!!d.staff.on;
   d.map=d.map&&Array.isArray(d.map.shapes)?d.map:blankMap();
   d.map.bgOp=d.map.bgOp||.5;
+  if(!Array.isArray(d.map.pins))d.map.pins=[];
   return d;
 }
 
@@ -784,12 +1018,12 @@ function seed(){
   const qp=n=>products.find(x=>x.name===n),qi=(n,q)=>{const p=qp(n);return {pid:p.id,name:p.name,unit:p.unit,qty:q,price:p.price,cost:p.cost}};
   const qitems=[qi('Portland cement 40kg',20),qi('Rebar 10mm (6 m)',30),qi('Hollow block 4 inch',200)];
   const quotes=[{id:uid(),ts:now-D,customer:'Kuya Rey (contractor)',items:qitems,total:r2(qitems.reduce((a,i)=>a+i.price*i.qty,0)),valid:7}];
-  return {v:1,shop:DEF_SHOP,lang:'en',demo:true,products,customers:[rey,cora,tonyo],ledger,sales,moves,expenses,closings,quotes,staff:{pin:'',on:false},map};
+  return {v:1,shop:DEF_SHOP,lang:'en',demo:true,products,customers:[rey,cora,tonyo],ledger,sales,moves,expenses,closings,quotes,deliveries:[{id:uid(),ts:startOfDay(now-3*D)+9*36e5,supplier:'Cement Depot',items:[{pid:qp('Portland cement 40kg').id,name:'Portland cement 40kg',unit:'bag',qty:50,cost:235}],total:11750},{id:uid(),ts:startOfDay(now-2*D)+9*36e5,supplier:'Hardware Wholesale',items:[{pid:qp('Common wire nail 2 inch').id,name:'Common wire nail 2 inch',unit:'kg',qty:25,cost:72}],total:1800}],staff:{pin:'',on:false},map};
 }
 
 let S=normalize(loadData()||seed());
 save();
-const ui={tab:'sell',q:'',cat:'',cart:[],day:dayKey(Date.now()),low:false,sheet:null,mapEdit:false,sel:null,mq:'',zi:0,rec:'insights',rrange:'30d',rpay:'',rq:''};
+const ui={tab:'sell',q:'',cat:'',cart:[],day:dayKey(Date.now()),low:false,sheet:null,mapEdit:false,sel:null,mq:'',zi:0,mv:'2d',rmonth:dayKey(Date.now()).slice(0,7),pbo:null,rec:'insights',rrange:'30d',rpay:'',rq:''};
 const ZOOMS=[1,1.5,2,3];
 
 /* ---------- Derived ---------- */
@@ -848,7 +1082,7 @@ function renderMain(){
   if(ui.tab==='sell')m.innerHTML=`<div class="search withscan"><input id="q" type="search" autocomplete="off" placeholder="${esc(t('search_products'))}" value="${esc(ui.q)}" aria-label="${esc(t('search_products'))}"><button class="btn scanbtn" data-act="scan" aria-label="${esc(t('scan'))}">${IC.scan}</button></div>${catChips()}<div id="list" class="grid"></div>`;
   else if(ui.tab==='utang')m.innerHTML=utangShell();
   else if(ui.tab==='stock')m.innerHTML=stockShell();
-  else if(ui.tab==='map')m.innerHTML=mapShell();
+  else if(ui.tab==='map'){m.innerHTML=mapShell();if(ui.mv==='3d')mv3Mount()}
   else m.innerHTML=recordsHTML();
   renderList();if(ui.tab==='records')renderRList();
 }
@@ -909,7 +1143,7 @@ function utangList(){
 function stockShell(){
   const low=S.products.filter(lowOf).length;
   return `<div class="bar-actions"><h2 class="h2">${esc(t('products_n',{n:S.products.length}))}</h2>${isStaff()?'':`<button class="btn primary" data-act="prod-new">+ ${esc(t('add_product'))}</button>`}</div>
-  <div class="chips"><button class="pick" data-act="low-toggle" aria-pressed="${ui.low}">${esc(t('show_low'))}<small>${esc(t('low_n',{n:low}))}</small></button>${isStaff()?'':`<button class="pick" data-act="restock-list">${esc(t('rl_btn'))}</button><button class="pick" data-act="labels">${esc(t('labels_btn'))}</button>`}</div>
+  <div class="chips"><button class="pick" data-act="low-toggle" aria-pressed="${ui.low}">${esc(t('show_low'))}<small>${esc(t('low_n',{n:low}))}</small></button>${isStaff()?'':`<button class="pick" data-act="restock-list">${esc(t('rl_btn'))}</button><button class="pick" data-act="receive">${esc(t('receive_btn'))}</button><button class="pick" data-act="labels">${esc(t('labels_btn'))}</button>`}</div>
   <div class="search"><input id="q" type="search" autocomplete="off" placeholder="${esc(t('search_products'))}" value="${esc(ui.q)}" aria-label="${esc(t('search_products'))}"></div>${catChips()}
   <div id="list" class="ledger"></div>`;
 }
@@ -928,7 +1162,7 @@ function stockList(){
 const KINDS={shelf:{c:'#3b82f6',w:2,h:.6},rack:{c:'#8b5cf6',w:3,h:.8},counter:{c:'#f59e0b',w:2.5,h:.9},bulk:{c:'#10b981',w:3,h:2},display:{c:'#ec4899',w:1.5,h:1},door:{c:'#64748b',w:1.5,h:.2},wall:{c:'#475569',w:3,h:.2}};
 const snap=v=>Math.round(v*10)/10;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-function mapShell(){
+function mapShell2D(){
   const edit=ui.mapEdit;
   return `<div class="bar-actions"><h2 class="h2">${esc(t('tab_map'))}</h2>${isStaff()?'':`<button class="btn ${edit?'primary':''}" data-act="map-edit">${esc(edit?t('done'):t('edit_layout'))}</button>`}</div>
   <div class="search"><input id="mq" type="search" autocomplete="off" placeholder="${esc(t('find_item'))}" value="${esc(ui.mq)}" aria-label="${esc(t('find_item'))}"></div>
@@ -1069,7 +1303,7 @@ function openSheet(s){ui.sheet=s;renderSheet(true)}
 function closeSheet(){if(ui.sheet&&ui.sheet.type==='scan')stopScan();ui.sheet=null;$('#scrim').classList.remove('open');$('#sheet').innerHTML=''}
 function renderSheet(focus){
   const sh=ui.sheet;if(!sh)return;
-  const f={checkout:checkoutHTML,custom:customHTML,customer:customerHTML,product:productHTML,restock:restockHTML,settings:settingsHTML,shape:shapeHTML,shapeedit:shapeEditHTML,mapset:mapSetHTML,doc:docHTML,datatools:dataToolsHTML,expense:expenseHTML,rlist:rlistHTML,scan:scanHTML,unlock:unlockHTML,labels:labelsHTML,labelprint:labelPrintHTML}[sh.type];
+  const f={checkout:checkoutHTML,custom:customHTML,customer:customerHTML,product:productHTML,restock:restockHTML,settings:settingsHTML,shape:shapeHTML,shapeedit:shapeEditHTML,mapset:mapSetHTML,doc:docHTML,datatools:dataToolsHTML,expense:expenseHTML,rlist:rlistHTML,scan:scanHTML,unlock:unlockHTML,labels:labelsHTML,labelprint:labelPrintHTML,receive:receiveHTML,delivdoc:delivdocHTML,cloud:cloudHTML,pin:pinHTML}[sh.type];
   $('#sheet').innerHTML='<div class="grab"></div>'+(f?f():'');
   $('#scrim').classList.add('open');
   if(focus){const x=$('#sheet [data-focus]');if(x)setTimeout(()=>x.focus(),30)}
@@ -1077,6 +1311,8 @@ function renderSheet(focus){
   if(sh.type==='product'&&sh.draft){applyDraft(sh.draft);sh.draft=null}
   if(sh.type==='scan'){stopScan();startScan()}
   if(sh.type==='labels')renderLabelList();
+  if(sh.type==='pin')mvPickList();
+  if(sh.type==='receive'){rvRes();rvSync()}
   if(sh.type==='shape'&&sh.mode==='assign')renderAssignList();
 }
 
@@ -1179,7 +1415,7 @@ function settingsHTML(){
   return `<h3 class="sh-title">${esc(t('settings'))}</h3>
   <label class="field"><span>${esc(t('shop_name'))}</span><input id="sname" autocomplete="off" value="${esc(S.shop)}" data-in="shop"></label>
   <div class="divider"></div>
-  ${staffSettingsHTML()}<button class="btn block" data-act="datatools" style="margin-bottom:12px">${esc(t('data_tools'))}</button>
+  ${staffSettingsHTML()}<button class="btn block" data-act="cloud" style="margin-bottom:10px">${esc(t('cb_title'))}</button><button class="btn block" data-act="datatools" style="margin-bottom:12px">${esc(t('data_tools'))}</button>
   <h4 class="h2" style="margin-bottom:6px">${esc(t('backup'))}</h4><p class="sub" style="margin:0 0 10px">${esc(t('backup_hint'))}</p>
   <div class="row2"><button class="btn" data-act="backup-copy">${esc(t('copy_backup'))}</button><button class="btn" data-act="backup-dl">${esc(t('download'))}</button></div>
   <label class="field" style="margin-top:12px"><span>${esc(t('restore'))}</span><textarea id="rtext" placeholder="${esc(t('paste_backup'))}"></textarea></label>
@@ -1448,14 +1684,16 @@ const custName=id=>{const c=S.customers.find(c=>c.id===id);return c?c.name:''};
 
 /* ----- Records tab ----- */
 function recordsHTML(){
-  const subs=['insights','summary','sales','stock','exp','close','quotes'];
+  const subs=['insights','report','summary','sales','stock','deliv','exp','close','quotes'];
   const head=`<div class="bar-actions"><h2 class="h2">${esc(t('tab_records'))}</h2><button class="btn sm" data-act="datatools">${esc(t('data_tools'))}</button></div>
   <div class="catrow">${subs.map(k=>`<button class="pick" data-act="rsub" data-v="${k}" aria-pressed="${ui.rec===k}">${esc(t('rec_'+k))}</button>`).join('')}</div>`;
   let body='';
   if(ui.rec==='insights')body=insightsHTML();
+  else if(ui.rec==='report')body=reportView();
   else if(ui.rec==='summary')body=todayHTML();
   else if(ui.rec==='sales')body=rangeChips()+`<div class="chips">${[['','pay_all_f'],['cash','cash'],['utang','on_utang']].map(([k,l])=>`<button class="pick" style="min-height:40px" data-act="rpay" data-v="${k}" aria-pressed="${ui.rpay===k}">${esc(t(l))}</button>`).join('')}</div><div class="search"><input id="rq" type="search" autocomplete="off" placeholder="${esc(t('search_records'))}" value="${esc(ui.rq)}" aria-label="${esc(t('search_records'))}"></div><div id="rlist"></div>`;
   else if(ui.rec==='stock')body=rangeChips()+`<div class="search"><input id="rq" type="search" autocomplete="off" placeholder="${esc(t('search_records'))}" value="${esc(ui.rq)}" aria-label="${esc(t('search_records'))}"></div><div id="rlist" class="ledger"></div>`;
+  else if(ui.rec==='deliv')body=delivList();
   else if(ui.rec==='exp')body=expHTML();
   else if(ui.rec==='close')body=closeHTML();
   else body=quotesHTML();
@@ -1684,7 +1922,7 @@ function rlistHTML(){
   const sh=ui.sheet;sh.qty=sh.qty||{};
   const gs=rlGroups();
   if(!gs.length)return `<h3 class="sh-title">${esc(t('rl_title'))}</h3><div class="empty">${esc(t('rl_none'))}</div><button class="btn block" data-act="close">${esc(t('close'))}</button>`;
-  return `<h3 class="sh-title">${esc(t('rl_title'))}</h3>`+gs.map((g,gi)=>`<div class="card" style="padding:10px 12px;margin:10px 0 0"><div class="bar-actions" style="margin-bottom:4px"><b>${esc(g.name||t('no_supplier'))}</b><button class="btn sm" data-act="rl-copy" data-g="${gi}">${esc(t('rl_copy'))}</button></div>${g.items.map(p=>{if(sh.qty[p.id]===undefined)sh.qty[p.id]=suggQty(p);return `<div class="line"><div class="ln"><b>${esc(p.name)}</b><small>${esc(t('on_hand'))} ${fq(p.stock)} ${esc(p.unit)}${p.stock<=0?' · '+esc(t('out')):''}</small></div><div class="step"><input class="qin" inputmode="decimal" autocomplete="off" value="${fq(sh.qty[p.id])}" data-in="rlq" data-id="${esc(p.id)}" aria-label="${esc(t('suggested'))}"><span class="sub" style="margin:0">${esc(p.unit)}</span></div></div>`}).join('')}</div>`).join('')+`<div class="row2" style="margin-top:12px"><button class="btn" data-act="close">${esc(t('close'))}</button><button class="btn primary" data-act="rl-copy-all">${esc(t('rl_copy_all'))}</button></div>`;
+  return `<h3 class="sh-title">${esc(t('rl_title'))}</h3>`+gs.map((g,gi)=>`<div class="card" style="padding:10px 12px;margin:10px 0 0"><div class="bar-actions" style="margin-bottom:4px"><b>${esc(g.name||t('no_supplier'))}</b><span style="display:flex;gap:6px"><button class="btn sm" data-act="rl-receive" data-g="${gi}">${esc(t('receive_btn'))}</button><button class="btn sm" data-act="rl-copy" data-g="${gi}">${esc(t('rl_copy'))}</button></span></div>${g.items.map(p=>{if(sh.qty[p.id]===undefined)sh.qty[p.id]=suggQty(p);return `<div class="line"><div class="ln"><b>${esc(p.name)}</b><small>${esc(t('on_hand'))} ${fq(p.stock)} ${esc(p.unit)}${p.stock<=0?' · '+esc(t('out')):''}</small></div><div class="step"><input class="qin" inputmode="decimal" autocomplete="off" value="${fq(sh.qty[p.id])}" data-in="rlq" data-id="${esc(p.id)}" aria-label="${esc(t('suggested'))}"><span class="sub" style="margin:0">${esc(p.unit)}</span></div></div>`}).join('')}</div>`).join('')+`<div class="row2" style="margin-top:12px"><button class="btn" data-act="close">${esc(t('close'))}</button><button class="btn primary" data-act="rl-copy-all">${esc(t('rl_copy_all'))}</button></div>`;
 }
 function rlText(groups){
   const q=ui.sheet.qty||{},L=[S.shop+' - '+t('rl_title'),new Date().toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})];
@@ -1883,6 +2121,7 @@ function applyDraft(d){
 
 /* ----- Insights: plain-language analysis of the store's own numbers ----- */
 function periodBounds(){
+  if(ui.pbo)return ui.pbo;
   const now=Date.now(),r=ui.rrange,a=rangeStart(),b=now+1;let pa=null,pb=null;
   if(r==='today'){pa=startOfDay(now-864e5);pb=a}
   else if(r==='month'){const d=new Date();pa=new Date(d.getFullYear(),d.getMonth()-1,1).getTime();pb=a}
@@ -1897,12 +2136,11 @@ function periodStats(a,b){
   return {ss,n:ss.length,sales:r2(sales),profit:r2(profit),margin:costed>0?profit/costed*100:null,exp:r2(exp),net:r2(profit-exp),avg:ss.length?r2(sales/ss.length):0,utangShare:sales>0?utangSales/sales*100:0};
 }
 const dchip=(c,p)=>{if(!(p>0))return '';const d=Math.round((c-p)/p*100);if(d===0)return `<small class="dchip">= ${esc(t('ins_same'))}</small>`;return `<small class="dchip ${d>0?'up':'dn'}">${d>0?'▲':'▼'} ${Math.abs(d)}%</small>`};
-function insightsHTML(){
+function insightsCalc(){
   const {a,b,pa,pb}=periodBounds(),now=Date.now();
   const firstTs=S.sales.length?Math.min(...S.sales.map(s=>s.ts)):now;
   const cur=periodStats(a,b),prev=pa!==null?periodStats(pa,pb):null,hasPrev=!!(prev&&prev.n>0&&firstTs<=pa+(pb-pa)*.25);
-  const head=rangeChips();
-  if(cur.n<3)return head+`<div class="empty">${esc(t('ins_nodata'))}</div>`;
+  if(cur.n<3)return {nodata:true,cur,prev,hasPrev,a,b,F:[],v:null,rows:[],top:[]};
   const F=[],add=(lvl,msg,tip)=>F.push({lvl,msg,tip:tip||''}),names=arr=>arr.slice(0,3).join(', ');
   // 1 sales trend
   if(hasPrev&&prev.sales>0){
@@ -1964,16 +2202,24 @@ function insightsHTML(){
   }
   const nb=F.filter(f=>f.lvl==='bad').length,nw=F.filter(f=>f.lvl==='warn').length;
   const v=nb?'bad':nw>=3?'mixed':'good';
+  const top=rows.filter(o=>o.costed>0).sort((x,y)=>y.pr-x.pr).slice(0,5);
+  return {cur,prev,hasPrev,F,v,rows,top,a,b};
+}
+function insightsHTML(){
+  const head=rangeChips(),R=insightsCalc();
+  if(R.nodata)return head+`<div class="empty">${esc(t('ins_nodata'))}</div>`;
+  const {cur,prev,hasPrev,F,v,top}=R;
   const verdict=`<div class="sign"><div class="k">${esc(t('ins_title'))}</div><div class="big" style="font-size:26px">${esc(t('ins_'+v))}</div><div class="s">${esc(t('ins_'+v+'_s'))}</div></div>`;
   const tile=(k,val,ch)=>`<div class="tile"><div class="k">${esc(t(k))}</div><div class="v">${val}</div>${ch||''}</div>`;
   const P=hasPrev?prev:null;
   const tiles=`<div class="tiles">${tile('sales',peso(cur.sales),P&&dchip(cur.sales,P.sales))}${tile('profit',peso(cur.profit),P&&dchip(cur.profit,P.profit))}${tile('net_profit',peso(cur.net),P&&dchip(cur.net,P.net))}${tile('margin',cur.margin===null?'—':(Math.round(cur.margin*10)/10)+'%','')}${tile('ins_avg',peso(cur.avg),P&&dchip(cur.avg,P.avg))}${tile('ins_count',String(cur.n),P&&dchip(cur.n,P.n))}</div>${hasPrev?`<p class="sub" style="margin:-6px 0 12px">${esc(t('ins_vs'))}</p>`:`<p class="sub" style="margin:-6px 0 12px">${esc(t('ins_noprev'))}</p>`}`;
-  const sym={good:'✓',warn:'!',bad:'✕',info:'i'};
-  const order={bad:0,warn:1,good:2,info:3};
-  const list=`<div class="bar-actions"><h2 class="h2">${esc(t('ins_findings'))}</h2></div><div class="ledger">${F.sort((x,y)=>order[x.lvl]-order[y.lvl]).map(f=>`<div class="find"><span class="dot ${f.lvl}" aria-hidden="true">${sym[f.lvl]}</span><div><b>${esc(f.msg)}</b>${f.tip?`<small>${esc(f.tip)}</small>`:''}</div></div>`).join('')}</div>`;
-  const top=rows.filter(o=>o.costed>0).sort((x,y)=>y.pr-x.pr).slice(0,5);
+  const list=`<div class="bar-actions"><h2 class="h2">${esc(t('ins_findings'))}</h2></div>${findingsHTML(F)}`;
   const topH=top.length?`<div class="card" style="margin-top:14px"><h2 class="h2" style="margin-bottom:8px">${esc(t('ins_top'))}</h2>${top.map(o=>`<div class="line"><div class="ln"><b>${esc(o.n)}</b><small>${fq(o.qty)}${o.u!=='pc'?' '+esc(o.u):'×'} · ${esc(t('sales'))} ${peso(o.rev)}</small></div><div class="lt" style="color:var(--green)">${peso(o.pr)}</div></div>`).join('')}</div>`:'';
   return head+verdict+tiles+list+topH+`<p class="sub" style="margin-top:12px">${esc(t('ins_note'))}</p>`;
+}
+function findingsHTML(F){
+  const sym={good:'✓',warn:'!',bad:'✕',info:'i'},order={bad:0,warn:1,good:2,info:3};
+  return `<div class="ledger">${F.slice().sort((x,y)=>order[x.lvl]-order[y.lvl]).map(f=>`<div class="find"><span class="dot ${f.lvl}" aria-hidden="true">${sym[f.lvl]}</span><div><b>${esc(f.msg)}</b>${f.tip?`<small>${esc(f.tip)}</small>`:''}</div></div>`).join('')}</div>`;
 }
 
 /* ----- Own barcodes (Code 128) and printable labels ----- */
@@ -2055,6 +2301,488 @@ document.addEventListener('input',e=>{
   if(el.dataset&&el.dataset.in==='lq'&&ui.sheet&&ui.sheet.type==='labels'){ui.sheet.q=el.value;renderLabelList()}
 });
 
+/* ----- Receive delivery ----- */
+function rvNewCost(p,qty,cost,mode){
+  if(!(cost>0))return p.cost;
+  const old=p.stock||0;
+  if(mode==='last'||p.cost===null||!(old>0))return r2(cost);
+  return r2((old*p.cost+qty*cost)/(old+qty));
+}
+function receiveHTML(){
+  const sh=ui.sheet,sups=[...new Set(S.products.map(x=>x.supplier).filter(Boolean))];
+  const lines=sh.lines.map((l,i)=>`<div class="rvl" id="rvl${i}"><div class="ln"><b>${esc(l.name)}</b><small id="rvnc${i}"></small></div><label class="rvf"><span>${esc(t('rv_qty'))} (${esc(l.unit)})</span><input class="qin" inputmode="decimal" autocomplete="off" value="${l.qty===''?'':fq(l.qty)}" data-in="rvqty" data-i="${i}"></label><label class="rvf"><span>${esc(t('rv_cost'))}</span><input class="qin" inputmode="decimal" autocomplete="off" value="${l.cost===''?'':l.cost}" data-in="rvcost" data-i="${i}"></label><button class="sq rm" data-act="rv-rm" data-i="${i}" aria-label="${esc(t('remove'))}">✕</button></div>`).join('');
+  return `<h3 class="sh-title">${esc(t('rv_title'))}</h3>
+  <label class="field"><span>${esc(t('rv_supplier'))}</span><input id="rvsup" list="rvsups" autocomplete="off" value="${esc(sh.supplier)}" data-in="rvsup"><datalist id="rvsups">${sups.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></label>
+  <div class="search" style="margin-bottom:6px"><input id="rvq" type="search" autocomplete="off" placeholder="${esc(t('rv_search'))}" value="${esc(sh.q||'')}" data-in="rvq" aria-label="${esc(t('rv_search'))}"></div>
+  <div id="rvres" class="ledger" style="margin-bottom:10px"></div>
+  <div id="rvlines">${lines||`<div class="empty" style="padding:14px">${esc(t('rv_search'))}</div>`}</div>
+  <div class="chips" style="margin-top:8px"><button class="pick" data-act="rv-mode" data-v="avg" aria-pressed="${sh.mode==='avg'}">${esc(t('rv_avg'))}</button><button class="pick" data-act="rv-mode" data-v="last" aria-pressed="${sh.mode==='last'}">${esc(t('rv_last'))}</button></div>
+  <p class="sub" style="margin:-4px 0 10px">${esc(t('rv_mode_hint'))}</p>
+  <div class="totalrow"><span>${esc(t('rv_total'))}</span><strong id="rvtot"></strong></div>
+  <div class="row2"><button class="btn" data-act="close">${esc(t('cancel'))}</button><button class="btn primary" data-act="rv-save">${esc(t('rv_save'))}</button></div>`;
+}
+function rvRes(){
+  const sh=ui.sheet,el=$('#rvres');if(!el)return;
+  const q=(sh.q||'').trim().toLowerCase();
+  if(!q){el.innerHTML='';el.style.display='none';return}
+  const ps=S.products.filter(p=>matchP(p,q)&&!sh.lines.some(l=>l.pid===p.id)).sort((a,b)=>a.name.localeCompare(b.name)).slice(0,6);
+  el.style.display='';
+  el.innerHTML=ps.length?ps.map(p=>`<button class="lrow" style="min-height:48px" data-act="rv-add" data-id="${esc(p.id)}"><span class="nm"><b>${esc(p.name)}</b><small>${esc(t('on_hand'))} ${p.stock===null?'—':fq(p.stock)} ${esc(p.unit)}${p.supplier?' · '+esc(p.supplier):''}</small></span><span class="amt">+</span></button>`).join(''):`<div class="empty" style="padding:12px">${esc(t('no_results'))}</div>`;
+}
+function rvSync(){
+  const sh=ui.sheet;if(!sh||sh.type!=='receive')return;
+  let tot=0;
+  sh.lines.forEach((l,i)=>{
+    const p=S.products.find(x=>x.id===l.pid),q=num(l.qty),c=num(l.cost);tot+=q*c;
+    const el=$('#rvnc'+i);if(!el||!p)return;
+    el.textContent=(q>0&&c>0)?t('rv_newcost',{c:peso(rvNewCost(p,q,c,sh.mode))})+' · '+peso(q*c):'';
+  });
+  const e=$('#rvtot');if(e)e.textContent=peso(tot);
+}
+function rvAdd(p,qty,cost){
+  const sh=ui.sheet;if(sh.lines.some(l=>l.pid===p.id))return;
+  sh.lines.push({pid:p.id,name:p.name,unit:p.unit,qty:qty===undefined?'':qty,cost:cost===undefined?(p.cost===null?'':p.cost):cost});
+}
+function deliveryText(d){
+  const L=[S.shop+' - '+t('rv_detail'),new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'})];
+  if(d.supplier)L.push(t('supplier')+': '+d.supplier);
+  L.push('------------------------');
+  d.items.forEach(i=>L.push(fq(i.qty)+' '+i.unit+' '+i.name+' @ '+peso(i.cost)+' = '+peso(i.qty*i.cost)));
+  L.push('------------------------',t('rv_total')+': '+peso(d.total));
+  return L.join('\n');
+}
+function delivdocHTML(){
+  const d=S.deliveries.find(x=>x.id===ui.sheet.id);if(!d)return '';
+  return `<h3 class="sh-title">${esc(t('rv_detail'))}</h3><p class="sh-sub">${esc(new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'}))}${d.supplier?' · '+esc(d.supplier):''}</p>
+  ${d.items.map(i=>`<div class="line"><div class="ln"><b>${esc(i.name)}</b><small>${fq(i.qty)} ${esc(i.unit)} @ ${peso(i.cost)}</small></div><div class="lt">${peso(i.qty*i.cost)}</div></div>`).join('')}
+  <div class="totalrow"><span>${esc(t('rv_total'))}</span><strong>${peso(d.total)}</strong></div>
+  <div class="row2"><button class="btn" data-act="deliv-copy" data-id="${esc(d.id)}">${esc(t('copy_doc'))}</button><button class="btn" data-act="close">${esc(t('close'))}</button></div>`;
+}
+function delivList(){
+  const st=rangeStart();
+  const ds=S.deliveries.filter(d=>d.ts>=st).sort((a,b)=>b.ts-a.ts);
+  const total=r2(ds.reduce((a,d)=>a+d.total,0));
+  return rangeChips()+`<div class="bar-actions"><div class="tile" style="flex:1"><div class="k">${esc(t('rv_total'))}</div><div class="v">${peso(total)}</div></div><button class="btn primary" data-act="receive">+ ${esc(t('receive_btn'))}</button></div>
+  <div class="ledger">${ds.length?ds.map(d=>`<button class="lrow" data-act="deliv-open" data-id="${esc(d.id)}"><span class="nm"><b>${esc(d.supplier||t('no_supplier'))}</b><small>${esc(dateStr(d.ts,{month:'short',day:'numeric'}))} · ${esc(summary(d.items))}</small></span><span class="amt">${peso(d.total)}</span></button>`).join(''):`<div class="empty">${esc(t('no_deliv'))}</div>`}</div>`;
+}
+Object.assign(A,{
+receive:()=>openSheet({type:'receive',supplier:'',lines:[],q:'',mode:'avg'}),
+'rl-receive':d=>{
+  const g=rlGroups()[+d.g];if(!g)return;const q=ui.sheet.qty||{};
+  const sh={type:'receive',supplier:g.name,lines:[],q:'',mode:'avg'};ui.sheet=sh;
+  g.items.forEach(p=>{if((q[p.id]||0)>0)rvAdd(p,q[p.id])});
+  openSheet(sh);
+},
+'rv-add':d=>{const p=S.products.find(x=>x.id===d.id);if(!p)return;rvAdd(p);const sh=ui.sheet;sh.q='';renderSheet();const l=$('#rvl'+(sh.lines.length-1)+' input');if(l)l.focus()},
+'rv-rm':d=>{ui.sheet.lines.splice(+d.i,1);renderSheet()},
+'rv-mode':d=>{ui.sheet.mode=d.v;renderSheet()},
+'rv-save':()=>{
+  const sh=ui.sheet,ls=sh.lines.filter(l=>num(l.qty)>0);
+  if(!ls.length){toast(t('rv_none'));return}
+  const items=[];
+  ls.forEach(l=>{
+    const p=S.products.find(x=>x.id===l.pid);if(!p)return;
+    const q=r3(num(l.qty)),c=r2(num(l.cost));
+    const nc=rvNewCost(p,q,c,sh.mode);
+    if(nc!==null&&nc!==undefined)p.cost=nc;
+    if(p.stock!==null)p.stock=r3((p.stock||0)+q);
+    if(sh.supplier.trim()&&!p.supplier)p.supplier=sh.supplier.trim();
+    logMove(p,q,'restock',sh.supplier.trim()||t('rv_detail'));
+    items.push({pid:p.id,name:p.name,unit:p.unit,qty:q,cost:c});
+  });
+  S.deliveries.push({id:uid(),ts:Date.now(),supplier:sh.supplier.trim(),items,total:r2(items.reduce((a,i)=>a+i.qty*i.cost,0))});
+  save();closeSheet();renderMain();toast(t('rv_saved'));
+},
+'deliv-open':d=>openSheet({type:'delivdoc',id:d.id}),
+'deliv-copy':d=>{const x=S.deliveries.find(y=>y.id===d.id);if(x)copyText(deliveryText(x))}
+});
+['receive','rl-receive','rv-save','rv-add','rv-rm'].forEach(k=>OWNER.add(k));
+document.addEventListener('input',e=>{
+  const el=e.target,k=el.dataset&&el.dataset.in,sh=ui.sheet;
+  if(!k||!sh||sh.type!=='receive')return;
+  if(k==='rvq'){sh.q=el.value;rvRes()}
+  else if(k==='rvsup')sh.supplier=el.value;
+  else if(k==='rvqty'){sh.lines[+el.dataset.i].qty=el.value;rvSync()}
+  else if(k==='rvcost'){sh.lines[+el.dataset.i].cost=el.value;rvSync()}
+});
+document.addEventListener('keydown',e=>{
+  const el=e.target,sh=ui.sheet;
+  if(e.key==='Enter'&&el.id==='rvq'&&sh&&sh.type==='receive'){
+    const code=el.value.trim(),p=code&&S.products.find(x=>x.barcode&&x.barcode===code);
+    if(p){rvAdd(p);sh.q='';renderSheet()}
+  }
+});
+
+/* ----- Monthly report ----- */
+const monthKey=ts=>dayKey(ts).slice(0,7);
+const monthLabel=k=>{const [y,m]=k.split('-').map(Number);return new Date(y,m-1,1).toLocaleDateString('en-PH',{month:'long',year:'numeric'})};
+function monthBounds(k){
+  const [y,m]=k.split('-').map(Number),a=new Date(y,m-1,1).getTime(),e=new Date(y,m,1).getTime();
+  const b=Math.min(e,Date.now()+1),pa=new Date(y,m-2,1).getTime();
+  return {a,b,pa,pb:Math.min(a,pa+(b-a)),e};
+}
+function reportData(k){
+  const bd=monthBounds(k);
+  ui.pbo={a:bd.a,b:bd.b,pa:bd.pa,pb:bd.pb};
+  let R;try{R=insightsCalc()}finally{ui.pbo=null}
+  const cur=R.cur,inM=ts=>ts>=bd.a&&ts<bd.b;
+  const ndays=Math.round((Math.min(bd.e,startOfDay(Date.now())+864e5)-bd.a)/864e5);
+  const days=[];for(let i=0;i<ndays;i++)days.push(0);
+  cur.ss.forEach(s=>{const i=Math.floor((startOfDay(s.ts)-bd.a)/864e5);if(i>=0&&i<days.length)days[i]+=s.total});
+  const best=days.length&&Math.max(...days)>0?days.indexOf(Math.max(...days)):-1;
+  const cats={};
+  cur.ss.forEach(s=>s.items.forEach(i=>{const p=i.pid&&S.products.find(x=>x.id===i.pid),c=(p&&p.cat)||'Other';cats[c]=(cats[c]||0)+i.price*i.qty}));
+  const catList=Object.entries(cats).sort((x,y)=>y[1]-x[1]);
+  const ex={};S.expenses.filter(e=>inM(e.ts)).forEach(e=>{const c=e.cat||'Other';ex[c]=(ex[c]||0)+e.amount});
+  const exList=Object.entries(ex).sort((x,y)=>y[1]-x[1]);
+  const given=r2(S.ledger.filter(l=>l.type==='utang'&&inM(l.ts)).reduce((a,l)=>a+l.amount,0));
+  const collected=r2(S.ledger.filter(l=>l.type==='bayad'&&inM(l.ts)).reduce((a,l)=>a+l.amount,0));
+  const owed=r2(S.customers.reduce((a,c)=>a+Math.max(0,bal(c.id)),0));
+  const purchases=r2(S.deliveries.filter(d=>inM(d.ts)).reduce((a,d)=>a+d.total,0));
+  const shorts=S.closings.filter(c=>inM(new Date(c.day+'T12:00:00').getTime())&&c.diff<0);
+  const items={};
+  cur.ss.forEach(s=>s.items.forEach(i=>{const kk=i.name+'|'+(i.unit||'pc'),o=items[kk]||(items[kk]={n:i.name,u:i.unit||'pc',qty:0,rev:0,pr:0});o.qty+=i.qty;o.rev+=i.price*i.qty;if(i.cost!==null&&i.cost!==undefined)o.pr+=(i.price-i.cost)*i.qty}));
+  const topItems=Object.values(items).sort((x,y)=>y.rev-x.rev).slice(0,10);
+  return {k,bd,R,cur,days,best,catList,exList,given,collected,owed,purchases,shorts,topItems};
+}
+function reportHTML(k){
+  const D=reportData(k),{R,cur}=D,P=R.hasPrev?R.prev:null;
+  const tile=(lab,val,ch)=>`<div class="tile"><div class="k">${esc(lab)}</div><div class="v">${val}</div>${ch||''}</div>`;
+  if(!cur.n)return `<div id="rptdoc" class="rpt"><div class="rh"><div class="dshop">${esc(S.shop)}</div><div class="dt">${esc(t('rpt_title'))} · ${esc(monthLabel(k))}</div></div><div class="empty">${esc(t('rpt_none'))}</div></div>`;
+  const mx=Math.max(1,...D.days);
+  const bars=`<div class="mbars" role="img" aria-label="${esc(t('rpt_daily'))}">${D.days.map((v,i)=>`<i style="height:${Math.max(2,Math.round(v/mx*100))}%" ${i===D.best?'class="best"':''} title="${i+1}: ${peso(v)}"></i>`).join('')}</div><div class="mlab"><span>1</span><span>${D.days.length}</span></div>`;
+  const tot=Math.max(1,cur.sales),cmax=Math.max(1,...D.catList.map(x=>x[1]));
+  const catRows=D.catList.map(([c,v])=>`<div class="crow"><div class="cn">${esc(c)}</div><div class="cb"><i style="width:${Math.max(3,Math.round(v/cmax*100))}%"></i></div><div class="cv">${peso(v)}<small>${Math.round(v/tot*100)}%</small></div></div>`).join('');
+  const good=R.F.filter(f=>f.lvl==='good'),imp=R.F.filter(f=>f.lvl==='bad'||f.lvl==='warn');
+  const fl=(arr)=>arr.map(f=>`<div class="find"><span class="dot ${f.lvl}" aria-hidden="true">${f.lvl==='good'?'✓':f.lvl==='bad'?'✕':'!'}</span><div><b>${esc(f.msg)}</b>${f.tip?`<small>${esc(f.tip)}</small>`:''}</div></div>`).join('');
+  return `<div id="rptdoc" class="rpt">
+  <div class="rh"><div class="dshop">${esc(S.shop)}</div><div class="dt">${esc(t('rpt_title'))} · ${esc(monthLabel(k))}</div><div class="dd">${esc(t('rpt_generated',{d:dateStr(Date.now(),{month:'short',day:'numeric',year:'numeric'})}))}</div></div>
+  ${R.v?`<div class="sign" style="margin-top:12px"><div class="k">${esc(t('ins_title'))}</div><div class="big" style="font-size:24px">${esc(t('ins_'+R.v))}</div></div>`:''}
+  <div class="tiles">${tile(t('sales'),peso(cur.sales),P&&dchip(cur.sales,P.sales))}${tile(t('profit'),peso(cur.profit),P&&dchip(cur.profit,P.profit))}${tile(t('expenses'),peso(cur.exp),'')}${tile(t('net_profit'),peso(cur.net),P&&dchip(cur.net,P.net))}${tile(t('margin'),cur.margin===null?'—':(Math.round(cur.margin*10)/10)+'%','')}${tile(t('ins_count'),String(cur.n),P&&dchip(cur.n,P.n))}</div>
+  ${R.hasPrev?`<p class="sub" style="margin:-6px 0 12px">${esc(t('rpt_vs_note'))}</p>`:''}
+  <div class="card"><h2 class="h2">${esc(t('rpt_daily'))}</h2>${bars}${D.best>=0?`<p class="sub" style="margin-top:6px">${esc(t('rpt_best_day'))}: ${D.best+1} · ${peso(D.days[D.best])}</p>`:''}</div>
+  <div class="card"><h2 class="h2" style="margin-bottom:8px">${esc(t('rpt_money'))}</h2>
+    <div class="line"><div class="ln">${esc(t('rpt_given'))}</div><div class="lt">${peso(D.given)}</div></div>
+    <div class="line"><div class="ln">${esc(t('rpt_collected'))}</div><div class="lt">${peso(D.collected)}</div></div>
+    <div class="line"><div class="ln">${esc(t('rpt_owed'))}</div><div class="lt">${peso(D.owed)}</div></div>
+    <div class="line"><div class="ln">${esc(t('rpt_purchases'))}</div><div class="lt">${peso(D.purchases)}</div></div>
+    ${D.shorts.length?`<div class="line"><div class="ln">${esc(t('rpt_short'))}</div><div class="lt">${peso(-D.shorts.reduce((a,c)=>a+c.diff,0))}</div></div>`:''}
+  </div>
+  <div class="card"><h2 class="h2" style="margin-bottom:8px">${esc(t('rpt_cats'))}</h2>${catRows}</div>
+  <div class="card"><h2 class="h2" style="margin-bottom:8px">${esc(t('top_items'))}</h2>${D.topItems.map(o=>`<div class="line"><div class="ln"><b>${esc(o.n)}</b><small>${fq(o.qty)}${o.u!=='pc'?' '+esc(o.u):'×'}</small></div><div class="lt">${peso(o.rev)}</div></div>`).join('')}</div>
+  ${D.exList.length?`<div class="card"><h2 class="h2" style="margin-bottom:8px">${esc(t('rpt_exp_cats'))}</h2>${D.exList.map(([c,v])=>`<div class="line"><div class="ln">${esc(c)}</div><div class="lt">${peso(v)}</div></div>`).join('')}</div>`:''}
+  ${imp.length?`<div class="bar-actions"><h2 class="h2">${esc(t('rpt_improve'))}</h2></div><div class="ledger" style="margin-bottom:12px">${fl(imp)}</div>`:''}
+  ${good.length?`<div class="bar-actions"><h2 class="h2">${esc(t('rpt_good'))}</h2></div><div class="ledger">${fl(good)}</div>`:''}
+  <p class="sub" style="margin-top:12px">${esc(t('ins_note'))}</p></div>`;
+}
+function reportText(k){
+  const D=reportData(k),{R,cur}=D,L=[S.shop+' - '+t('rpt_title'),monthLabel(k),'------------------------'];
+  if(!cur.n){L.push(t('rpt_none'));return L.join('\n')}
+  L.push(t('sales')+': '+peso(cur.sales),t('profit')+': '+peso(cur.profit),t('expenses')+': '+peso(cur.exp),t('net_profit')+': '+peso(cur.net));
+  if(cur.margin!==null)L.push(t('margin')+': '+(Math.round(cur.margin*10)/10)+'%');
+  L.push(t('ins_count')+': '+cur.n);
+  if(R.hasPrev&&R.prev.sales>0)L.push(t('rpt_vs_text')+': '+(cur.sales>=R.prev.sales?'+':'')+Math.round((cur.sales-R.prev.sales)/R.prev.sales*100)+'%');
+  L.push('',t('rpt_given')+': '+peso(D.given),t('rpt_collected')+': '+peso(D.collected),t('rpt_owed')+': '+peso(D.owed),t('rpt_purchases')+': '+peso(D.purchases));
+  L.push('',t('rpt_cats')+':');D.catList.forEach(([c,v])=>L.push('- '+c+': '+peso(v)));
+  L.push('',t('top_items')+':');D.topItems.slice(0,5).forEach(o=>L.push('- '+o.n+': '+peso(o.rev)));
+  const imp=R.F.filter(f=>f.lvl==='bad'||f.lvl==='warn');
+  if(imp.length){L.push('',t('rpt_improve')+':');imp.forEach(f=>L.push('- '+f.msg))}
+  return L.join('\n');
+}
+function reportView(){
+  const k=ui.rmonth,isNow=k===monthKey(Date.now());
+  return `<div class="daynav"><button class="sq" data-act="rmonth" data-d="-1" aria-label="Previous month">‹</button><strong>${esc(monthLabel(k))}</strong><button class="sq" data-act="rmonth" data-d="1" aria-label="Next month" ${isNow?'disabled style="opacity:.35"':''}>›</button></div>
+  <div class="row2" style="margin-bottom:12px"><button class="btn sm" data-act="rpt-copy">${esc(t('copy_doc'))}</button><button class="btn sm" data-act="rpt-share">${esc(t('share_doc'))}</button><button class="btn sm primary" data-act="rpt-print">${esc(t('rpt_pdf'))}</button></div>`+reportHTML(k);
+}
+Object.assign(A,{
+rmonth:d=>{const [y,m]=ui.rmonth.split('-').map(Number),n=new Date(y,m-1+(+d.d),1),k=n.getFullYear()+'-'+pad(n.getMonth()+1);if(k>monthKey(Date.now()))return;ui.rmonth=k;renderMain()},
+'rpt-copy':()=>copyText(reportText(ui.rmonth)),
+'rpt-share':()=>shareText(reportText(ui.rmonth)),
+'rpt-print':()=>{
+  document.body.classList.add('pr-rpt');
+  const done=()=>document.body.classList.remove('pr-rpt');
+  window.addEventListener('afterprint',done,{once:true});setTimeout(done,30000);
+  setTimeout(()=>{try{window.print()}catch(e){done();copyText(reportText(ui.rmonth))}},60);
+}
+});
+
+/* ----- Cloud backup to Google Drive (via a small Google Apps Script) ----- */
+const CLOUD_LS='hardware-tracker.cloud';
+let cloud=(()=>{try{return Object.assign({url:'',key:'',auto:true,last:0,msg:''},JSON.parse(localStorage.getItem(CLOUD_LS))||{})}catch(e){return {url:'',key:'',auto:true,last:0,msg:''}}})();
+const cloudSave=()=>{try{localStorage.setItem(CLOUD_LS,JSON.stringify(cloud))}catch(e){}};
+let cloudBusy=false;
+const cloudOn=()=>!!(cloud.url&&cloud.key);
+async function cloudCall(body){
+  const r=await fetch(cloud.url,{method:'POST',body:JSON.stringify(Object.assign({key:cloud.key},body))});
+  const j=await r.json();
+  if(!j||!j.ok)throw new Error((j&&j.error)||'failed');
+  return j;
+}
+async function cloudBackup(manual){
+  if(cloudBusy||!cloudOn())return false;
+  cloudBusy=true;
+  try{
+    await cloudCall({action:'backup',data:JSON.stringify(S)});
+    cloud.last=Date.now();cloud.msg='';cloudDirty=false;cloudSave();
+    if(manual)toast(t('cb_done'));
+    return true;
+  }catch(e){cloud.msg=String(e&&e.message||e);cloudSave();if(manual)toast(t('cb_fail')+': '+cloud.msg);return false}
+  finally{cloudBusy=false;if(ui.sheet&&ui.sheet.type==='cloud')renderSheet()}
+}
+function cloudTick(){
+  if(cloud.auto&&cloudOn()&&cloudDirty&&Date.now()-cloud.last>3600e3&&navigator.onLine!==false)cloudBackup(false);
+}
+setInterval(cloudTick,5*60e3);
+document.addEventListener('visibilitychange',cloudTick);
+window.addEventListener('online',cloudTick);
+setTimeout(cloudTick,4000);
+async function cloudRestore(){
+  const sh=ui.sheet;
+  if(!sh.armRestore){sh.armRestore=true;renderSheet();return}
+  try{
+    const u=cloud.url+(cloud.url.indexOf('?')>=0?'&':'?')+'key='+encodeURIComponent(cloud.key)+'&action=latest';
+    const r=await fetch(u),j=await r.json();
+    if(!j||!j.ok)throw new Error((j&&j.error)||'failed');
+    try{localStorage.setItem('hardware-tracker.before-restore',JSON.stringify(S))}catch(e){}
+    restore(j.data);
+  }catch(e){sh.armRestore=false;renderSheet();toast(t('cb_fail')+': '+String(e&&e.message||e))}
+}
+const CLOUD_SCRIPT="// ARSE STORE cloud backup (Google Apps Script)\n// 1) Set KEY below to the same secret key shown in the app.\n// 2) Deploy > New deployment > Web app > Execute as: Me, Who has access: Anyone.\nvar KEY = '__KEY__';\nvar FOLDER_ID = '__FOLDER__'; // folder for the backups; if empty or not found, a folder named \"ARSE STORE Backups\" is used\nvar KEEP = 30; // how many daily backup files to keep\n\nfunction folder_() {\n  if (FOLDER_ID) { try { return DriveApp.getFolderById(FOLDER_ID); } catch (e) {} }\n  var it = DriveApp.getFoldersByName('ARSE STORE Backups');\n  return it.hasNext() ? it.next() : DriveApp.createFolder('ARSE STORE Backups');\n}\nfunction out_(o) {\n  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);\n}\nfunction put_(folder, name, text) {\n  var it = folder.getFilesByName(name);\n  if (it.hasNext()) it.next().setContent(text);\n  else folder.createFile(name, text, 'application/json');\n}\nfunction prune_(folder) {\n  var files = [], it = folder.getFiles();\n  while (it.hasNext()) {\n    var f = it.next();\n    if (/^arse-backup-\\d{4}-\\d{2}-\\d{2}\\.json$/.test(f.getName())) files.push(f);\n  }\n  files.sort(function (a, b) { return a.getName() < b.getName() ? 1 : -1; });\n  for (var i = KEEP; i < files.length; i++) files[i].setTrashed(true);\n}\nfunction doPost(e) {\n  try {\n    var b = JSON.parse(e.postData.contents);\n    if (b.key !== KEY) return out_({ ok: false, error: 'wrong key' });\n    if (b.action === 'ping') return out_({ ok: true });\n    if (b.action === 'backup') {\n      if (!b.data) return out_({ ok: false, error: 'no data' });\n      var f = folder_();\n      var day = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');\n      var name = 'arse-backup-' + day + '.json';\n      put_(f, name, b.data);\n      put_(f, 'arse-backup-latest.json', b.data);\n      prune_(f);\n      return out_({ ok: true, file: name, ts: new Date().getTime() });\n    }\n  } catch (err) {\n    return out_({ ok: false, error: String(err) });\n  }\n  return out_({ ok: false, error: 'unknown action' });\n}\nfunction doGet(e) {\n  var p = (e && e.parameter) || {};\n  if (p.key !== KEY) return out_({ ok: false, error: 'wrong key' });\n  if (p.action === 'ping') return out_({ ok: true });\n  if (p.action === 'latest') {\n    var it = folder_().getFilesByName('arse-backup-latest.json');\n    if (!it.hasNext()) return out_({ ok: false, error: 'no backup yet' });\n    var f = it.next();\n    return out_({ ok: true, ts: f.getLastUpdated().getTime(), data: f.getBlob().getDataAsString() });\n  }\n  return out_({ ok: false, error: 'unknown action' });\n}\n";
+const CLOUD_FOLDER_ID='1yIx-TTdILnyU39BIMA6xEA1OXEOjk5da';
+const cloudScript=()=>CLOUD_SCRIPT.replace('__KEY__',cloud.key||'CHANGE-THIS-SECRET').replace('__FOLDER__',CLOUD_FOLDER_ID);
+function cloudHTML(){
+  const sh=ui.sheet;
+  const st=cloud.last?t('cb_last',{d:new Date(cloud.last).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'})}):t('cb_never');
+  return `<h3 class="sh-title">${esc(t('cb_title'))}</h3><p class="sh-sub">${esc(t('cb_hint'))}</p>
+  <div class="card" style="padding:10px 12px;margin-bottom:12px"><b>${esc(st)}</b>${cloud.msg?`<div class="sub" style="color:var(--red)">${esc(cloud.msg)}</div>`:''}</div>
+  <label class="field"><span>${esc(t('cb_url'))}</span><input id="cburl" inputmode="url" autocapitalize="off" autocomplete="off" value="${esc(cloud.url)}" data-in="cburl" placeholder="https://script.google.com/macros/s/.../exec"></label>
+  <div class="field"><span>${esc(t('cb_key'))}</span><div style="display:flex;gap:8px"><input id="cbkey" autocapitalize="off" autocomplete="off" value="${esc(cloud.key)}" data-in="cbkey" style="min-width:0;flex:1"><button class="btn sm" style="min-height:48px" data-act="cb-makekey">${esc(t('cb_make_key'))}</button></div></div>
+  <div class="chips"><span class="sub" style="align-self:center;margin:0 4px 0 0">${esc(t('cb_auto'))}</span><button class="pick" data-act="cb-auto" data-v="1" aria-pressed="${!!cloud.auto}">${esc(t('cb_on'))}</button><button class="pick" data-act="cb-auto" data-v="0" aria-pressed="${!cloud.auto}">${esc(t('cb_off'))}</button></div>
+  <div class="row2"><button class="btn primary" data-act="cb-test" ${cloudBusy?'disabled':''}>${esc(t('cb_save_test'))}</button><button class="btn" data-act="cb-now" ${(!cloudOn()||cloudBusy)?'disabled':''}>${esc(t('cb_now'))}</button></div>
+  <button class="btn ghost-red block" style="margin-top:10px" data-act="cb-restore" ${cloudOn()?'':'disabled'}>${esc(sh.armRestore?t('cb_restore_arm'):t('cb_restore'))}</button>
+  <details style="margin-top:14px"><summary style="font-weight:700;min-height:44px;display:flex;align-items:center">${esc(t('cb_setup'))}</summary>
+    <ol class="sub" style="padding-left:20px;margin:4px 0 8px"><li>${esc(t('cb_s1'))}</li><li>${esc(t('cb_s2'))}</li><li>${esc(t('cb_s3'))}</li><li>${esc(t('cb_s4'))}</li><li>${esc(t('cb_s5'))}</li></ol>
+    <button class="btn block" data-act="cb-script">${esc(t('cb_copy_script'))}</button>
+    <p class="sub" style="margin-top:8px">${esc(t('cb_note'))}</p>
+  </details>
+  <button class="btn block" style="margin-top:14px" data-act="close">${esc(t('close'))}</button>`;
+}
+Object.assign(A,{
+cloud:()=>openSheet({type:'cloud',armRestore:false}),
+'cb-makekey':()=>{
+  const a=new Uint8Array(12);try{crypto.getRandomValues(a)}catch(e){for(let i=0;i<12;i++)a[i]=Math.floor(Math.random()*256)}
+  cloud.key=Array.from(a,x=>'abcdefghijkmnpqrstuvwxyz23456789'[x%32]).join('');cloudSave();renderSheet();
+},
+'cb-auto':d=>{cloud.auto=d.v==='1';cloudSave();renderSheet()},
+'cb-script':()=>{if(!cloud.key){toast(t('cb_need_key'));return}copyText(cloudScript())},
+'cb-test':async()=>{
+  const u=$('#cburl').value.trim(),k=$('#cbkey').value.trim();
+  if(!/^https:\/\/script\.google\.com\//.test(u)||!k){toast(t('cb_need_both'));return}
+  cloud.url=u;cloud.key=k;cloudSave();
+  try{await cloudCall({action:'ping'})}catch(e){cloud.msg=String(e&&e.message||e);cloudSave();renderSheet();toast(t('cb_fail')+': '+cloud.msg);return}
+  cloud.msg='';cloudSave();toast(t('cb_ok_test'));
+  const ok=await cloudBackup(true);if(!ok)renderSheet();
+},
+'cb-now':()=>cloudBackup(true),
+'cb-restore':()=>cloudRestore()
+});
+['cloud','cb-makekey','cb-auto','cb-script','cb-test','cb-now','cb-restore'].forEach(k=>OWNER.add(k));
+document.addEventListener('input',e=>{
+  const el=e.target,k=el.dataset&&el.dataset.in;
+  if(k==='cburl'){cloud.url=el.value.trim();cloudSave()}
+  else if(k==='cbkey'){cloud.key=el.value.trim();cloudSave()}
+});
+const _closingSave=A['closing-save'];
+A['closing-save']=()=>{_closingSave();if(cloudOn())cloudBackup(false)};
+
+/* ----- 3D scan view with item pins ----- */
+const mv3={el:null,url:null,blob:null,has:null,lp:null,placing:false,forPid:null,moveId:null,sel:null,pd:null,armRep:false,armDel:false,msg:''};
+function idb(){return new Promise((res,rej)=>{try{const r=indexedDB.open('arse-3d',1);r.onupgradeneeded=()=>r.result.createObjectStore('f');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function idbGet(k){const d=await idb();return new Promise((res,rej)=>{const q=d.transaction('f').objectStore('f').get(k);q.onsuccess=()=>res(q.result||null);q.onerror=()=>rej(q.error)})}
+async function idbPut(k,v){const d=await idb();return new Promise((res,rej)=>{const tx=d.transaction('f','readwrite');tx.objectStore('f').put(v,k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error)})}
+async function idbDel(k){const d=await idb();return new Promise((res,rej)=>{const tx=d.transaction('f','readwrite');tx.objectStore('f').delete(k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
+function loadMV(){
+  if(customElements.get('model-viewer'))return Promise.resolve(true);
+  if(mv3.lp)return mv3.lp;
+  mv3.lp=new Promise(res=>{const s=document.createElement('script');s.type='module';s.src='vendor/model-viewer.min.js';s.onload=()=>customElements.whenDefined('model-viewer').then(()=>res(true));s.onerror=()=>{mv3.lp=null;res(false)};document.head.appendChild(s)});
+  return mv3.lp;
+}
+const in3d=()=>ui.tab==='map'&&ui.mv==='3d';
+const mvPin=id=>S.map.pins.find(p=>p.id===id);
+const mvPinOf=pid=>S.map.pins.find(p=>p.pid===pid);
+function viewToggle(){return `<div class="seg vtog" role="group"><button data-act="mv-view" data-v="2d" aria-pressed="${ui.mv!=='3d'}">${esc(t('mv_2d'))}</button><button data-act="mv-view" data-v="3d" aria-pressed="${ui.mv==='3d'}">${esc(t('mv_3d'))}</button></div>`}
+function mapShell(){return viewToggle()+(ui.mv==='3d'?shell3D():mapShell2D())}
+function shell3D(){
+  if(mv3.has===null)return `<div class="empty">${esc(t('mv_loading'))}</div>`;
+  if(!mv3.has){
+    return `<div class="card" style="padding:16px"><h3 class="h2" style="margin:0 0 6px">${esc(t('mv_empty_t'))}</h3><p class="sub" style="margin:0 0 14px">${esc(t('mv_empty'))}</p>${isStaff()?'':`<button class="btn primary block" data-act="mv-file">${esc(t('mv_choose'))}</button>`}</div><input type="file" id="mvfile" accept=".glb,model/gltf-binary" hidden>`;
+  }
+  return `<div class="search"><input id="mq" type="search" autocomplete="off" placeholder="${esc(t('find_item'))}" value="${esc(ui.mq)}" aria-label="${esc(t('find_item'))}"></div>
+  <div class="v3wrap ${mv3.placing?'placing':''}" id="v3wrap"><div id="v3d"></div><div class="v3msg" id="v3msg">${esc(mv3.msg||t('mv_loading'))}</div></div>
+  <div class="maptools v3tools" id="mv3tools">${tools3D()}</div>
+  <div id="mapinfo">${info3D()}</div>
+  <div id="mvpins">${pins3D()}</div>
+  <p class="sub" style="margin-top:10px">${esc(t('mv_note'))}</p>
+  <input type="file" id="mvfile" accept=".glb,model/gltf-binary" hidden>`;
+}
+function tools3D(){
+  const own=!isStaff();
+  return `<button class="btn sm" data-act="mv-reset">${esc(t('mv_reset'))}</button>`+(own?`<span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button class="btn sm ${mv3.placing?'primary':''}" data-act="${mv3.placing?'mv-cancel':'mv-add'}">${esc(mv3.placing?t('mv_cancel'):t('mv_add_pin'))}</button><button class="btn sm" data-act="mv-file" ${mv3.armRep?'style="border-color:var(--red);color:var(--red)"':''}>${esc(mv3.armRep?t('mv_replace_arm'):t('mv_replace'))}</button><button class="btn sm ghost-red" data-act="mv-remove">${esc(mv3.armDel?t('mv_remove_arm'):t('mv_remove'))}</button></span>`:'');
+}
+function info3D(){
+  if(mv3.placing){
+    const p=mv3.forPid&&S.products.find(x=>x.id===mv3.forPid);
+    return `<div class="banner" style="background:var(--sign);color:var(--on-sign)"><span>${esc(p?t('mv_placing_for',{name:p.name}):t('mv_placing'))}</span></div>`;
+  }
+  const pn=mv3.sel&&mvPin(mv3.sel),p=pn&&S.products.find(x=>x.id===pn.pid);
+  if(p){
+    const own=!isStaff();
+    return `<div class="card"><b>${esc(p.name)}</b><div class="sub" style="margin:2px 0 10px">${peso(p.price)}/${esc(p.unit)} · ${p.stock===null?'—':fq(p.stock)+' '+esc(p.unit)}${locLabel(p)?' · '+esc(locLabel(p)):''}</div>${own?`<div class="row2"><button class="btn sm" data-act="pin-move" data-id="${esc(pn.id)}">${esc(t('mv_move_pin'))}</button><button class="btn sm ghost-red" data-act="pin-del" data-id="${esc(pn.id)}">${esc(t('mv_del_pin'))}</button></div><button class="btn sm block" style="margin-top:8px" data-act="prod-edit" data-id="${esc(p.id)}">${esc(t('details'))}</button>`:''}</div>`;
+  }
+  const q=ui.mq.trim().toLowerCase();
+  if(!q)return `<p class="sub">${esc(t('mv_hint'))}</p>`;
+  const ps=S.products.filter(x=>matchP(x,q)).sort((a,b)=>a.name.localeCompare(b.name)).slice(0,30);
+  if(!ps.length)return `<div class="empty">${esc(t('no_results'))}</div>`;
+  return `<div class="ledger">${ps.map(x=>{const pn2=mvPinOf(x.id);return `<button class="lrow" ${pn2?`data-act="pin-find" data-id="${esc(x.id)}"`:(isStaff()?'disabled':`data-act="pin-for" data-id="${esc(x.id)}"`)}><span class="nm"><b>${esc(x.name)}</b><small>${esc(pn2?t('mv_pinned_yes'):(isStaff()?t('mv_nopin_find'):t('mv_tap_to_pin')))}</small></span><span class="amt">${x.stock===null?'—':fq(x.stock)}<small> ${x.stock===null?'':esc(x.unit)}</small></span></button>`}).join('')}</div>`;
+}
+function pins3D(){
+  const rows=S.map.pins.map(pn=>({pn,p:S.products.find(x=>x.id===pn.pid)})).filter(r=>r.p).sort((a,b)=>a.p.name.localeCompare(b.p.name));
+  return `<details class="card" style="padding:4px 12px;margin-top:10px"><summary style="font-weight:700;min-height:44px;display:flex;align-items:center">${esc(t('mv_pins_n',{n:rows.length}))}</summary>${rows.length?`<div class="ledger">${rows.map(r=>`<button class="lrow" data-act="pin-sel" data-id="${esc(r.pn.id)}"><span class="nm"><b>${esc(r.p.name)}</b><small>${esc(locLabel(r.p)||'')}</small></span></button>`).join('')}</div>`:`<p class="sub">${esc(t('mv_no_pins'))}</p>`}</details>`;
+}
+function mv3Refresh(){
+  const a=$('#mv3tools'),b=$('#mapinfo'),c=$('#mvpins'),w=$('#v3wrap');
+  if(a)a.innerHTML=tools3D();if(b)b.innerHTML=info3D();if(c){const o=c.querySelector('details'),op=o&&o.open;c.innerHTML=pins3D();if(op)c.querySelector('details').open=true}
+  if(w)w.classList.toggle('placing',mv3.placing);
+  mv3Pins();
+}
+function mv3Msg(s){mv3.msg=s;const m=$('#v3msg');if(m){m.textContent=s;m.style.display=s?'':'none'}}
+async function mv3Mount(){
+  if(mv3.has===null){
+    try{mv3.blob=await idbGet('scan')}catch(e){mv3.blob=null}
+    mv3.has=!!mv3.blob;if(in3d())renderMain();return;
+  }
+  if(!mv3.has)return;
+  mv3Msg(t('mv_loading'));
+  const ok=await loadMV();
+  const host=$('#v3d');if(!host||!in3d())return;
+  if(!ok){mv3Msg(t('mv_engine_fail'));return}
+  if(!mv3.el){
+    if(!mv3.blob){try{mv3.blob=await idbGet('scan')}catch(e){}}
+    if(!mv3.blob){mv3.has=false;renderMain();return}
+    const el=document.createElement('model-viewer');
+    mv3.url=URL.createObjectURL(mv3.blob);mv3.blob=null;
+    el.setAttribute('src',mv3.url);el.setAttribute('camera-controls','');el.setAttribute('touch-action','pan-y');
+    el.setAttribute('interaction-prompt','none');el.setAttribute('shadow-intensity','0');el.setAttribute('exposure','1.1');
+    el.setAttribute('min-camera-orbit','auto auto 0.3m');el.setAttribute('alt','Store 3D scan');
+    el.addEventListener('load',()=>{mv3Msg('');mv3Pins()});
+    el.addEventListener('error',()=>mv3Msg(t('mv_fail')));
+    el.addEventListener('pointerdown',e=>{mv3.pd={x:e.clientX,y:e.clientY}});
+    el.addEventListener('click',e=>{
+      if(e.target.closest&&e.target.closest('[data-pin]'))return;
+      const d=mv3.pd;if(d&&Math.hypot(e.clientX-d.x,e.clientY-d.y)>8)return;
+      if(!mv3.placing)return;
+      const h=el.positionAndNormalFromPoint(e.clientX,e.clientY);
+      if(!h){toast(t('mv_no_hit'));return}
+      const pos=[h.position.x,h.position.y,h.position.z],nrm=[h.normal.x,h.normal.y,h.normal.z];
+      if(mv3.moveId){const pn=mvPin(mv3.moveId);if(pn){pn.pos=pos.map(r3k);pn.nrm=nrm.map(r3k);save();mv3.placing=false;mv3.moveId=null;mv3Refresh()}return}
+      if(mv3.forPid){pinPut(mv3.forPid,pos,nrm);return}
+      openSheet({type:'pin',pos,nrm,pq:''});
+    });
+    mv3.el=el;
+  }
+  host.appendChild(mv3.el);
+  if(mv3.el.loaded)mv3Msg('');
+  mv3Pins();
+}
+const r3k=v=>Math.round(v*1000)/1000;
+function pinPut(pid,pos,nrm){
+  const p=S.products.find(x=>x.id===pid);if(!p)return;
+  S.map.pins=S.map.pins.filter(x=>x.pid!==pid);
+  const pn={id:uid(),pid,pos:pos.map(r3k),nrm:nrm.map(r3k)};S.map.pins.push(pn);save();
+  mv3.placing=false;mv3.forPid=null;mv3.moveId=null;mv3.sel=pn.id;
+  if(ui.sheet&&ui.sheet.type==='pin')closeSheet();
+  mv3Refresh();toast(t('mv_pinned',{name:p.name}));
+}
+function mv3Pins(){
+  const el=mv3.el;if(!el)return;
+  el.querySelectorAll('[data-pin]').forEach(n=>n.remove());
+  const q=ui.mq.trim().toLowerCase();
+  S.map.pins.forEach(pn=>{
+    const p=S.products.find(x=>x.id===pn.pid);if(!p)return;
+    const hit=!!q&&matchP(p,q),dim=!!q&&!hit,sel=mv3.sel===pn.id;
+    const b=document.createElement('button');
+    b.slot='hotspot-'+pn.id;b.className='pin3d'+(hit?' hit':'')+(dim?' dim':'')+(sel?' sel':'');
+    b.dataset.pin=pn.id;b.dataset.act='pin-sel';b.dataset.id=pn.id;
+    b.dataset.position=pn.pos.map(v=>v+'m').join(' ');b.dataset.normal=pn.nrm.map(v=>v+'m').join(' ');
+    b.setAttribute('aria-label',p.name);
+    const l=document.createElement('span');l.className='pl';l.textContent=p.name;b.appendChild(l);
+    el.appendChild(b);
+  });
+}
+function mv3Fly(pn){
+  const el=mv3.el;if(!el||!pn)return;
+  let mx=5;try{const d=el.getDimensions();mx=Math.max(d.x,d.y,d.z)||5}catch(e){}
+  const th=Math.atan2(pn.nrm[0],pn.nrm[2]),ph=clamp(Math.acos(clamp(pn.nrm[1],-1,1)),.8,1.45);
+  el.cameraTarget=pn.pos.map(v=>v+'m').join(' ');
+  el.cameraOrbit=th+'rad '+ph+'rad '+Math.max(mx*.26,2)+'m';
+}
+function mv3Search(){
+  mv3.sel=null;mv3Pins();const b=$('#mapinfo');if(b)b.innerHTML=info3D();
+  const q=ui.mq.trim().toLowerCase();
+  if(q){const h=S.map.pins.find(pn=>{const p=S.products.find(x=>x.id===pn.pid);return p&&matchP(p,q)});if(h)mv3Fly(h)}
+}
+function pinHTML(){
+  const sh=ui.sheet;
+  return `<h3 class="sh-title">${esc(t('mv_pick_title'))}</h3>
+  <div class="search"><input id="pq" type="search" autocomplete="off" placeholder="${esc(t('assign_search'))}" value="${esc(sh.pq||'')}" data-in="pq" data-focus></div>
+  <div class="hist" id="plist" style="max-height:48vh"></div>
+  <button class="btn block" style="margin-top:12px" data-act="close">${esc(t('close'))}</button>`;
+}
+function mvPickList(){
+  const sh=ui.sheet,l=$('#plist');if(!l)return;
+  const q=(sh.pq||'').trim().toLowerCase();
+  const ps=S.products.filter(p=>matchP(p,q)).sort((a,b)=>a.name.localeCompare(b.name)).slice(0,60);
+  l.innerHTML=ps.length?ps.map(p=>`<button class="lrow" data-act="pin-set" data-id="${esc(p.id)}"><span class="nm"><b>${esc(p.name)}</b><small>${esc(mvPinOf(p.id)?t('mv_pinned_yes'):(locLabel(p)||'—'))}</small></span><span class="amt">+</span></button>`).join(''):`<div class="empty">${esc(t('no_results'))}</div>`;
+}
+document.addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.in==='pq'&&ui.sheet&&ui.sheet.type==='pin'){ui.sheet.pq=el.value;mvPickList()}});
+document.addEventListener('change',async e=>{
+  const el=e.target;if(!el||el.id!=='mvfile')return;
+  const f=el.files&&el.files[0];el.value='';if(!f)return;
+  if(!/\.glb$/i.test(f.name)){toast(t('mv_need_glb'));return}
+  try{await idbPut('scan',f)}catch(err){toast(t('mv_fail'));return}
+  if(mv3.url){try{URL.revokeObjectURL(mv3.url)}catch(x){}}
+  if(mv3.el){mv3.el.remove();mv3.el=null}
+  mv3.url=null;mv3.blob=f;mv3.has=true;mv3.armRep=false;mv3.armDel=false;mv3.sel=null;mv3.placing=false;
+  if(S.map.pins.length){S.map.pins=[];save()}
+  if(f.size>40e6)toast(t('mv_big',{mb:Math.round(f.size/1e6)}));else toast(t('mv_saved'));
+  renderMain();
+});
+Object.assign(A,{
+'mv-view':d=>{ui.mv=d.v==='3d'?'3d':'2d';mv3.placing=false;mv3.moveId=null;mv3.forPid=null;ui.mapEdit=false;ui.sel=null;ui.mq='';renderMain()},
+'mv-file':()=>{
+  if(mv3.has&&S.map.pins.length&&!mv3.armRep){mv3.armRep=true;mv3Refresh();return}
+  mv3.armRep=false;const i=$('#mvfile');if(i)i.click();
+},
+'mv-remove':async()=>{
+  if(!mv3.armDel){mv3.armDel=true;mv3Refresh();return}
+  try{await idbDel('scan')}catch(e){}
+  if(mv3.url){try{URL.revokeObjectURL(mv3.url)}catch(x){}}
+  if(mv3.el){mv3.el.remove();mv3.el=null}
+  mv3.url=null;mv3.blob=null;mv3.has=false;mv3.armDel=false;mv3.armRep=false;mv3.sel=null;mv3.placing=false;
+  S.map.pins=[];save();renderMain();
+},
+'mv-add':()=>{mv3.placing=true;mv3.forPid=null;mv3.moveId=null;mv3.sel=null;mv3Refresh()},
+'mv-cancel':()=>{mv3.placing=false;mv3.forPid=null;mv3.moveId=null;mv3Refresh()},
+'mv-reset':()=>{const el=mv3.el;if(!el)return;el.cameraTarget='auto auto auto';el.cameraOrbit='auto auto auto'},
+'pin-sel':d=>{if(mv3.placing)return;mv3.sel=d.id;mv3Refresh();mv3Fly(mvPin(d.id))},
+'pin-find':d=>{const pn=mvPinOf(d.id);if(!pn)return;mv3.sel=pn.id;mv3Refresh();mv3Fly(pn)},
+'pin-for':d=>{mv3.placing=true;mv3.forPid=d.id;mv3.moveId=null;mv3.sel=null;mv3Refresh()},
+'pin-move':d=>{mv3.placing=true;mv3.moveId=d.id;mv3.forPid=null;mv3Refresh()},
+'pin-del':d=>{S.map.pins=S.map.pins.filter(x=>x.id!==d.id);save();mv3.sel=null;mv3Refresh()},
+'pin-set':d=>{const sh=ui.sheet;if(sh&&sh.type==='pin')pinPut(d.id,sh.pos,sh.nrm)}
+});
+['mv-file','mv-remove','mv-add','pin-for','pin-move','pin-del','pin-set'].forEach(k=>OWNER.add(k));
+
 /* ---------- Events ---------- */
 document.addEventListener('click',e=>{
   if(e.target.id==='scrim'){A.close();return}
@@ -2066,7 +2794,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{
   const el=e.target;
   if(el.id==='q'){ui.q=el.value;renderList();return}
-  if(el.id==='mq'){ui.mq=el.value;refreshShapes();const i=$('#mapinfo');if(i)i.innerHTML=mapInfo();return}
+  if(el.id==='mq'){ui.mq=el.value;if(ui.mv==='3d'){mv3Search();return}refreshShapes();const i=$('#mapinfo');if(i)i.innerHTML=mapInfo();return}
   const k=el.dataset&&el.dataset.in;if(!k)return;
   if(k==='given'){ui.sheet.given=el.value;syncCheckout()}
   else if(k==='qty'){

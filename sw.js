@@ -1,9 +1,9 @@
 // Offline cache for ARSE Store. Bump VERSION when you change any file.
-const VERSION = 'hardware-v6';
+const VERSION = 'hardware-v7';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE).then(() => c.add('./vendor/model-viewer.min.js').catch(() => {}))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
