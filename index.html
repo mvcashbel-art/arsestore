@@ -229,6 +229,16 @@ textarea{resize:vertical;min-height:84px}
 .cartbar .cartwrap .clr.armed{background:var(--red);color:#fff}
 .cartbar .cartwrap [data-act="checkout"]{flex:1;width:auto}
 .sq.rm{color:var(--red);border-color:var(--red);width:40px;height:40px;font-size:16px}
+.chk{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;flex-shrink:0;color:transparent}
+.chk.on{background:var(--sign);border-color:var(--on-sign);color:var(--on-sign)}
+.lblgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
+.lbl{background:#fff;color:#000;border:1.5px dashed #9aa3bd;border-radius:6px;padding:6px 8px;break-inside:avoid;text-align:center}
+.lbl .ln1{font:700 12px/1.15 var(--body);overflow-wrap:anywhere;max-height:2.4em;overflow:hidden}
+.lbl .ln2{font:700 13px var(--body);margin:2px 0 4px}
+.lbl .ln3{font:11px/1 monospace;letter-spacing:1px;margin-top:3px}
+.bc{width:100%;height:46px;display:block;background:#fff}
+@page{margin:8mm}
+@media print{.lblgrid{grid-template-columns:repeat(3,1fr)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -383,7 +393,26 @@ scan:'Scan',
 copy_stmt:'Copy statement',
 make_quote:'Make a quotation instead',
 no_sales_r:'No sales in this period',
-cat_ph:'Type a new one or pick below',cat_pick:'Pick an existing category, or type a new one above.',
+cat_ph:'Type a new one or pick below',
+labels_btn:'Barcode labels',
+lbl_title:'Barcode labels',
+lbl_hint:'Tick the items to label. Items without a code get one made for them. Then print the labels and stick them on the shelf, bin or item.',
+lbl_note:'For items sold by kg or metre, scanning adds 1. Change the amount at checkout.',
+lbl_all:'All items',
+lbl_none:'No barcode yet',
+lbl_sel_all:'Select all shown',
+lbl_clear:'Clear',
+lbl_print:'Make and print labels',
+lbl_sel:'{n} selected',
+lbl_print_hint:'Tap Print, then choose your printer or Save as PDF. Cut along the dashed lines.',
+lbl_back:'Back',
+make_bc:'Make a barcode for this item',
+bc_made:'Barcode made',
+bc_has:'This item already has a barcode',
+bc_dup:'That barcode is already used by {name}',
+lbl_nocode:'no code',
+lbl_pick_some:'Tick at least one item',
+cat_pick:'Pick an existing category, or type a new one above.',
 remove:'Remove',minus_one:'Take one off',clear_cart:'Clear cart',clear_arm:'Tap again to clear the cart',cart_cleared:'Cart cleared',
 rec_insights:'Insights',
 ins_title:'How is the store doing?',
@@ -558,7 +587,26 @@ scan:'Scan',
 copy_stmt:'Kopyaha ang statement',
 make_quote:'Himoa na lang nga quotation',
 no_sales_r:'Walay benta niining panahona',
-cat_ph:'Mag-type og bag-o o pili sa ubos',cat_pick:'Pili og naa nang kategorya, o mag-type og bag-o sa taas.',
+cat_ph:'Mag-type og bag-o o pili sa ubos',
+labels_btn:'Barcode label',
+lbl_title:'Barcode label',
+lbl_hint:'Pili ang mga item nga butangan og label. Ang walay code himoan og code. Unya i-print ug idikit sa estante, bin o item.',
+lbl_note:'Sa mga item nga kilo o metro, usa ang madugang kung i-scan. Usba ang gidaghanon sa checkout.',
+lbl_all:'Tanang item',
+lbl_none:'Wala pay barcode',
+lbl_sel_all:'Pilia tanan',
+lbl_clear:'Hawani',
+lbl_print:'Himoa ug i-print ang label',
+lbl_sel:'{n} ang napili',
+lbl_print_hint:'Pislita ang Print, unya pili sa printer o Save as PDF. Gunting sunod sa putol-putol nga linya.',
+lbl_back:'Balik',
+make_bc:'Himoag barcode kining item',
+bc_made:'Nahimo ang barcode',
+bc_has:'Naa nay barcode kining item',
+bc_dup:'Gigamit na kini nga barcode sa {name}',
+lbl_nocode:'walay code',
+lbl_pick_some:'Pili bisan usa ka item',
+cat_pick:'Pili og naa nang kategorya, o mag-type og bag-o sa taas.',
 remove:'Kuhaa',minus_one:'Kuhaa og usa',clear_cart:'Kuhaa ang tanan sa cart',clear_arm:'Pislita pag-usab aron kuhaon ang tanan',cart_cleared:'Nahawan ang cart',
 rec_insights:'Pagsusi',
 ins_title:'Kumusta ang tindahan?',
@@ -644,6 +692,7 @@ function blank(lang,shop){return {v:1,shop:shop||DEF_SHOP,lang:lang||'en',demo:f
 function normalize(d){
   d.products.forEach(p=>{p.unit=p.unit||'pc';p.cat=p.cat||'';p.loc=p.loc||null;p.spot=p.spot||'';p.supplier=p.supplier||'';p.barcode=p.barcode||'';if(p.stock===undefined)p.stock=null;if(p.cost===undefined)p.cost=null;if(p.low===undefined)p.low=5});
   ['moves','expenses','closings','quotes'].forEach(k=>{if(!Array.isArray(d[k]))d[k]=[]});
+  d.bcNext=+d.bcNext||1;
   d.staff=d.staff&&typeof d.staff==='object'?d.staff:{pin:'',on:false};d.staff.pin=String(d.staff.pin||'');d.staff.on=!!d.staff.on;
   d.map=d.map&&Array.isArray(d.map.shapes)?d.map:blankMap();
   d.map.bgOp=d.map.bgOp||.5;
@@ -860,7 +909,7 @@ function utangList(){
 function stockShell(){
   const low=S.products.filter(lowOf).length;
   return `<div class="bar-actions"><h2 class="h2">${esc(t('products_n',{n:S.products.length}))}</h2>${isStaff()?'':`<button class="btn primary" data-act="prod-new">+ ${esc(t('add_product'))}</button>`}</div>
-  <div class="chips"><button class="pick" data-act="low-toggle" aria-pressed="${ui.low}">${esc(t('show_low'))}<small>${esc(t('low_n',{n:low}))}</small></button>${isStaff()?'':`<button class="pick" data-act="restock-list">${esc(t('rl_btn'))}</button>`}</div>
+  <div class="chips"><button class="pick" data-act="low-toggle" aria-pressed="${ui.low}">${esc(t('show_low'))}<small>${esc(t('low_n',{n:low}))}</small></button>${isStaff()?'':`<button class="pick" data-act="restock-list">${esc(t('rl_btn'))}</button><button class="pick" data-act="labels">${esc(t('labels_btn'))}</button>`}</div>
   <div class="search"><input id="q" type="search" autocomplete="off" placeholder="${esc(t('search_products'))}" value="${esc(ui.q)}" aria-label="${esc(t('search_products'))}"></div>${catChips()}
   <div id="list" class="ledger"></div>`;
 }
@@ -1020,13 +1069,14 @@ function openSheet(s){ui.sheet=s;renderSheet(true)}
 function closeSheet(){if(ui.sheet&&ui.sheet.type==='scan')stopScan();ui.sheet=null;$('#scrim').classList.remove('open');$('#sheet').innerHTML=''}
 function renderSheet(focus){
   const sh=ui.sheet;if(!sh)return;
-  const f={checkout:checkoutHTML,custom:customHTML,customer:customerHTML,product:productHTML,restock:restockHTML,settings:settingsHTML,shape:shapeHTML,shapeedit:shapeEditHTML,mapset:mapSetHTML,doc:docHTML,datatools:dataToolsHTML,expense:expenseHTML,rlist:rlistHTML,scan:scanHTML,unlock:unlockHTML}[sh.type];
+  const f={checkout:checkoutHTML,custom:customHTML,customer:customerHTML,product:productHTML,restock:restockHTML,settings:settingsHTML,shape:shapeHTML,shapeedit:shapeEditHTML,mapset:mapSetHTML,doc:docHTML,datatools:dataToolsHTML,expense:expenseHTML,rlist:rlistHTML,scan:scanHTML,unlock:unlockHTML,labels:labelsHTML,labelprint:labelPrintHTML}[sh.type];
   $('#sheet').innerHTML='<div class="grab"></div>'+(f?f():'');
   $('#scrim').classList.add('open');
   if(focus){const x=$('#sheet [data-focus]');if(x)setTimeout(()=>x.focus(),30)}
   if(sh.type==='checkout')syncCheckout();
   if(sh.type==='product'&&sh.draft){applyDraft(sh.draft);sh.draft=null}
   if(sh.type==='scan'){stopScan();startScan()}
+  if(sh.type==='labels')renderLabelList();
   if(sh.type==='shape'&&sh.mode==='assign')renderAssignList();
 }
 
@@ -1113,7 +1163,7 @@ function productHTML(){
   <p class="sub" style="margin:-4px 0 12px">${esc(t('stock_hint'))}</p>
   <div class="row2"><label class="field"><span>${esc(t('location'))}</span><select id="ploc"><option value="">${esc(t('none'))}</option>${shapes.map(s=>`<option value="${esc(s.id)}" ${p&&p.loc===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></label><label class="field"><span>${esc(t('spot'))}</span><input id="pspot" autocomplete="off" placeholder="${esc(t('spot_ph'))}" value="${esc(p?p.spot:'')}"></label></div>
   <div class="row2"><label class="field"><span>${esc(t('supplier'))}</span><input id="psup" list="suplist" autocomplete="off" value="${esc(p?p.supplier:'')}"><datalist id="suplist">${[...new Set(S.products.map(x=>x.supplier).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist></label></div>
-  <div class="field"><span>${esc(t('barcode'))}</span><div style="display:flex;gap:8px"><input id="pbar" inputmode="numeric" autocomplete="off" value="${esc(p?p.barcode:'')}" style="min-width:0;flex:1"><button type="button" class="btn scanbtn" data-act="scan-for-product" aria-label="${esc(t('scan'))}">${IC.scan}</button></div></div>
+  <div class="field"><span>${esc(t('barcode'))}</span><div style="display:flex;gap:8px"><input id="pbar" inputmode="numeric" autocomplete="off" value="${esc(p?p.barcode:'')}" style="min-width:0;flex:1"><button type="button" class="btn scanbtn" data-act="scan-for-product" aria-label="${esc(t('scan'))}">${IC.scan}</button></div><button type="button" class="link" data-act="gen-barcode" style="margin-top:6px">${esc(t('make_bc'))}</button></div>
   <div class="row2"><button class="btn" data-act="close">${esc(t('cancel'))}</button><button class="btn primary" data-act="prod-save">${esc(t('save'))}</button></div>
   ${p?`<div class="divider"></div><button class="btn ghost-red block" data-act="prod-del">${esc(sh.confirmDel?t('confirm_delete'):t('delete'))}</button>`:''}`;
 }
@@ -1293,6 +1343,7 @@ settings:()=>openSheet({type:'settings'}),
   const cv=$('#pc').value.trim(),sv=$('#ps').value.trim(),lv=$('#pl').value.trim();
   const rec={name,price,unit:$('#pu').value,cat:$('#pcat').value.trim(),cost:cv===''?null:r2(num(cv)),stock:sv===''?null:Math.max(0,r3(num(sv))),low:lv===''?5:Math.max(0,r3(num(lv))),loc:$('#ploc').value||null,spot:$('#pspot').value.trim(),supplier:$('#psup').value.trim(),barcode:$('#pbar').value.trim()};
   const sh=ui.sheet;
+  if(rec.barcode){const dup=S.products.find(p=>p.barcode===rec.barcode&&p.id!==sh.id);if(dup){toast(t('bc_dup',{name:dup.name}));$('#pbar').focus();return}}
   if(sh.id){const pp=S.products.find(p=>p.id===sh.id),ob=pp.stock;Object.assign(pp,rec);if(rec.stock!==null&&rec.stock!==ob)logMove(pp,r3(rec.stock-(ob||0)),'adjust','')}
   else{const pp={id:uid(),...rec};S.products.push(pp);if(rec.stock)logMove(pp,rec.stock,'initial','')}
   save();closeSheet();renderMain();if(ui.tab==='map')refreshMap(true);toast(t('saved'));
@@ -1924,6 +1975,85 @@ function insightsHTML(){
   const topH=top.length?`<div class="card" style="margin-top:14px"><h2 class="h2" style="margin-bottom:8px">${esc(t('ins_top'))}</h2>${top.map(o=>`<div class="line"><div class="ln"><b>${esc(o.n)}</b><small>${fq(o.qty)}${o.u!=='pc'?' '+esc(o.u):'×'} · ${esc(t('sales'))} ${peso(o.rev)}</small></div><div class="lt" style="color:var(--green)">${peso(o.pr)}</div></div>`).join('')}</div>`:'';
   return head+verdict+tiles+list+topH+`<p class="sub" style="margin-top:12px">${esc(t('ins_note'))}</p>`;
 }
+
+/* ----- Own barcodes (Code 128) and printable labels ----- */
+const C128=['212222','222122','222221','121223','121322','131222','122213','122312','132212','221213','221312','231212','112232','122132','122231','113222','123122','123221','223211','221132','221231','213212','223112','312131','311222','321122','321221','312212','322112','322211','212123','212321','232121','111323','131123','131321','112313','132113','132311','211313','231113','231311','112133','112331','132131','113123','113321','133121','313121','211331','231131','213113','213311','213131','311123','311321','331121','312113','312311','332111','314111','221411','431111','111224','111422','121124','121421','141122','141221','112214','112412','122114','122411','142112','142211','241211','221114','413111','241112','134111','111242','121142','121241','114212','124112','124211','411212','421112','421211','212141','214121','412121','111143','111341','131141','114113','114311','411113','411311','113141','114131','311141','411131','211412','211214','211232','2331112'];
+function code128(text){
+  text=String(text);if(!text)return null;
+  const vals=[];
+  if(/^\d+$/.test(text)&&text.length%2===0){vals.push(105);for(let i=0;i<text.length;i+=2)vals.push(+text.slice(i,i+2))}
+  else{vals.push(104);for(const ch of text){const c=ch.charCodeAt(0);if(c<32||c>126)return null;vals.push(c-32)}}
+  let sum=vals[0];for(let i=1;i<vals.length;i++)sum+=vals[i]*i;
+  vals.push(sum%103,106);
+  return vals.map(v=>C128[v]).join('');
+}
+function barcodeSVG(text){
+  const w=code128(text);if(!w)return '';
+  let x=10,bar=true,d='';
+  for(const ch of w){const n=+ch;if(bar)d+='M'+x+' 0h'+n+'v40h-'+n+'z';x+=n;bar=!bar}
+  return `<svg class="bc" viewBox="0 0 ${x+10} 40" preserveAspectRatio="none" role="img" aria-label="${esc(text)}" shape-rendering="crispEdges"><path d="${d}" fill="#000"/></svg>`;
+}
+function nextCode(){
+  let m=0;S.products.forEach(p=>{if(/^29\d{6}$/.test(p.barcode||''))m=Math.max(m,+p.barcode.slice(2))});
+  const n=Math.max(+S.bcNext||1,m+1);S.bcNext=n+1;
+  return '29'+String(n).padStart(6,'0');
+}
+const labelHTML=p=>`<div class="lbl"><div class="ln1">${esc(p.name)}</div><div class="ln2">${peso(p.price)}/${esc(p.unit)}</div>${barcodeSVG(p.barcode)}<div class="ln3">${esc(p.barcode)}</div></div>`;
+const lblShown=()=>{
+  const sh=ui.sheet,q=(sh.q||'').trim().toLowerCase();
+  return S.products.filter(p=>(!sh.only||!p.barcode)&&(!q||(p.name+' '+p.cat).toLowerCase().includes(q))).sort((a,b)=>a.name.localeCompare(b.name));
+};
+const lblSelIds=()=>Object.keys(ui.sheet.sel).filter(k=>ui.sheet.sel[k]&&S.products.some(p=>p.id===k));
+function labelsHTML(){
+  const sh=ui.sheet;
+  return `<h3 class="sh-title">${esc(t('lbl_title'))}</h3><p class="sh-sub">${esc(t('lbl_hint'))}</p>
+  <div class="chips"><button class="pick" data-act="lbl-only" data-v="0" aria-pressed="${!sh.only}">${esc(t('lbl_all'))}</button><button class="pick" data-act="lbl-only" data-v="1" aria-pressed="${!!sh.only}">${esc(t('lbl_none'))}</button></div>
+  <div class="search"><input type="search" autocomplete="off" placeholder="${esc(t('search_products'))}" value="${esc(sh.q||'')}" data-in="lq" aria-label="${esc(t('search_products'))}"></div>
+  <div id="lbllist" class="ledger" style="max-height:34vh;overflow:auto"></div>
+  <div class="bar-actions" style="margin:10px 0 4px"><span class="sub" id="lblcount" style="margin:0"></span><span style="display:flex;gap:8px"><button class="btn sm" data-act="lbl-all">${esc(t('lbl_sel_all'))}</button><button class="btn sm" data-act="lbl-clear">${esc(t('lbl_clear'))}</button></span></div>
+  <p class="sub" style="margin:4px 0 12px">${esc(t('lbl_note'))}</p>
+  <div class="row2"><button class="btn" data-act="close">${esc(t('close'))}</button><button class="btn primary" id="lblgo" data-act="lbl-go" disabled>${esc(t('lbl_print'))}</button></div>`;
+}
+function renderLabelList(){
+  const sh=ui.sheet,el=$('#lbllist');if(!sh||sh.type!=='labels'||!el)return;
+  const ps=lblShown();
+  el.innerHTML=ps.length?ps.map(p=>`<button class="lrow" style="min-height:52px" data-act="lbl-tog" data-id="${esc(p.id)}"><span class="chk ${sh.sel[p.id]?'on':''}" aria-hidden="true">✓</span><span class="nm"><b>${esc(p.name)}</b><small>${peso(p.price)}/${esc(p.unit)} · ${p.barcode?esc(p.barcode):esc(t('lbl_nocode'))}</small></span></button>`).join(''):`<div class="empty">${esc(t('no_results'))}</div>`;
+  const n=lblSelIds().length;
+  $('#lblcount').textContent=t('lbl_sel',{n});
+  const b=$('#lblgo');if(b)b.disabled=!n;
+}
+function labelPrintHTML(){
+  const sh=ui.sheet,ps=sh.ids.map(id=>S.products.find(p=>p.id===id)).filter(p=>p&&p.barcode);
+  return `<h3 class="sh-title noprint">${esc(t('lbl_title'))}</h3><p class="sh-sub noprint">${esc(t('lbl_print_hint'))}</p>
+  <div class="lblgrid">${ps.map(labelHTML).join('')}</div>
+  <div class="row2 noprint"><button class="btn" data-act="lbl-back">${esc(t('lbl_back'))}</button><button class="btn primary" data-act="lbl-doprint">${esc(t('print_doc'))}</button></div>
+  <button class="btn block noprint" style="margin-top:10px" data-act="close">${esc(t('close'))}</button>`;
+}
+Object.assign(A,{
+labels:()=>openSheet({type:'labels',q:'',only:false,sel:{}}),
+'lbl-only':d=>{ui.sheet.only=d.v==='1';renderSheet();},
+'lbl-tog':d=>{const sh=ui.sheet;sh.sel[d.id]=!sh.sel[d.id];renderLabelList()},
+'lbl-all':()=>{lblShown().forEach(p=>{ui.sheet.sel[p.id]=true});renderLabelList()},
+'lbl-clear':()=>{ui.sheet.sel={};renderLabelList()},
+'lbl-go':()=>{
+  const ids=lblSelIds();if(!ids.length){toast(t('lbl_pick_some'));return}
+  ids.forEach(id=>{const p=S.products.find(x=>x.id===id);if(p&&!p.barcode)p.barcode=nextCode()});
+  save();renderMain();
+  openSheet({type:'labelprint',ids});
+},
+'lbl-back':()=>{const sel={};ui.sheet.ids.forEach(id=>sel[id]=true);openSheet({type:'labels',q:'',only:false,sel})},
+'lbl-doprint':()=>{try{window.print()}catch(e){toast(t('lbl_print_hint'))}},
+'gen-barcode':()=>{
+  const e=$('#pbar');if(!e)return;
+  if(e.value.trim()){toast(t('bc_has'));return}
+  e.value=nextCode();toast(t('bc_made'));
+}
+});
+OWNER.add('labels');OWNER.add('lbl-go');OWNER.add('gen-barcode');
+document.addEventListener('input',e=>{
+  const el=e.target;
+  if(el.dataset&&el.dataset.in==='lq'&&ui.sheet&&ui.sheet.type==='labels'){ui.sheet.q=el.value;renderLabelList()}
+});
 
 /* ---------- Events ---------- */
 document.addEventListener('click',e=>{

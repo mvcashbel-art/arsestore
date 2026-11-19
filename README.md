@@ -5,7 +5,7 @@ Sales, utang, stock, store-map and records for ARSE STORE (hardware). Works offl
 ## What is inside
 - **Sell**: tap items, checkout cash or utang, scan barcodes, make a quotation.
 - **Utang**: customer credit ledger, reminders, copy statement.
-- **Stock**: counts, low-stock warnings, supplier restock list, item supplier and barcode.
+- **Stock**: counts, low-stock warnings, supplier restock list, item supplier and barcode. Items with no barcode can get their own (Make a barcode) and you can print shelf/bin labels (Stock → Barcode labels).
 - **Map**: 2D layout of the store; tap a shelf to see what is on it.
 - **Records**: Insights (is the store doing well?), summary, sales history with receipts, stock log, expenses, daily closing, saved quotes. Import / Export (CSV) is here too.
 - **Staff mode** (Settings): staff can sell but cannot see costs, profit, records or settings. The 4-digit PIN is a simple lock, not strong security.
