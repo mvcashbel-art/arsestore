@@ -220,6 +220,15 @@ textarea{resize:vertical;min-height:84px}
 .find small{display:block;color:var(--muted);margin-top:2px}
 .find .dot{flex-shrink:0;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--body);color:#fff;margin-top:1px}
 .dot.good{background:var(--green)}.dot.warn{background:#c98a00}.dot.bad{background:var(--red)}.dot.info{background:var(--muted)}
+.pwrap{position:relative;display:flex}
+.pwrap .prod{flex:1;width:100%}
+.pminus{position:absolute;top:-14px;left:-12px;z-index:2;width:40px;height:40px;border-radius:50%;background:var(--red);color:#fff;border:3px solid var(--paper);font:700 24px/1 var(--body);display:grid;place-items:center;padding:0}
+.cartbar .cartwrap{display:flex;gap:8px;max-width:528px;margin:0 auto;pointer-events:auto}
+.cartbar .cartwrap button{margin:0;max-width:none}
+.cartbar .cartwrap .clr{flex:none;width:56px;background:var(--card);color:var(--red);border-color:var(--red);font:700 20px var(--body);justify-content:center}
+.cartbar .cartwrap .clr.armed{background:var(--red);color:#fff}
+.cartbar .cartwrap [data-act="checkout"]{flex:1;width:auto}
+.sq.rm{color:var(--red);border-color:var(--red);width:40px;height:40px;font-size:16px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -374,6 +383,7 @@ scan:'Scan',
 copy_stmt:'Copy statement',
 make_quote:'Make a quotation instead',
 no_sales_r:'No sales in this period',
+remove:'Remove',minus_one:'Take one off',clear_cart:'Clear cart',clear_arm:'Tap again to clear the cart',cart_cleared:'Cart cleared',
 rec_insights:'Insights',
 ins_title:'How is the store doing?',
 ins_good:'Doing well',
@@ -547,6 +557,7 @@ scan:'Scan',
 copy_stmt:'Kopyaha ang statement',
 make_quote:'Himoa na lang nga quotation',
 no_sales_r:'Walay benta niining panahona',
+remove:'Kuhaa',minus_one:'Kuhaa og usa',clear_cart:'Kuhaa ang tanan sa cart',clear_arm:'Pislita pag-usab aron kuhaon ang tanan',cart_cleared:'Nahawan ang cart',
 rec_insights:'Pagsusi',
 ins_title:'Kumusta ang tindahan?',
 ins_good:'Maayo ang lakaw',
@@ -775,7 +786,7 @@ function render(){
 }
 function renderCart(){
   const el=$('#cartbar'),n=cartCount();
-  el.innerHTML=(ui.tab==='sell'&&n)?`<button data-act="checkout"><span>${esc(n===1&&S.lang==='en'?t('item_1'):t('items_n',{n}))}</span><strong>${peso(cartTotal())}</strong><span>${esc(t('checkout'))} →</span></button>`:'';
+  el.innerHTML=(ui.tab==='sell'&&n)?`<div class="cartwrap"><button class="clr ${ui.clrArm?'armed':''}" data-act="clear-cart" aria-label="${esc(t('clear_cart'))}">${ui.clrArm?'?':'✕'}</button><button data-act="checkout"><span>${esc(n===1&&S.lang==='en'?t('item_1'):t('items_n',{n}))}</span><strong>${peso(cartTotal())}</strong><span>${esc(t('checkout'))} →</span></button></div>`:'';
 }
 function catChips(){
   const cs=cats();if(!cs.length)return '';
@@ -807,7 +818,7 @@ function sellList(){
     const out=p.stock!==null&&p.stock<=0;
     const chip=p.stock===null?'':out?`<span class="chip out">${esc(t('out'))}</span>`:`<span class="chip ${lowOf(p)?'low':''}">${fq(p.stock)}</span>`;
     const where=locLabel(p);
-    return `<button class="prod ${inCart?'in':''}" data-act="add" data-id="${esc(p.id)}" ${out?'disabled':''}>${inCart?`<span class="qty">×${fq(inCart.qty)}</span>`:''}<span class="pn">${esc(p.name)}${where?`<span class="pl">${esc(where)}</span>`:''}</span><span style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span class="pp">${peso(p.price)}<small>/${esc(p.unit)}</small></span>${chip}</span></button>`;
+    return `<div class="pwrap">${inCart?`<button class="pminus" data-act="sub" data-id="${esc(p.id)}" aria-label="${esc(t('minus_one'))}">−</button>`:''}<button class="prod ${inCart?'in':''}" data-act="add" data-id="${esc(p.id)}" ${out?'disabled':''}>${inCart?`<span class="qty">×${fq(inCart.qty)}</span>`:''}<span class="pn">${esc(p.name)}${where?`<span class="pl">${esc(where)}</span>`:''}</span><span style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span class="pp">${peso(p.price)}<small>/${esc(p.unit)}</small></span>${chip}</span></button></div>`;
   }).join('');
   const other=`<button class="prod other" data-act="custom"><span class="pn">+ ${esc(t('custom_item'))}</span></button>`;
   if(!ps.length&&(q||ui.cat))return `<div class="empty" style="grid-column:1/-1">${esc(t('no_results'))}</div>`+other;
@@ -1019,7 +1030,7 @@ function renderSheet(focus){
 
 function checkoutHTML(){
   const sh=ui.sheet,total=cartTotal();
-  const lines=ui.cart.map((l,i)=>`<div class="line"><div class="ln"><b>${esc(l.name)}</b><small>${peso(l.price)} ${esc(t('each',{u:l.unit}))}</small></div><div class="step"><button class="sq" data-act="dec" data-i="${i}" aria-label="−">−</button><input class="qin" inputmode="decimal" autocomplete="off" value="${fq(l.qty)}" data-in="qty" data-i="${i}" aria-label="Quantity"><button class="sq" data-act="inc" data-i="${i}" aria-label="+">+</button></div><div class="lt" id="lt${i}">${peso(l.price*l.qty)}</div></div>`).join('');
+  const lines=ui.cart.map((l,i)=>`<div class="line"><div class="ln"><b>${esc(l.name)}</b><small>${peso(l.price)} ${esc(t('each',{u:l.unit}))}</small></div><div class="step"><button class="sq" data-act="dec" data-i="${i}" aria-label="−">−</button><input class="qin" inputmode="decimal" autocomplete="off" value="${fq(l.qty)}" data-in="qty" data-i="${i}" aria-label="Quantity"><button class="sq" data-act="inc" data-i="${i}" aria-label="+">+</button></div><div class="lt" id="lt${i}">${peso(l.price*l.qty)}</div><button class="sq rm" data-act="rm" data-i="${i}" aria-label="${esc(t('remove'))}">✕</button></div>`).join('');
   let pay='';
   if(sh.method==='cash'){
     const quick=[100,200,500,1000,2000,5000].filter(v=>v>=total).slice(0,3);
@@ -1689,6 +1700,12 @@ function staffSettingsHTML(){
 
 /* ----- Actions for this section ----- */
 Object.assign(A,{
+sub:d=>{const l=ui.cart.find(x=>x.pid===d.id);if(!l)return;l.qty=r3(l.qty-stepOf(l.unit));if(l.qty<=0)ui.cart=ui.cart.filter(x=>x!==l);renderList();renderCart()},
+rm:d=>{ui.cart.splice(+d.i,1);renderCart();renderList();if(!ui.cart.length)closeSheet();else renderSheet()},
+'clear-cart':()=>{
+  if(!ui.clrArm){ui.clrArm=true;toast(t('clear_arm'));renderCart();clearTimeout(ui.clrT);ui.clrT=setTimeout(()=>{ui.clrArm=false;renderCart()},3000);return}
+  ui.clrArm=false;clearTimeout(ui.clrT);ui.cart=[];renderList();renderCart();toast(t('cart_cleared'));
+},
 settings:()=>openSheet({type:isStaff()?'unlock':'settings'}),
 rsub:d=>{ui.rec=d.v;ui.rq='';renderMain()},
 rrange:d=>{ui.rrange=d.v;renderMain()},
