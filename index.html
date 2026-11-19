@@ -383,6 +383,7 @@ scan:'Scan',
 copy_stmt:'Copy statement',
 make_quote:'Make a quotation instead',
 no_sales_r:'No sales in this period',
+cat_ph:'Type a new one or pick below',cat_pick:'Pick an existing category, or type a new one above.',
 remove:'Remove',minus_one:'Take one off',clear_cart:'Clear cart',clear_arm:'Tap again to clear the cart',cart_cleared:'Cart cleared',
 rec_insights:'Insights',
 ins_title:'How is the store doing?',
@@ -557,6 +558,7 @@ scan:'Scan',
 copy_stmt:'Kopyaha ang statement',
 make_quote:'Himoa na lang nga quotation',
 no_sales_r:'Walay benta niining panahona',
+cat_ph:'Mag-type og bag-o o pili sa ubos',cat_pick:'Pili og naa nang kategorya, o mag-type og bag-o sa taas.',
 remove:'Kuhaa',minus_one:'Kuhaa og usa',clear_cart:'Kuhaa ang tanan sa cart',clear_arm:'Pislita pag-usab aron kuhaon ang tanan',cart_cleared:'Nahawan ang cart',
 rec_insights:'Pagsusi',
 ins_title:'Kumusta ang tindahan?',
@@ -1104,7 +1106,8 @@ function productHTML(){
   const catList=[...new Set([...CATS,...cats()])];
   return `<h3 class="sh-title">${esc(p?t('edit'):t('add_product'))}</h3>
   <label class="field"><span>${esc(t('product_name'))}</span><input id="pn" autocomplete="off" value="${esc(p?p.name:'')}" data-focus></label>
-  <div class="row2"><label class="field"><span>${esc(t('category'))}</span><input id="pcat" list="catlist" autocomplete="off" value="${esc(p?p.cat:(ui.cat||''))}"><datalist id="catlist">${catList.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></label><label class="field"><span>${esc(t('unit'))}</span><select id="pu">${[...new Set([...UNITS,unit])].map(u=>`<option ${u===unit?'selected':''}>${esc(u)}</option>`).join('')}</select></label></div>
+  <div class="row2"><label class="field"><span>${esc(t('category'))}</span><input id="pcat" list="catlist" autocomplete="off" placeholder="${esc(t('cat_ph'))}" value="${esc(p?p.cat:(ui.cat||''))}"><datalist id="catlist">${catList.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></label><label class="field"><span>${esc(t('unit'))}</span><select id="pu">${[...new Set([...UNITS,unit])].map(u=>`<option ${u===unit?'selected':''}>${esc(u)}</option>`).join('')}</select></label></div>
+  <div class="catrow" style="margin-top:2px">${catList.map(c=>`<button type="button" class="pick" data-act="pick-cat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>
   <div class="row2"><label class="field"><span>${esc(t('price'))}</span><input id="pp" inputmode="decimal" autocomplete="off" value="${p?p.price:''}"></label><label class="field"><span>${esc(t('cost'))}</span><input id="pc" inputmode="decimal" autocomplete="off" value="${p&&p.cost!==null?p.cost:''}"></label></div>
   <div class="row2"><label class="field"><span>${esc(t('stock_qty'))}</span><input id="ps" inputmode="decimal" autocomplete="off" value="${p&&p.stock!==null?fq(p.stock):''}"></label><label class="field"><span>${esc(t('low_at'))}</span><input id="pl" inputmode="decimal" autocomplete="off" value="${p?fq(p.low):5}"></label></div>
   <p class="sub" style="margin:-4px 0 12px">${esc(t('stock_hint'))}</p>
@@ -1700,6 +1703,7 @@ function staffSettingsHTML(){
 
 /* ----- Actions for this section ----- */
 Object.assign(A,{
+'pick-cat':d=>{const e=$('#pcat');if(e){e.value=d.v}},
 sub:d=>{const l=ui.cart.find(x=>x.pid===d.id);if(!l)return;l.qty=r3(l.qty-stepOf(l.unit));if(l.qty<=0)ui.cart=ui.cart.filter(x=>x!==l);renderList();renderCart()},
 rm:d=>{ui.cart.splice(+d.i,1);renderCart();renderList();if(!ui.cart.length)closeSheet();else renderSheet()},
 'clear-cart':()=>{
