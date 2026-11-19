@@ -1,5 +1,5 @@
 // Offline cache for ARSE Store. Bump VERSION when you change any file.
-const VERSION = 'hardware-v1';
+const VERSION = 'hardware-v3';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
