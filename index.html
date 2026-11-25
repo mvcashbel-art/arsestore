@@ -281,6 +281,9 @@ textarea{resize:vertical;min-height:84px}
 .pin3d.hit,.pin3d.sel{background:var(--sign);width:26px;height:26px}
 .pin3d.hit .pl,.pin3d.sel .pl{display:block}
 .pin3d.dim{opacity:.35}
+.discrow{display:flex;align-items:center;gap:10px;margin:10px 0}.discrow>span{font-weight:700;flex:0 0 auto}.discrow input{flex:1;min-width:0;min-height:44px;border:2px solid var(--line);border-radius:10px;padding:0 10px;font:inherit;background:var(--card);color:var(--ink)}
+.discrow .seg button{min-height:44px;padding:0 14px}.tierbar{display:flex;margin:0 0 10px}.tierbar button{flex:1;min-height:40px}.discrow .tierbar{margin:0;flex:1}
+.sublines .line{padding:2px 0}.dlogo{display:block;max-height:64px;max-width:70%;margin:0 auto 6px;object-fit:contain}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -517,6 +520,92 @@ cb_note:'Keep the link and key private. Anyone who has both can read your backup
 cb_need_key:'Tap Make a key first',
 cb_need_both:'Paste the Web app link (starts with https://script.google.com) and a key',
 mv_2d:'2D plan',
+disc:'Discount',
+subtotal:'Subtotal',
+down_pay:'Down payment',
+down_ph:'Paid now (optional)',
+down_note:'Down payment',
+due_date:'Due date',
+over_limit:'Over the limit: balance would be {a} (limit {l})',
+sell_anyway:'Sell anyway',
+price_tier:'Price',
+tier_retail:'Retail',
+tier_contr:'Contractor',
+price2:'Contractor price (optional)',
+cust_tier:'Usual price',
+cust_limit:'Utang limit (optional)',
+cust_terms:'Pay within (days, optional)',
+limit_info:'Limit {l} · room left {r}',
+due_chip:'Due {d}',
+overdue_chip:'Overdue {n}d',
+f_all:'All',
+f_over:'Overdue',
+f_week:'Due this week',
+ret_btn:'Return items',
+ret_title:'Return items',
+ret_free:'Return without receipt',
+ret_t:'Return',
+ret_refund:'Refund',
+ret_cash:'Cash back',
+ret_credit:'Credit to utang',
+ret_restock:'Put back in stock',
+ret_note:'Reason (optional)',
+ret_save:'Record return',
+ret_none:'Nothing to return',
+ret_saved:'Return recorded',
+ret_add:'Search an item to return',
+mv_return:'Returned',
+ret_credit_note:'Return credit',
+ret_slip:'Return slip',
+ret_max:'Only {n} can be returned',
+ret_open:'Return',
+rcpt_down:'Paid now',
+orders_btn:'Orders · {n}',
+si_title:'Receipt header and logo',
+si_hint:'Shown on receipts, quotations, orders and the monthly report.',
+si_logo:'Store logo',
+si_logo_pick:'Choose a logo',
+si_logo_change:'Change logo',
+si_addr:'Address',
+si_line:'Extra line (owner, TIN, etc.)',
+si_line_ph:'Optional',
+si_foot:'Footer message',
+si_btn:'Receipt header and logo',
+orders_title:'Orders',
+ord_hint:'Delivery and pickup orders. Stock is taken when you complete the order.',
+ord_new:'New order',
+ord_title_t:'Order',
+ord_name:'Customer name',
+ord_noname:'No name',
+ord_kind_d:'Delivery',
+ord_kind_p:'Pickup',
+ord_addr:'Delivery address',
+ord_when:'Date and time',
+ord_fee:'Delivery fee (optional)',
+ord_note:'Note',
+ord_total:'Order total',
+ord_save:'Save order',
+ord_saved:'Order saved',
+ord_preparing:'Preparing',
+ord_ready:'Ready',
+ord_delivered:'Delivered',
+ord_pickedup:'Picked up',
+ord_complete:'Complete and record sale',
+ord_active:'Active',
+ord_done_f:'Done',
+ord_none:'No orders here',
+ord_copy:'Copy order text',
+ord_late:'Late',
+ord_fee_line:'Delivery fee',
+make_order:'Save as delivery or pickup order',
+back:'Back',
+rcpt_left:'On utang',
+loose_from:'Sold loose from',
+loose_none:'Not loose',
+loose_per:'How many {u} in one pack',
+loose_hint:'Stock is taken from the pack item automatically.',
+limit_label:'Limit',
+next_due:'Next due {d}',
 mv_3d:'3D scan',
 mv_empty_t:'No 3D scan yet',
 mv_empty:'Scan the store with your iPhone (Polycam or Scaniverse), export it as a GLB file, then choose the file here. It is saved on this phone.',
@@ -806,6 +895,92 @@ cb_note:'Ayaw ipakita ang link ug yawe. Kung naa kini sa uban, mabasa nila ang i
 cb_need_key:'Paghimo una og yawe',
 cb_need_both:'I-paste ang Web app link (nagsugod sa https://script.google.com) ug yawe',
 mv_2d:'2D plano',
+disc:'Diskwento',
+subtotal:'Subtotal',
+down_pay:'Down payment',
+down_ph:'Gibayad karon (kung naa)',
+down_note:'Down payment',
+due_date:'Petsa sa bayad',
+over_limit:'Sobra sa limit: mahimong {a} ang utang (limit {l})',
+sell_anyway:'Ibaligya gihapon',
+price_tier:'Presyo',
+tier_retail:'Retail',
+tier_contr:'Kontraktor',
+price2:'Presyo sa kontraktor (kung naa)',
+cust_tier:'Naandan nga presyo',
+cust_limit:'Limit sa utang (kung naa)',
+cust_terms:'Bayad sulod sa (adlaw, kung naa)',
+limit_info:'Limit {l} · nahibilin {r}',
+due_chip:'Bayad sa {d}',
+overdue_chip:'Late {n}d',
+f_all:'Tanan',
+f_over:'Late na',
+f_week:'Bayad karong semana',
+ret_btn:'Isulod ang binalik',
+ret_title:'Binalik nga butang',
+ret_free:'Pagbalik nga walay resibo',
+ret_t:'Balik',
+ret_refund:'Isulit',
+ret_cash:'Cash balik',
+ret_credit:'Ikuha sa utang',
+ret_restock:'Ibalik sa stock',
+ret_note:'Hinungdan (kung naa)',
+ret_save:'I-save ang pagbalik',
+ret_none:'Walay mabalik',
+ret_saved:'Na-save ang pagbalik',
+ret_add:'Pangita og butang nga ibalik',
+mv_return:'Gibalik',
+ret_credit_note:'Credit sa pagbalik',
+ret_slip:'Slip sa pagbalik',
+ret_max:'{n} ra ang mabalik',
+ret_open:'Balik',
+rcpt_down:'Gibayad karon',
+orders_btn:'Mga order · {n}',
+si_title:'Header sa resibo ug logo',
+si_hint:'Makita sa resibo, quotation, order ug bulan-bulan nga report.',
+si_logo:'Logo sa tindahan',
+si_logo_pick:'Pili og logo',
+si_logo_change:'Ilisi ang logo',
+si_addr:'Address',
+si_line:'Dugang nga linya (tag-iya, TIN, ug uban pa)',
+si_line_ph:'Kung gusto',
+si_foot:'Mensahe sa ubos',
+si_btn:'Header sa resibo ug logo',
+orders_title:'Mga order',
+ord_hint:'Mga order nga deliver o kuhaon. Makuha ang stock kung makompleto ang order.',
+ord_new:'Bag-ong order',
+ord_title_t:'Order',
+ord_name:'Ngalan sa kustomer',
+ord_noname:'Walay ngalan',
+ord_kind_d:'Deliver',
+ord_kind_p:'Kuhaon',
+ord_addr:'Address sa deliver',
+ord_when:'Petsa ug oras',
+ord_fee:'Bayad sa deliver (kung naa)',
+ord_note:'Nota',
+ord_total:'Total sa order',
+ord_save:'I-save ang order',
+ord_saved:'Na-save ang order',
+ord_preparing:'Gihimo pa',
+ord_ready:'Andam na',
+ord_delivered:'Na-deliver na',
+ord_pickedup:'Nakuha na',
+ord_complete:'Humana ug i-save ang benta',
+ord_active:'Aktibo',
+ord_done_f:'Humana',
+ord_none:'Walay order dinhi',
+ord_copy:'Kopyaha ang order',
+ord_late:'Late',
+ord_fee_line:'Bayad sa deliver',
+make_order:'I-save isip order nga deliver o kuhaon',
+back:'Balik',
+rcpt_left:'Sa utang',
+loose_from:'Gibaligya nga tingi gikan sa',
+loose_none:'Dili tingi',
+loose_per:'Pila ka {u} sa usa ka pack',
+loose_hint:'Awtomatik nga makuha ang stock sa pack.',
+limit_label:'Limit',
+next_due:'Sunod nga bayad {d}',
 mv_3d:'3D scan',
 mv_empty_t:'Wala pay 3D scan',
 mv_empty:'I-scan ang tindahan gamit ang imong iPhone (Polycam o Scaniverse), i-export isip GLB file, unya pilia ang file dinhi. Matipigan kini niining telepono.',
@@ -923,9 +1098,12 @@ function save(){cloudDirty=true;mem=S;if(!lsOK)return true;try{localStorage.setI
 const blankMap=()=>({w:12,h:8,bg:null,bgOp:.5,shapes:[]});
 function blank(lang,shop){return {v:1,shop:shop||DEF_SHOP,lang:lang||'en',demo:false,products:[],customers:[],ledger:[],sales:[],moves:[],expenses:[],closings:[],quotes:[],deliveries:[],staff:{pin:'',on:false},map:blankMap()}}
 function normalize(d){
-  d.products.forEach(p=>{p.unit=p.unit||'pc';p.cat=p.cat||'';p.loc=p.loc||null;p.spot=p.spot||'';p.supplier=p.supplier||'';p.barcode=p.barcode||'';if(p.stock===undefined)p.stock=null;if(p.cost===undefined)p.cost=null;if(p.low===undefined)p.low=5});
+  d.products.forEach(p=>{p.unit=p.unit||'pc';p.cat=p.cat||'';p.loc=p.loc||null;p.spot=p.spot||'';p.supplier=p.supplier||'';p.barcode=p.barcode||'';if(p.price2===undefined)p.price2=null;p.parent=p.parent||null;p.per=+p.per||0;if(p.stock===undefined)p.stock=null;if(p.cost===undefined)p.cost=null;if(p.low===undefined)p.low=5});
   ['moves','expenses','closings','quotes','deliveries'].forEach(k=>{if(!Array.isArray(d[k]))d[k]=[]});
   d.bcNext=+d.bcNext||1;
+  d.customers.forEach(c=>{c.tier=c.tier||'retail';c.limit=+c.limit||0;c.terms=+c.terms||0});
+  d.orders=Array.isArray(d.orders)?d.orders:[];
+  d.info=d.info&&typeof d.info==='object'?d.info:{};['addr','phone','line','foot','logo'].forEach(k=>{d.info[k]=d.info[k]||''});
   d.staff=d.staff&&typeof d.staff==='object'?d.staff:{pin:'',on:false};d.staff.pin=String(d.staff.pin||'');d.staff.on=!!d.staff.on;
   d.map=d.map&&Array.isArray(d.map.shapes)?d.map:blankMap();
   d.map.bgOp=d.map.bgOp||.5;
@@ -1023,18 +1201,20 @@ function seed(){
 
 let S=normalize(loadData()||seed());
 save();
-const ui={tab:'sell',q:'',cat:'',cart:[],day:dayKey(Date.now()),low:false,sheet:null,mapEdit:false,sel:null,mq:'',zi:0,mv:'2d',rmonth:dayKey(Date.now()).slice(0,7),pbo:null,rec:'insights',rrange:'30d',rpay:'',rq:''};
+const ui={tab:'sell',q:'',cat:'',cart:[],day:dayKey(Date.now()),low:false,sheet:null,mapEdit:false,sel:null,mq:'',zi:0,mv:'2d',tier:'retail',uf:'',orderRef:null,rmonth:dayKey(Date.now()).slice(0,7),pbo:null,rec:'insights',rrange:'30d',rpay:'',rq:''};
 const ZOOMS=[1,1.5,2,3];
 
 /* ---------- Derived ---------- */
 const bal=cid=>r2(S.ledger.filter(l=>l.cid===cid).reduce((a,l)=>a+(l.type==='utang'?l.amount:-l.amount),0));
 function daysSincePay(c){
   const L=S.ledger.filter(l=>l.cid===c.id);if(!L.length)return 0;
-  const pays=L.filter(l=>l.type==='bayad');
+  const pays=L.filter(l=>l.type==='bayad'&&!l.dp&&!l.ret);
   const base=pays.length?Math.max(...pays.map(l=>l.ts)):Math.min(...L.map(l=>l.ts));
   return Math.floor((Date.now()-base)/864e5);
 }
-const cartTotal=()=>r2(ui.cart.reduce((a,l)=>a+l.price*l.qty,0));
+const cartSub=()=>r2(ui.cart.reduce((a,l)=>a+l.price*l.qty,0));
+function discOf(sub){const sh=ui.sheet;if(!sh||sh.type!=='checkout'||isStaff())return 0;const v=num(sh.dval);if(!(v>0))return 0;return r2(Math.min(sub,sh.dtype==='pct'?sub*Math.min(v,100)/100:v))}
+const cartTotal=()=>{const x=cartSub();return r2(x-discOf(x))};
 const cartCount=()=>ui.cart.filter(l=>l.qty>0).length;
 const lowOf=p=>p.stock!==null&&p.stock<=p.low;
 const qtyText=i=>(i.unit&&i.unit!=='pc')?fq(i.qty)+' '+i.unit+' '+i.name:(i.qty>1?fq(i.qty)+'× '+i.name:i.name);
@@ -1079,7 +1259,7 @@ function catChips(){
 }
 function renderMain(){
   const m=$('#main');
-  if(ui.tab==='sell')m.innerHTML=`<div class="search withscan"><input id="q" type="search" autocomplete="off" placeholder="${esc(t('search_products'))}" value="${esc(ui.q)}" aria-label="${esc(t('search_products'))}"><button class="btn scanbtn" data-act="scan" aria-label="${esc(t('scan'))}">${IC.scan}</button></div>${catChips()}<div id="list" class="grid"></div>`;
+  if(ui.tab==='sell')m.innerHTML=`<div class="search withscan"><input id="q" type="search" autocomplete="off" placeholder="${esc(t('search_products'))}" value="${esc(ui.q)}" aria-label="${esc(t('search_products'))}"><button class="btn scanbtn" data-act="scan" aria-label="${esc(t('scan'))}">${IC.scan}</button></div>${ordersBtn()}${tierBar()}${catChips()}<div id="list" class="grid"></div>`;
   else if(ui.tab==='utang')m.innerHTML=utangShell();
   else if(ui.tab==='stock')m.innerHTML=stockShell();
   else if(ui.tab==='map'){m.innerHTML=mapShell();if(ui.mv==='3d')mv3Mount()}
@@ -1100,10 +1280,10 @@ function sellList(){
   const ps=S.products.filter(p=>matchP(p,q)&&(!ui.cat||p.cat===ui.cat)).sort((a,b)=>a.name.localeCompare(b.name));
   const cards=ps.map(p=>{
     const inCart=ui.cart.find(l=>l.pid===p.id);
-    const out=p.stock!==null&&p.stock<=0;
-    const chip=p.stock===null?'':out?`<span class="chip out">${esc(t('out'))}</span>`:`<span class="chip ${lowOf(p)?'low':''}">${fq(p.stock)}</span>`;
+    const av=availOf(p),out=av!==null&&av<=0;
+    const chip=av===null?'':out?`<span class="chip out">${esc(t('out'))}</span>`:`<span class="chip ${lowOf(p)?'low':''}">${fq(av)}</span>`;
     const where=locLabel(p);
-    return `<div class="pwrap">${inCart?`<button class="pminus" data-act="sub" data-id="${esc(p.id)}" aria-label="${esc(t('minus_one'))}">−</button>`:''}<button class="prod ${inCart?'in':''}" data-act="add" data-id="${esc(p.id)}" ${out?'disabled':''}>${inCart?`<span class="qty">×${fq(inCart.qty)}</span>`:''}<span class="pn">${esc(p.name)}${where?`<span class="pl">${esc(where)}</span>`:''}</span><span style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span class="pp">${peso(p.price)}<small>/${esc(p.unit)}</small></span>${chip}</span></button></div>`;
+    return `<div class="pwrap">${inCart?`<button class="pminus" data-act="sub" data-id="${esc(p.id)}" aria-label="${esc(t('minus_one'))}">−</button>`:''}<button class="prod ${inCart?'in':''}" data-act="add" data-id="${esc(p.id)}" ${out?'disabled':''}>${inCart?`<span class="qty">×${fq(inCart.qty)}</span>`:''}<span class="pn">${esc(p.name)}${where?`<span class="pl">${esc(where)}</span>`:''}</span><span style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span class="pp">${peso(tierPrice(p))}<small>/${esc(p.unit)}</small></span>${chip}</span></button></div>`;
   }).join('');
   const other=`<button class="prod other" data-act="custom"><span class="pn">+ ${esc(t('custom_item'))}</span></button>`;
   if(!ps.length&&(q||ui.cat))return `<div class="empty" style="grid-column:1/-1">${esc(t('no_results'))}</div>`+other;
@@ -1113,9 +1293,9 @@ function addToCart(pid){
   const p=S.products.find(x=>x.id===pid);if(!p)return;
   const line=ui.cart.find(l=>l.pid===pid);
   if(line){
-    if(p.stock!==null&&line.qty+1>p.stock){toast(t('stock_left',{n:fq(p.stock)}));return}
+    const av=availOf(p);if(av!==null&&line.qty+1>av){toast(t('stock_left',{n:fq(av)}));return}
     line.qty=r3(line.qty+1);
-  }else ui.cart.push({key:pid,pid,name:p.name,unit:p.unit,price:p.price,cost:p.cost,qty:1});
+  }else ui.cart.push({key:pid,pid,name:p.name,unit:p.unit,price:tierPrice(p),p1:p.price,p2:p.price2||null,cost:p.cost,qty:1});
   renderList();renderCart();
 }
 
@@ -1126,16 +1306,16 @@ function utangShell(){
   return `<div class="sign"><div class="k">${esc(t('owed_total'))}</div><div class="big">${peso(total)}</div><div class="s">${esc(rows.length?t('n_owing',{n:rows.length}):t('nobody_owes'))}</div></div>
   <div class="bar-actions"><h2 class="h2">${esc(t('tab_utang'))}</h2><button class="btn" data-act="cust-new">+ ${esc(t('add_customer'))}</button></div>
   <div class="search"><input id="q" type="search" autocomplete="off" placeholder="${esc(t('customer_name'))}" value="${esc(ui.q)}" aria-label="${esc(t('customer_name'))}"></div>
-  <div id="list" class="ledger"></div>`;
+  ${dueFilterBar()}<div id="list" class="ledger"></div>`;
 }
 function utangList(){
   const q=ui.q.trim().toLowerCase();
-  const cs=S.customers.filter(c=>!q||c.name.toLowerCase().includes(q)).map(c=>({c,b:bal(c.id)})).sort((a,b)=>b.b-a.b||a.c.name.localeCompare(b.c.name));
+  const cs=S.customers.filter(c=>!q||c.name.toLowerCase().includes(q)).filter(c=>{if(!ui.uf)return true;if(bal(c.id)<=0)return false;const d=dueInfo(c);if(!d.next)return false;return ui.uf==='over'?d.next<Date.now():d.next-Date.now()<=7*864e5}).map(c=>({c,b:bal(c.id)})).sort((a,b)=>b.b-a.b||a.c.name.localeCompare(b.c.name));
   if(!cs.length)return `<div class="empty">${esc(t('no_results'))}</div>`;
   return cs.map(({c,b})=>{
     const d=daysSincePay(c);
     const sub=b>0?(d>=30?`<span class="chip old">${esc(t('no_payment_days',{n:d}))}</span>`:`<small>${esc(whenLabel(Math.max(...S.ledger.filter(l=>l.cid===c.id).map(l=>l.ts))))}</small>`):`<span class="chip ok">${esc(t('paid_off'))}</span>`;
-    return `<button class="lrow" data-act="cust-open" data-id="${esc(c.id)}"><span class="nm"><b>${esc(c.name)}</b>${sub}</span><span class="amt ${b>0?'red':'green'}">${peso(b)}</span></button>`;
+    return `<button class="lrow" data-act="cust-open" data-id="${esc(c.id)}"><span class="nm"><b>${esc(c.name)}</b>${sub}${dueChip(c)}</span><span class="amt ${b>0?'red':'green'}">${peso(b)}</span></button>`;
   }).join('');
 }
 
@@ -1152,9 +1332,9 @@ function stockList(){
   const ps=S.products.filter(p=>matchP(p,q)&&(!ui.cat||p.cat===ui.cat)&&(!ui.low||lowOf(p))).sort((a,b)=>(lowOf(b)-lowOf(a))||a.name.localeCompare(b.name));
   if(!ps.length)return `<div class="empty">${esc(S.products.length?t('no_results'):t('no_products'))}</div>`;
   return ps.map(p=>{
-    const chip=p.stock===null?'':p.stock<=0?`<span class="chip out">${esc(t('out'))}</span>`:lowOf(p)?`<span class="chip low">${esc(t('low_label'))}</span>`:'';
-    const where=locLabel(p);
-    return `<div class="sale"><button class="lrow" style="padding:0;min-height:44px;flex:1" ${isStaff()?'':'data-act="prod-edit"'} data-id="${esc(p.id)}"><span class="nm"><b>${esc(p.name)}</b><small>${peso(p.price)}/${esc(p.unit)}${(p.cost!==null&&!isStaff())?' · '+esc(t('cost'))+' '+peso(p.cost):''}</small>${where?`<small>${esc(where)}</small>`:''}</span></button>${chip}<span class="amt" style="min-width:42px;text-align:right">${p.stock===null?'—':fq(p.stock)}<small> ${p.stock===null?'':esc(p.unit)}</small></span>${(p.stock===null||isStaff())?'':`<button class="btn sm" data-act="restock" data-id="${esc(p.id)}">${esc(t('restock'))}</button>`}</div>`;
+    const av=availOf(p),chip=av===null?'':av<=0?`<span class="chip out">${esc(t('out'))}</span>`:lowOf(p)?`<span class="chip low">${esc(t('low_label'))}</span>`:'';
+    const where=locLabel(p),pr=parentOf(p);
+    return `<div class="sale"><button class="lrow" style="padding:0;min-height:44px;flex:1" ${isStaff()?'':'data-act="prod-edit"'} data-id="${esc(p.id)}"><span class="nm"><b>${esc(p.name)}</b><small>${peso(p.price)}/${esc(p.unit)}${p.price2>0?' · '+esc(t('tier_contr'))+' '+peso(p.price2):''}${(p.cost!==null&&!isStaff())?' · '+esc(t('cost'))+' '+peso(p.cost):''}</small>${pr?`<small>${esc(t('loose_from'))} ${esc(pr.name)}</small>`:''}${where?`<small>${esc(where)}</small>`:''}</span></button>${chip}<span class="amt" style="min-width:42px;text-align:right">${av===null?'—':fq(av)}<small> ${av===null?'':esc(p.unit)}</small></span>${(p.stock===null||isStaff()||pr)?'':`<button class="btn sm" data-act="restock" data-id="${esc(p.id)}">${esc(t('restock'))}</button>`}</div>`;
   }).join('');
 }
 
@@ -1273,8 +1453,8 @@ function todayHTML(){
   const total=r2(sales.reduce((a,s)=>a+s.total,0));
   const profit=r2(sales.reduce((a,s)=>a+s.items.reduce((x,i)=>x+(i.cost!==null&&i.cost!==undefined?(i.price-i.cost)*i.qty:0),0),0));
   const cashSales=r2(sales.filter(s=>s.method==='cash').reduce((a,s)=>a+s.total,0));
-  const paid=r2(led.filter(l=>l.type==='bayad').reduce((a,l)=>a+l.amount,0));
-  const given=r2(led.filter(l=>l.type==='utang').reduce((a,l)=>a+l.amount,0));
+  const paid=r2(led.filter(l=>l.type==='bayad'&&!l.ret).reduce((a,l)=>a+l.amount,0));
+  const given=r2(led.filter(l=>l.type==='utang').reduce((a,l)=>a+l.amount,0)-led.filter(l=>l.dp).reduce((a,l)=>a+l.amount,0));
   const expd=r2(S.expenses.filter(e=>dayKey(e.ts)===key).reduce((a,e)=>a+e.amount,0));
   const top={};sales.forEach(s=>s.items.forEach(i=>{const k=i.name+'|'+(i.unit||'pc');top[k]=(top[k]||0)+i.qty}));
   const topList=Object.entries(top).sort((a,b)=>b[1]-a[1]).slice(0,5);
@@ -1294,7 +1474,7 @@ function todayHTML(){
   <div class="card"><h2 class="h2">${esc(t('last7'))}</h2><div class="bars">${days.map(d=>{const sel=d.k===key;return `<button data-act="pickday" data-k="${d.k}" aria-pressed="${sel}" aria-label="${esc(dateStr(d.ts)+' '+peso(d.v))}">${sel?`<em>${peso(d.v)}</em>`:''}<i style="height:${Math.max(3,Math.round(d.v/max*92))}%"></i><span>${new Date(d.ts).toLocaleDateString('en-PH',{weekday:'short'}).slice(0,3)}</span></button>`}).join('')}</div></div>
   ${topList.length?`<div class="card"><h2 class="h2" style="margin-bottom:8px">${esc(t('top_items'))}</h2>${topList.map(([k,q])=>{const [n,u]=k.split('|');return `<div class="line"><div class="ln"><b>${esc(n)}</b></div><div class="lt">${fq(q)}${u!=='pc'?' '+esc(u):'×'}</div></div>`}).join('')}</div>`:''}
   <div class="bar-actions"><h2 class="h2">${esc(t('sales_list'))}</h2></div>
-  <div class="ledger">${sales.length?sales.map(s=>`<div class="sale"><div class="nm"><b>${peso(s.total)}</b> <span class="chip ${s.method==='utang'?'old':''}">${esc(s.method==='utang'?t('on_utang'):t('cash'))}</span><small>${esc(timeStr(s.ts))} · ${esc(summary(s.items))}${s.cid?' · '+esc(t('on_utang_for',{name:cname(s.cid)})):''}</small></div><button class="link" data-act="sale-open" data-id="${esc(s.id)}">${esc(t('receipt_t'))}</button></div>`).join(''):`<div class="empty">${esc(t('no_sales'))}</div>`}</div>
+  <div class="ledger">${sales.length?sales.map(s=>`<div class="sale"><div class="nm"><b>${peso(s.total)}</b> ${saleChip(s)}<small>${esc(timeStr(s.ts))} · ${esc(summary(s.items))}${s.cid?' · '+esc(t('on_utang_for',{name:cname(s.cid)})):''}</small></div><button class="link" data-act="sale-open" data-id="${esc(s.id)}">${esc(t('receipt_t'))}</button></div>`).join(''):`<div class="empty">${esc(t('no_sales'))}</div>`}</div>
   <p class="sub" style="margin-top:10px">${esc(t('profit_note'))}</p>`;
 }
 
@@ -1303,7 +1483,7 @@ function openSheet(s){ui.sheet=s;renderSheet(true)}
 function closeSheet(){if(ui.sheet&&ui.sheet.type==='scan')stopScan();ui.sheet=null;$('#scrim').classList.remove('open');$('#sheet').innerHTML=''}
 function renderSheet(focus){
   const sh=ui.sheet;if(!sh)return;
-  const f={checkout:checkoutHTML,custom:customHTML,customer:customerHTML,product:productHTML,restock:restockHTML,settings:settingsHTML,shape:shapeHTML,shapeedit:shapeEditHTML,mapset:mapSetHTML,doc:docHTML,datatools:dataToolsHTML,expense:expenseHTML,rlist:rlistHTML,scan:scanHTML,unlock:unlockHTML,labels:labelsHTML,labelprint:labelPrintHTML,receive:receiveHTML,delivdoc:delivdocHTML,cloud:cloudHTML,pin:pinHTML}[sh.type];
+  const f={checkout:checkoutHTML,custom:customHTML,customer:customerHTML,product:productHTML,restock:restockHTML,settings:settingsHTML,shape:shapeHTML,shapeedit:shapeEditHTML,mapset:mapSetHTML,doc:docHTML,datatools:dataToolsHTML,expense:expenseHTML,rlist:rlistHTML,scan:scanHTML,unlock:unlockHTML,labels:labelsHTML,labelprint:labelPrintHTML,receive:receiveHTML,delivdoc:delivdocHTML,cloud:cloudHTML,pin:pinHTML,ret:retHTML,orders:ordersHTML,order:orderHTML,shopinfo:shopInfoHTML}[sh.type];
   $('#sheet').innerHTML='<div class="grab"></div>'+(f?f():'');
   $('#scrim').classList.add('open');
   if(focus){const x=$('#sheet [data-focus]');if(x)setTimeout(()=>x.focus(),30)}
@@ -1312,6 +1492,7 @@ function renderSheet(focus){
   if(sh.type==='scan'){stopScan();startScan()}
   if(sh.type==='labels')renderLabelList();
   if(sh.type==='pin')mvPickList();
+  if(sh.type==='ret'){rsList();retSync()}
   if(sh.type==='receive'){rvRes();rvSync()}
   if(sh.type==='shape'&&sh.mode==='assign')renderAssignList();
 }
@@ -1329,13 +1510,13 @@ function checkoutHTML(){
     const cs=[...S.customers].sort((a,b)=>a.name.localeCompare(b.name));
     pay=`<div class="sh-sub" style="margin-bottom:8px;font-weight:700;color:var(--ink)">${esc(t('pick_customer'))}</div>
     <div class="chips">${cs.map(c=>`<button class="pick" data-act="pick-cust" data-id="${esc(c.id)}" aria-pressed="${sh.cid===c.id}">${esc(c.name)}<small>${peso(bal(c.id))}</small></button>`).join('')}</div>
-    <label class="field"><span>${esc(t('new_customer'))}</span><input id="newname" autocomplete="off" value="${esc(sh.newName)}" data-in="newname"></label>`;
+    <label class="field"><span>${esc(t('new_customer'))}</span><input id="newname" autocomplete="off" value="${esc(sh.newName)}" data-in="newname"></label>${downBlock(sh)}`;
   }
-  return `<h3 class="sh-title">${esc(t('checkout'))}</h3>${lines}
+  return `<h3 class="sh-title">${esc(t('checkout'))}</h3>${lines}${tierBlock()}${discBlock()}
   <div class="totalrow"><span>${esc(t('total'))}</span><strong id="ctotal">${peso(total)}</strong></div>
   <div class="seg" style="display:flex;margin-bottom:14px" role="group"><button style="flex:1;min-height:44px" data-act="method" data-v="cash" aria-pressed="${sh.method==='cash'}">${esc(t('cash'))}</button><button style="flex:1;min-height:44px" data-act="method" data-v="utang" aria-pressed="${sh.method==='utang'}">${esc(t('on_utang'))}</button></div>
   ${pay}
-  <button class="link" data-act="make-quote" style="display:block;margin:0 auto 12px">${esc(t('make_quote'))}</button>
+  <button class="link" data-act="make-quote" style="display:block;margin:0 auto 6px">${esc(t('make_quote'))}</button><button class="link" data-act="make-order" style="display:block;margin:0 auto 12px">${esc(t('make_order'))}</button>
   <div class="row2"><button class="btn" data-act="close">${esc(t('cancel'))}</button><button class="btn primary" id="confirm" data-act="confirm-sale">${esc(t('record_sale'))}</button></div>`;
 }
 function syncCheckout(){
@@ -1349,6 +1530,7 @@ function syncCheckout(){
     else{ch.style.display='';const d=r2(g-total);ch.className='change'+(d<0?' bad':'');ch.textContent=d<0?t('short')+' '+peso(-d):t('change')+': '+peso(d)}
     btn.disabled=cartCount()===0;
   }else btn.disabled=!(sh.cid||sh.newName.trim())||cartCount()===0;
+  syncDisc();
 }
 function customHTML(){
   return `<h3 class="sh-title">${esc(t('custom_title'))}</h3>
@@ -1362,6 +1544,8 @@ function customerHTML(){
     return `<h3 class="sh-title">${esc(c?t('edit'):t('add_customer'))}</h3>
     <label class="field"><span>${esc(t('customer_name'))}</span><input id="cn" autocomplete="off" value="${esc(c?c.name:'')}" data-focus></label>
     <label class="field"><span>${esc(t('phone'))}</span><input id="cp" inputmode="tel" autocomplete="off" value="${esc(c?c.phone:'')}"></label>
+    <div class="row2"><label class="field"><span>${esc(t('cust_limit'))}</span><input id="climit" inputmode="decimal" autocomplete="off" value="${c&&c.limit>0?c.limit:''}"></label><label class="field"><span>${esc(t('cust_terms'))}</span><input id="cterms" inputmode="numeric" autocomplete="off" value="${c&&c.terms>0?c.terms:''}"></label></div>
+    <label class="field"><span>${esc(t('cust_tier'))}</span><select id="ctier"><option value="retail" ${!c||c.tier!=='contractor'?'selected':''}>${esc(t('tier_retail'))}</option><option value="contractor" ${c&&c.tier==='contractor'?'selected':''}>${esc(t('tier_contr'))}</option></select></label>
     <div class="row2"><button class="btn" data-act="${c?'cust-open':'close'}" data-id="${esc(sh.id||'')}">${esc(t('cancel'))}</button><button class="btn primary" data-act="cust-save">${esc(t('save'))}</button></div>
     ${c?`<div class="divider"></div><button class="btn ghost-red block" data-act="cust-del">${esc(sh.confirmDel?t('confirm_delete'):t('delete'))}</button>`:''}`;
   }
@@ -1371,6 +1555,7 @@ function customerHTML(){
     return `<h3 class="sh-title">${esc(pay?t('add_payment'):t('add_utang'))}</h3><p class="sh-sub">${esc(c.name)} · ${esc(t('balance'))} ${peso(b)}</p>
     <label class="field"><span>${esc(t('amount'))}</span><input id="amt" inputmode="decimal" autocomplete="off" data-focus></label>
     ${pay&&b>0?`<div class="chips"><button class="pick" data-act="pay-all" data-v="${b}">${esc(t('pay_all'))} · ${peso(b)}</button></div>`:''}
+    ${pay?'':`<label class="field"><span>${esc(t('due_date'))}</span><input id="ldue" type="date" value="${c.terms>0?esc(dueStr(Date.now()+c.terms*864e5)):''}"></label>`}
     <label class="field"><span>${esc(t('note'))}</span><input id="lnote" autocomplete="off"></label>
     <div class="row2"><button class="btn" data-act="cust-open" data-id="${esc(c.id)}">${esc(t('cancel'))}</button><button class="btn ${pay?'green':'primary'}" data-act="ledger-save">${esc(t('save'))}</button></div>`;
   }
@@ -1379,10 +1564,11 @@ function customerHTML(){
   const href='sms:'+(c.phone||'').replace(/[^\d+]/g,'')+'?body='+encodeURIComponent(msg);
   return `<h3 class="sh-title">${esc(c.name)}</h3>
   <div class="totalrow" style="margin:4px 0 12px"><span>${esc(t('balance'))}</span><strong style="color:${b>0?'var(--red)':'var(--green)'}">${peso(b)}</strong></div>
+  ${(()=>{const di=dueInfo(c),bits=[];if(c.limit>0)bits.push(t('limit_info',{l:peso(c.limit),r:peso(Math.max(0,c.limit-b))}));if(b>0&&di.next)bits.push(t('next_due',{d:dateStr(di.next,{month:'short',day:'numeric',year:'numeric'})}));return bits.length?`<p class="sub" style="margin:-6px 0 10px">${esc(bits.join(' · '))}${b>0&&di.over>0?` <span class="chip out">${esc(t('overdue_chip',{n:Math.max(1,Math.floor((Date.now()-di.next)/864e5))}))}</span>`:''}</p>`:''})()}
   <div class="row2"><button class="btn ghost-red" data-act="ledger-new" data-v="utang">+ ${esc(t('add_utang'))}</button><button class="btn green" data-act="ledger-new" data-v="bayad">${esc(t('add_payment'))}</button></div>
   ${b>0?`<div class="row2" style="margin-top:10px"><a class="btn" href="${href}">${esc(t('send_reminder'))}</a><button class="btn" data-act="copy-msg">${esc(t('copy_text'))}</button></div>`:''}
   <button class="btn block" style="margin-top:10px" data-act="copy-stmt">${esc(t('copy_stmt'))}</button>
-  <div class="hist" aria-label="${esc(t('history'))}">${hist.length?hist.map(l=>`<div class="h"><div><b>${esc(l.type==='utang'?t('on_utang'):t('add_payment'))}</b><small>${esc(dateStr(l.ts,{month:'short',day:'numeric',year:'numeric'}))}${l.note?' · '+esc(l.note):''}</small></div><span class="amt ${l.type==='utang'?'red':'green'}">${l.type==='utang'?'+':'−'}${peso(l.amount)}</span></div>`).join(''):`<div class="empty">—</div>`}</div>
+  <div class="hist" aria-label="${esc(t('history'))}">${hist.length?hist.map(l=>`<div class="h"><div><b>${esc(l.type==='utang'?t('on_utang'):l.ret?t('ret_credit_note'):l.dp?t('down_note'):t('add_payment'))}</b><small>${esc(dateStr(l.ts,{month:'short',day:'numeric',year:'numeric'}))}${l.note?' · '+esc(l.note):''}</small></div><span class="amt ${l.type==='utang'?'red':'green'}">${l.type==='utang'?'+':'−'}${peso(l.amount)}</span></div>`).join(''):`<div class="empty">—</div>`}</div>
   <div class="row2"><button class="btn" data-act="cust-edit" data-id="${esc(c.id)}">${esc(t('edit'))}</button><button class="btn" data-act="close">${esc(t('close'))}</button></div>`;
 }
 function productHTML(){
@@ -1394,10 +1580,13 @@ function productHTML(){
   <label class="field"><span>${esc(t('product_name'))}</span><input id="pn" autocomplete="off" value="${esc(p?p.name:'')}" data-focus></label>
   <div class="row2"><label class="field"><span>${esc(t('category'))}</span><input id="pcat" list="catlist" autocomplete="off" placeholder="${esc(t('cat_ph'))}" value="${esc(p?p.cat:(ui.cat||''))}"><datalist id="catlist">${catList.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></label><label class="field"><span>${esc(t('unit'))}</span><select id="pu">${[...new Set([...UNITS,unit])].map(u=>`<option ${u===unit?'selected':''}>${esc(u)}</option>`).join('')}</select></label></div>
   <div class="catrow" style="margin-top:2px">${catList.map(c=>`<button type="button" class="pick" data-act="pick-cat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>
-  <div class="row2"><label class="field"><span>${esc(t('price'))}</span><input id="pp" inputmode="decimal" autocomplete="off" value="${p?p.price:''}"></label><label class="field"><span>${esc(t('cost'))}</span><input id="pc" inputmode="decimal" autocomplete="off" value="${p&&p.cost!==null?p.cost:''}"></label></div>
+  <div class="row2"><label class="field"><span>${esc(t('price'))}</span><input id="pp" inputmode="decimal" autocomplete="off" value="${p?p.price:''}"></label><label class="field"><span>${esc(t('price2'))}</span><input id="pp2" inputmode="decimal" autocomplete="off" value="${p&&p.price2>0?p.price2:''}"></label></div>
+  <div class="row2"><label class="field"><span>${esc(t('cost'))}</span><input id="pc" inputmode="decimal" autocomplete="off" value="${p&&p.cost!==null?p.cost:''}"></label></div>
   <div class="row2"><label class="field"><span>${esc(t('stock_qty'))}</span><input id="ps" inputmode="decimal" autocomplete="off" value="${p&&p.stock!==null?fq(p.stock):''}"></label><label class="field"><span>${esc(t('low_at'))}</span><input id="pl" inputmode="decimal" autocomplete="off" value="${p?fq(p.low):5}"></label></div>
   <p class="sub" style="margin:-4px 0 12px">${esc(t('stock_hint'))}</p>
   <div class="row2"><label class="field"><span>${esc(t('location'))}</span><select id="ploc"><option value="">${esc(t('none'))}</option>${shapes.map(s=>`<option value="${esc(s.id)}" ${p&&p.loc===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></label><label class="field"><span>${esc(t('spot'))}</span><input id="pspot" autocomplete="off" placeholder="${esc(t('spot_ph'))}" value="${esc(p?p.spot:'')}"></label></div>
+  <div class="row2"><label class="field"><span>${esc(t('loose_from'))}</span><select id="ppar"><option value="">${esc(t('loose_none'))}</option>${S.products.filter(x=>!x.parent&&(!p||x.id!==p.id)).sort((a,b)=>a.name.localeCompare(b.name)).map(x=>`<option value="${esc(x.id)}" ${p&&p.parent===x.id?'selected':''}>${esc(x.name)} (${esc(x.unit)})</option>`).join('')}</select></label><label class="field"><span>${esc(t('loose_per',{u:unit}))}</span><input id="pper" inputmode="decimal" autocomplete="off" value="${p&&p.per>0?p.per:''}"></label></div>
+  <p class="sub" style="margin:-4px 0 12px">${esc(t('loose_hint'))}</p>
   <div class="row2"><label class="field"><span>${esc(t('supplier'))}</span><input id="psup" list="suplist" autocomplete="off" value="${esc(p?p.supplier:'')}"><datalist id="suplist">${[...new Set(S.products.map(x=>x.supplier).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist></label></div>
   <div class="field"><span>${esc(t('barcode'))}</span><div style="display:flex;gap:8px"><input id="pbar" inputmode="numeric" autocomplete="off" value="${esc(p?p.barcode:'')}" style="min-width:0;flex:1"><button type="button" class="btn scanbtn" data-act="scan-for-product" aria-label="${esc(t('scan'))}">${IC.scan}</button></div><button type="button" class="link" data-act="gen-barcode" style="margin-top:6px">${esc(t('make_bc'))}</button></div>
   <div class="row2"><button class="btn" data-act="close">${esc(t('cancel'))}</button><button class="btn primary" data-act="prod-save">${esc(t('save'))}</button></div>
@@ -1415,7 +1604,7 @@ function settingsHTML(){
   return `<h3 class="sh-title">${esc(t('settings'))}</h3>
   <label class="field"><span>${esc(t('shop_name'))}</span><input id="sname" autocomplete="off" value="${esc(S.shop)}" data-in="shop"></label>
   <div class="divider"></div>
-  ${staffSettingsHTML()}<button class="btn block" data-act="cloud" style="margin-bottom:10px">${esc(t('cb_title'))}</button><button class="btn block" data-act="datatools" style="margin-bottom:12px">${esc(t('data_tools'))}</button>
+  ${staffSettingsHTML()}<button class="btn block" data-act="shopinfo" style="margin-bottom:10px">${esc(t('si_btn'))}</button><button class="btn block" data-act="cloud" style="margin-bottom:10px">${esc(t('cb_title'))}</button><button class="btn block" data-act="datatools" style="margin-bottom:12px">${esc(t('data_tools'))}</button>
   <h4 class="h2" style="margin-bottom:6px">${esc(t('backup'))}</h4><p class="sub" style="margin:0 0 10px">${esc(t('backup_hint'))}</p>
   <div class="row2"><button class="btn" data-act="backup-copy">${esc(t('copy_backup'))}</button><button class="btn" data-act="backup-dl">${esc(t('download'))}</button></div>
   <label class="field" style="margin-top:12px"><span>${esc(t('restore'))}</span><textarea id="rtext" placeholder="${esc(t('paste_backup'))}"></textarea></label>
@@ -1477,29 +1666,6 @@ function copyText(s){
 }
 function setTab(k){if(isStaff()&&k==='records')k='sell';ui.tab=k;ui.rq='';ui.q='';ui.cat='';ui.low=false;ui.mapEdit=false;ui.sel=null;ui.mq='';if(location.hash!=='#'+k)try{history.replaceState(null,'','#'+k)}catch(e){}render();window.scrollTo(0,0)}
 
-function recordSale(){
-  const sh=ui.sheet;
-  ui.cart=ui.cart.filter(l=>l.qty>0);
-  if(!ui.cart.length)return;
-  const total=cartTotal();let cid=null;
-  if(sh.method==='utang'){
-    if(sh.cid)cid=sh.cid;
-    else if(sh.newName.trim()){const c={id:uid(),name:sh.newName.trim(),phone:''};S.customers.push(c);cid=c.id}
-    else return;
-  }
-  const items=ui.cart.map(l=>({pid:l.pid,name:l.name,unit:l.unit||'pc',qty:l.qty,price:l.price,cost:l.cost}));
-  const sale={id:uid(),ts:Date.now(),items,total,method:sh.method,cid};
-  ui.cart.forEach(l=>{const p=l.pid&&S.products.find(p=>p.id===l.pid);if(p&&p.stock!==null){p.stock=Math.max(0,r3(p.stock-l.qty));logMove(p,-l.qty,'sale','',sale.id)}});
-  S.sales.push(sale);
-  if(cid)S.ledger.push({id:uid(),cid,type:'utang',amount:total,note:summary(items),ts:sale.ts,saleId:sale.id});
-  ui.cart=[];closeSheet();save();render();toast(t('sale_saved')+' · '+peso(total));
-}
-function voidSale(id){
-  const s=S.sales.find(x=>x.id===id);if(!s)return;
-  s.items.forEach(i=>{const p=i.pid&&S.products.find(p=>p.id===i.pid);if(p&&p.stock!==null){p.stock=r3(p.stock+i.qty);logMove(p,i.qty,'void','',id)}});
-  S.sales=S.sales.filter(x=>x.id!==id);S.ledger=S.ledger.filter(l=>l.saleId!==id);
-  save();render();
-}
 function newShape(kind,over){
   const k=KINDS[kind],n=S.map.shapes.filter(s=>s.kind===kind).length+1;
   const w=Math.min(k.w,S.map.w),h=Math.min(k.h,S.map.h);
@@ -1538,11 +1704,11 @@ custom:()=>openSheet({type:'custom'}),
   closeSheet();renderList();renderCart();
 },
 checkout:()=>openSheet({type:'checkout',method:'cash',given:'',cid:null,newName:''}),
-inc:d=>{const l=ui.cart[+d.i];if(!l)return;const st=stepOf(l.unit),p=l.pid&&S.products.find(p=>p.id===l.pid);if(p&&p.stock!==null&&l.qty+st>p.stock){toast(t('stock_left',{n:fq(p.stock)}));return}l.qty=r3(l.qty+st);renderSheet();renderCart()},
+inc:d=>{const l=ui.cart[+d.i];if(!l)return;const st=stepOf(l.unit),p=l.pid&&S.products.find(p=>p.id===l.pid);const av=p?availOf(p):null;if(p&&av!==null&&l.qty+st>av){toast(t('stock_left',{n:fq(av)}));return}l.qty=r3(l.qty+st);renderSheet();renderCart()},
 dec:d=>{const l=ui.cart[+d.i];if(!l)return;l.qty=r3(l.qty-stepOf(l.unit));if(l.qty<=0)ui.cart.splice(+d.i,1);if(!ui.cart.length)closeSheet();else renderSheet();renderCart();renderList()},
 method:d=>{ui.sheet.method=d.v;renderSheet(true)},
 'given-q':d=>{const v=d.v==='exact'?cartTotal():+d.v;ui.sheet.given=String(v);$('#given').value=v;syncCheckout()},
-'pick-cust':d=>{ui.sheet.cid=d.id;ui.sheet.newName='';renderSheet()},
+'pick-cust':d=>{const sh=ui.sheet,c=S.customers.find(x=>x.id===d.id);sh.cid=d.id;sh.newName='';if(c){if(c.terms>0)sh.due=dueStr(Date.now()+c.terms*864e5);else sh.due='';if(c.tier==='contractor'&&hasTier()){ui.tier='contractor';applyTier()}}renderSheet();renderList();renderCart()},
 'confirm-sale':()=>recordSale(),
 close:()=>{closeSheet();if(ui.tab==='sell'){renderList();renderCart()}},
 settings:()=>openSheet({type:'settings'}),
@@ -1552,9 +1718,9 @@ settings:()=>openSheet({type:'settings'}),
 'cust-edit':d=>openSheet({type:'customer',id:d.id,mode:'edit'}),
 'cust-save':()=>{
   const name=$('#cn').value.trim();if(!name){$('#cn').focus();return}
-  const sh=ui.sheet,phone=$('#cp').value.trim();
-  if(sh.id){const c=S.customers.find(x=>x.id===sh.id);c.name=name;c.phone=phone}
-  else{const c={id:uid(),name,phone};S.customers.push(c);sh.id=c.id}
+  const sh=ui.sheet,phone=$('#cp').value.trim(),lim=Math.max(0,r2(num($('#climit').value))),terms=Math.max(0,Math.round(num($('#cterms').value))),tier=$('#ctier').value==='contractor'?'contractor':'retail';
+  if(sh.id){const c=S.customers.find(x=>x.id===sh.id);c.name=name;c.phone=phone;c.limit=lim;c.terms=terms;c.tier=tier}
+  else{const c={id:uid(),name,phone,limit:lim,terms,tier};S.customers.push(c);sh.id=c.id}
   save();sh.mode=null;renderSheet();renderMain();toast(t('saved'));
 },
 'cust-del':()=>{
@@ -1567,7 +1733,9 @@ settings:()=>openSheet({type:'settings'}),
 'pay-all':d=>{$('#amt').value=d.v},
 'ledger-save':()=>{
   const sh=ui.sheet,a=r2(num($('#amt').value));if(a<=0){$('#amt').focus();return}
-  S.ledger.push({id:uid(),cid:sh.id,type:sh.mode,amount:a,note:$('#lnote').value.trim(),ts:Date.now()});
+  const le={id:uid(),cid:sh.id,type:sh.mode,amount:a,note:$('#lnote').value.trim(),ts:Date.now()};
+  if(sh.mode==='utang'){const dd=dueTs(($('#ldue')||{}).value);if(dd)le.due=dd;const c0=S.customers.find(x=>x.id===sh.id);if(c0&&c0.limit>0&&bal(c0.id)+a>c0.limit)toast(t('over_limit',{a:peso(bal(c0.id)+a),l:peso(c0.limit)}))}
+  S.ledger.push(le);
   save();sh.mode=null;renderSheet();renderMain();toast(t('saved'));
 },
 'copy-msg':()=>{const c=S.customers.find(x=>x.id===ui.sheet.id);copyText(t('reminder_text',{name:c.name,shop:S.shop,amount:peso(bal(c.id))}))},
@@ -1577,7 +1745,9 @@ settings:()=>openSheet({type:'settings'}),
   const name=$('#pn').value.trim(),price=r2(num($('#pp').value));
   if(!name){$('#pn').focus();return}if(price<=0){$('#pp').focus();return}
   const cv=$('#pc').value.trim(),sv=$('#ps').value.trim(),lv=$('#pl').value.trim();
-  const rec={name,price,unit:$('#pu').value,cat:$('#pcat').value.trim(),cost:cv===''?null:r2(num(cv)),stock:sv===''?null:Math.max(0,r3(num(sv))),low:lv===''?5:Math.max(0,r3(num(lv))),loc:$('#ploc').value||null,spot:$('#pspot').value.trim(),supplier:$('#psup').value.trim(),barcode:$('#pbar').value.trim()};
+  const rec={name,price,unit:$('#pu').value,cat:$('#pcat').value.trim(),cost:cv===''?null:r2(num(cv)),stock:sv===''?null:Math.max(0,r3(num(sv))),low:lv===''?5:Math.max(0,r3(num(lv))),loc:$('#ploc').value||null,spot:$('#pspot').value.trim(),supplier:$('#psup').value.trim(),barcode:$('#pbar').value.trim(),price2:(()=>{const v=r2(num($('#pp2').value));return v>0?v:null})(),parent:$('#ppar').value||null,per:Math.max(0,r3(num($('#pper').value)))};
+  if(rec.parent&&!(rec.per>0)){$('#pper').focus();return}
+  if(rec.parent){rec.stock=null;rec.low=0}else{rec.parent=null;rec.per=0}
   const sh=ui.sheet;
   if(rec.barcode){const dup=S.products.find(p=>p.barcode===rec.barcode&&p.id!==sh.id);if(dup){toast(t('bc_dup',{name:dup.name}));$('#pbar').focus();return}}
   if(sh.id){const pp=S.products.find(p=>p.id===sh.id),ob=pp.stock;Object.assign(pp,rec);if(rec.stock!==null&&rec.stock!==ob)logMove(pp,r3(rec.stock-(ob||0)),'adjust','')}
@@ -1712,9 +1882,9 @@ function salesList(){
   const rows=ss.slice(0,150).map(s=>{
     const dk=dayKey(s.ts);let h='';
     if(dk!==last){last=dk;h=`<div class="dayh">${esc(dateStr(s.ts,{weekday:'short',month:'short',day:'numeric'}))}</div>`}
-    return h+`<button class="lrow" data-act="sale-open" data-id="${esc(s.id)}"><span class="nm"><b>${peso(s.total)} <span class="chip ${s.method==='utang'?'old':''}">${esc(s.method==='utang'?t('on_utang'):t('cash'))}</span></b><small>${esc(timeStr(s.ts))} · ${esc(summary(s.items))}${s.cid?' · '+esc(custName(s.cid)):''}</small></span><span class="amt">›</span></button>`;
+    return h+`<button class="lrow" data-act="sale-open" data-id="${esc(s.id)}"><span class="nm"><b>${peso(s.total)} ${saleChip(s)}</b><small>${esc(timeStr(s.ts))} · ${esc(summary(s.items))}${s.cid?' · '+esc(custName(s.cid)):''}</small></span><span class="amt">›</span></button>`;
   }).join('');
-  return `<div class="tiles" style="margin-bottom:10px"><div class="tile"><div class="k">${esc(t('n_sales',{n:ss.length}))}</div><div class="v">${peso(total)}</div></div></div><div class="ledger">${rows||`<div class="empty">${esc(t('no_sales_r'))}</div>`}</div>`;
+  return `<div class="tiles" style="margin-bottom:10px"><div class="tile"><div class="k">${esc(t('n_sales',{n:ss.length}))}</div><div class="v">${peso(total)}</div></div></div><button class="btn block" style="margin-bottom:10px" data-act="ret-free">${esc(t('ret_free'))}</button><div class="ledger">${rows||`<div class="empty">${esc(t('no_sales_r'))}</div>`}</div>`;
 }
 function movesList(){
   const q=ui.rq.trim().toLowerCase(),st=rangeStart();
@@ -1732,7 +1902,7 @@ function closeHTML(){
   const key=ui.day,isT=key===dayKey(Date.now());
   const sales=S.sales.filter(s=>dayKey(s.ts)===key);
   const cashSales=r2(sales.filter(s=>s.method==='cash').reduce((a,s)=>a+s.total,0));
-  const paid=r2(S.ledger.filter(l=>l.type==='bayad'&&dayKey(l.ts)===key).reduce((a,l)=>a+l.amount,0));
+  const paid=r2(S.ledger.filter(l=>l.type==='bayad'&&!l.ret&&dayKey(l.ts)===key).reduce((a,l)=>a+l.amount,0));
   const exp=r2(S.expenses.filter(e=>dayKey(e.ts)===key).reduce((a,e)=>a+e.amount,0));
   const saved=S.closings.find(c=>c.day===key);
   const prev=S.closings.filter(c=>c.day<key).sort((a,b)=>a.day<b.day?1:-1)[0];
@@ -1782,29 +1952,37 @@ function expenseHTML(){
 }
 
 /* ----- Receipts and quotations ----- */
+const infoLines=()=>[S.info.addr,S.info.phone,S.info.line].filter(Boolean);
+const itemQtyTxt=i=>fq(Math.abs(i.qty))+(i.unit&&i.unit!=='pc'?' '+i.unit:'');
 function docText(d){
-  const L=[S.shop,d.kind==='quote'?t('quotation'):t('receipt_t'),new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'})];
+  const isQ=d.kind==='quote',isR=!!d.ret;
+  const L=[S.shop,...infoLines(),isQ?t('quotation'):isR?t('ret_slip'):t('receipt_t'),new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'})];
   if(d.customer)L.push(t('customer_name')+': '+d.customer);
   L.push('------------------------');
-  d.items.forEach(i=>L.push(fq(i.qty)+(i.unit&&i.unit!=='pc'?' '+i.unit:'')+' '+i.name+' @ '+peso(i.price)+' = '+peso(i.qty*i.price)));
-  L.push('------------------------',t('total')+': '+peso(d.total));
-  if(d.kind==='quote')L.push(t('valid_until',{d:dateStr(d.ts+(d.valid||7)*864e5,{month:'short',day:'numeric',year:'numeric'})}));
-  else L.push(t('thanks'));
+  d.items.forEach(i=>{const p=i.lp||i.price,q=Math.abs(i.qty);L.push(itemQtyTxt(i)+' '+i.name+' @ '+peso(p)+' = '+peso(q*p))});
+  L.push('------------------------');
+  if(d.disc>0)L.push(t('subtotal')+': '+peso(d.sub),t('disc')+': -'+peso(d.disc));
+  L.push((isR?t('ret_refund'):t('total'))+': '+peso(Math.abs(d.total)));
+  if(d.down>0)L.push(t('rcpt_down')+': '+peso(d.down),t('rcpt_left')+': '+peso(d.total-d.down));
+  if(isQ)L.push(t('valid_until',{d:dateStr(d.ts+(d.valid||7)*864e5,{month:'short',day:'numeric',year:'numeric'})}));
+  else if(!isR)L.push(S.info.foot||t('thanks'));
   return L.join('\n');
 }
 function docHTML(){
-  const d=ui.sheet,isQ=d.kind==='quote';
-  const lines=d.items.map(i=>`<div class="dl"><span>${fq(i.qty)}${i.unit&&i.unit!=='pc'?' '+esc(i.unit):''} ${esc(i.name)}<small>@ ${peso(i.price)}</small></span><b>${peso(i.qty*i.price)}</b></div>`).join('');
+  const d=ui.sheet,isQ=d.kind==='quote',isR=!!d.ret;
+  const lines=d.items.map(i=>{const p=i.lp||i.price,q=Math.abs(i.qty);return `<div class="dl"><span>${esc(itemQtyTxt(i))} ${esc(i.name)}<small>@ ${peso(p)}</small></span><b>${peso(q*p)}</b></div>`}).join('');
   let actions;
   if(isQ&&d.quoteId)actions=`<button class="btn primary" data-act="quote-load">${esc(t('load_cart'))}</button><button class="btn ghost-red" data-act="quote-del">${esc(d.confirmDel?t('confirm_delete'):t('delete'))}</button>`;
   else if(isQ)actions=`<button class="btn primary" data-act="quote-save">${esc(t('save_quote'))}</button><button class="btn" data-act="close">${esc(t('close'))}</button>`;
   else actions=`<button class="btn ghost-red" data-act="sale-void" data-id="${esc(d.saleId)}">${esc(d.confirmDel?t('confirm_delete'):t('void'))}</button><button class="btn" data-act="close">${esc(t('close'))}</button>`;
-  return `<div class="doc" id="docbox"><div class="dh"><div class="dshop">${esc(S.shop)}</div><div class="dt">${esc(isQ?t('quotation'):t('receipt_t'))}</div><div class="dd">${esc(new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'}))}</div></div>
+  const retBtn=(!isQ&&!isR&&d.saleId&&!isStaff())?`<button class="btn block noprint" style="margin-top:10px" data-act="ret-open" data-id="${esc(d.saleId)}">${esc(t('ret_btn'))}</button>`:'';
+  const totals=`${d.disc>0?`<div class="dl"><span>${esc(t('subtotal'))}</span><b>${peso(d.sub)}</b></div><div class="dl"><span>${esc(t('disc'))}</span><b>−${peso(d.disc)}</b></div>`:''}<div class="dtot"><span>${esc(isR?t('ret_refund'):t('total'))}</span><strong>${peso(Math.abs(d.total))}</strong></div>${d.down>0?`<div class="dl"><span>${esc(t('rcpt_down'))}</span><b>${peso(d.down)}</b></div><div class="dl"><span>${esc(t('rcpt_left'))}</span><b>${peso(d.total-d.down)}</b></div>`:''}`;
+  return `<div class="doc" id="docbox"><div class="dh">${S.info.logo?`<img class="dlogo" src="${S.info.logo}" alt="">`:''}<div class="dshop">${esc(S.shop)}</div>${infoLines().map(x=>`<div class="dd">${esc(x)}</div>`).join('')}<div class="dt">${esc(isQ?t('quotation'):isR?t('ret_slip'):t('receipt_t'))}</div><div class="dd">${esc(new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'}))}</div></div>
   ${isQ?`<label class="field noprint"><span>${esc(t('customer_opt'))}</span><input id="dcust" autocomplete="off" value="${esc(d.customer||'')}" data-in="dcust"></label>`:(d.customer?`<div class="dd">${esc(t('customer_name'))}: ${esc(d.customer)}</div>`:'')}
-  <div>${lines}</div><div class="dtot"><span>${esc(t('total'))}</span><strong>${peso(d.total)}</strong></div>
-  ${isQ?`<label class="field noprint" style="margin-top:10px"><span>${esc(t('valid_days'))}</span><input id="dvalid" inputmode="numeric" autocomplete="off" value="${d.valid||7}" data-in="dvalid"></label>`:`<div class="dd center">${esc(t('thanks'))}</div>`}</div>
+  <div>${lines}</div>${totals}
+  ${isQ?`<label class="field noprint" style="margin-top:10px"><span>${esc(t('valid_days'))}</span><input id="dvalid" inputmode="numeric" autocomplete="off" value="${d.valid||7}" data-in="dvalid"></label>`:(isR?'':`<div class="dd center">${esc(S.info.foot||t('thanks'))}</div>`)}</div>
   <div class="row2 noprint" style="margin-top:12px"><button class="btn" data-act="doc-copy">${esc(t('copy_doc'))}</button><button class="btn" data-act="doc-share">${esc(t('share_doc'))}</button><button class="btn" data-act="doc-print">${esc(t('print_doc'))}</button></div>
-  <div class="row2 noprint" style="margin-top:10px">${actions}</div>
+  <div class="row2 noprint" style="margin-top:10px">${actions}</div>${retBtn}
   ${d.quoteId?`<button class="btn block noprint" style="margin-top:10px" data-act="close">${esc(t('close'))}</button>`:''}`;
 }
 function shareText(txt){
@@ -1813,8 +1991,8 @@ function shareText(txt){
 }
 
 /* ----- Import / export ----- */
-const ITEM_COLS=['name','category','unit','price','cost','stock','low stock','location','spot','supplier','barcode'];
-const ALIAS={name:['name','item','itemname','product','productname','ngalan'],cat:['category','cat','type'],unit:['unit','uom'],price:['price','sellingprice','srp','presyo','retail'],cost:['cost','capital','puhunan','costprice'],stock:['stock','qty','quantity','onhand','stockonhand'],low:['low','lowstock','lowstocklevel','reorder','reorderlevel','min','minimum','warnat'],loc:['location','shelf','area','loc'],spot:['spot','bin','row','position'],supplier:['supplier','vendor'],barcode:['barcode','sku','code','upc']};
+const ITEM_COLS=['name','category','unit','price','cost','stock','low stock','location','spot','supplier','barcode','contractor price'];
+const ALIAS={name:['name','item','itemname','product','productname','ngalan'],cat:['category','cat','type'],unit:['unit','uom'],price:['price','sellingprice','srp','presyo','retail'],cost:['cost','capital','puhunan','costprice'],stock:['stock','qty','quantity','onhand','stockonhand'],low:['low','lowstock','lowstocklevel','reorder','reorderlevel','min','minimum','warnat'],loc:['location','shelf','area','loc'],spot:['spot','bin','row','position'],supplier:['supplier','vendor'],barcode:['barcode','sku','code','upc'],price2:['contractorprice','contractor','wholesale','wholesaleprice','price2']};
 const csvCell=v=>{v=v==null?'':String(v);return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
 const toCSV=rows=>rows.map(r=>r.map(csvCell).join(',')).join('\r\n');
 function parseCSV(text){
@@ -1844,7 +2022,7 @@ function dlFile(name,text,mime,bom){
 function exportData(kind){
   const d=dayKey(Date.now()),loc=id=>{const s=shapeById(id);return s?s.name:''};
   const dt=ts=>dayKey(ts),tm=ts=>timeStr(ts);
-  if(kind==='items')dlFile('arse-items-'+d+'.csv',toCSV([ITEM_COLS,...S.products.map(p=>[p.name,p.cat,p.unit,p.price,p.cost===null?'':p.cost,p.stock===null?'':p.stock,p.low,loc(p.loc),p.spot,p.supplier,p.barcode])]));
+  if(kind==='items')dlFile('arse-items-'+d+'.csv',toCSV([ITEM_COLS,...S.products.map(p=>[p.name,p.cat,p.unit,p.price,p.cost===null?'':p.cost,p.stock===null?'':p.stock,p.low,loc(p.loc),p.spot,p.supplier,p.barcode,p.price2>0?p.price2:''])]));
   else if(kind==='sales'){
     const rows=[['date','time','payment','customer','item','qty','unit','price','line total','sale total']];
     S.sales.slice().sort((a,b)=>a.ts-b.ts).forEach(s=>s.items.forEach(i=>rows.push([dt(s.ts),tm(s.ts),s.method,custName(s.cid),i.name,i.qty,i.unit||'pc',i.price,r2(i.qty*i.price),s.total])));
@@ -1874,6 +2052,7 @@ function runImport(text){
     if(g('unit'))rec.unit=g('unit');
     if(g('price'))rec.price=r2(clean(g('price')));
     if(g('cost'))rec.cost=r2(clean(g('cost')));
+    if(g('price2'))rec.price2=r2(clean(g('price2')));
     if(g('stock'))rec.stock=Math.max(0,r3(clean(g('stock'))));
     if(g('low'))rec.low=Math.max(0,r3(clean(g('low'))));
     if(shape)rec.loc=shape.id;
@@ -1886,7 +2065,7 @@ function runImport(text){
       u++;
     }else{
       if(!(rec.price>0)){sk++;return}
-      const np=Object.assign({id:uid(),unit:'pc',cat:'',price:0,cost:null,stock:null,low:5,loc:null,spot:'',supplier:'',barcode:''},rec);
+      const np=Object.assign({id:uid(),unit:'pc',cat:'',price:0,cost:null,stock:null,low:5,loc:null,spot:'',supplier:'',barcode:'',price2:null,parent:null,per:0},rec);
       S.products.push(np);if(np.stock)logMove(np,np.stock,'import','');a++;
     }
   });
@@ -1962,7 +2141,7 @@ function onBarcode(code){
 function useBarcode(code){
   const p=S.products.find(x=>x.barcode&&x.barcode===code);
   if(!p){toast(t('scan_none')+' ('+code+')');return}
-  if(p.stock!==null&&p.stock<=0){toast(t('out')+': '+p.name);return}
+  const av0=availOf(p);if(av0!==null&&av0<=0){toast(t('out')+': '+p.name);return}
   addToCart(p.id);toast(t('scan_added',{name:p.name}));
 }
 function scanHTML(){
@@ -2030,7 +2209,7 @@ export:d=>exportData(d.v),
   S.closings.push({id:uid(),day:key,float:fl,expected:expd,counted,diff:r2(counted-expd),note:$('#cnote').value.trim(),ts:Date.now()});
   save();renderMain();toast(t('closing_saved'));
 },
-'sale-open':d=>{const s=S.sales.find(x=>x.id===d.id);if(s)openSheet({type:'doc',kind:'receipt',ts:s.ts,items:s.items,total:s.total,customer:custName(s.cid),saleId:s.id})},
+'sale-open':d=>{const s=S.sales.find(x=>x.id===d.id);if(s)openSheet({type:'doc',kind:'receipt',ts:s.ts,items:s.items,total:s.total,customer:custName(s.cid),saleId:s.id,sub:s.sub,disc:s.disc,down:s.down,ret:!!s.ret,note:s.note})},
 'sale-void':d=>{
   const sh=ui.sheet;if(!sh.confirmDel){sh.confirmDel=true;renderSheet();return}
   voidSale(d.id);closeSheet();renderMain();
@@ -2072,7 +2251,7 @@ scan:()=>openSheet({type:'scan',target:'sell'}),
 },
 'copy-stmt':()=>{
   const c=S.customers.find(x=>x.id===ui.sheet.id);if(!c)return;
-  const L=[S.shop,t('history')+' - '+c.name,new Date().toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}),'------------------------'];
+  const L=[S.shop,...infoLines(),t('history')+' - '+c.name,new Date().toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}),'------------------------'];
   S.ledger.filter(l=>l.cid===c.id).sort((a,b)=>a.ts-b.ts).forEach(l=>L.push(dateStr(l.ts,{month:'short',day:'numeric',year:'numeric'})+'  '+(l.type==='utang'?'+':'-')+peso(l.amount)+(l.note?'  '+l.note:'')));
   L.push('------------------------',t('balance')+': '+peso(bal(c.id)));
   copyText(L.join('\n'));
@@ -2133,7 +2312,8 @@ function periodStats(a,b){
   let sales=0,profit=0,costed=0,utangSales=0;
   ss.forEach(s=>{sales+=s.total;if(s.method==='utang')utangSales+=s.total;s.items.forEach(i=>{if(i.cost!==null&&i.cost!==undefined){profit+=(i.price-i.cost)*i.qty;costed+=i.price*i.qty}})});
   const exp=S.expenses.filter(e=>e.ts>=a&&e.ts<b).reduce((x,e)=>x+e.amount,0);
-  return {ss,n:ss.length,sales:r2(sales),profit:r2(profit),margin:costed>0?profit/costed*100:null,exp:r2(exp),net:r2(profit-exp),avg:ss.length?r2(sales/ss.length):0,utangShare:sales>0?utangSales/sales*100:0};
+  const nS=ss.filter(x=>!x.ret).length;
+  return {ss,n:nS,sales:r2(sales),profit:r2(profit),margin:costed>0?profit/costed*100:null,exp:r2(exp),net:r2(profit-exp),avg:nS?r2(sales/nS):0,utangShare:sales>0?utangSales/sales*100:0};
 }
 const dchip=(c,p)=>{if(!(p>0))return '';const d=Math.round((c-p)/p*100);if(d===0)return `<small class="dchip">= ${esc(t('ins_same'))}</small>`;return `<small class="dchip ${d>0?'up':'dn'}">${d>0?'▲':'▼'} ${Math.abs(d)}%</small>`};
 function insightsCalc(){
@@ -2344,7 +2524,7 @@ function rvAdd(p,qty,cost){
   sh.lines.push({pid:p.id,name:p.name,unit:p.unit,qty:qty===undefined?'':qty,cost:cost===undefined?(p.cost===null?'':p.cost):cost});
 }
 function deliveryText(d){
-  const L=[S.shop+' - '+t('rv_detail'),new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'})];
+  const L=[S.shop,...infoLines(),t('rv_detail'),new Date(d.ts).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'})];
   if(d.supplier)L.push(t('supplier')+': '+d.supplier);
   L.push('------------------------');
   d.items.forEach(i=>L.push(fq(i.qty)+' '+i.unit+' '+i.name+' @ '+peso(i.cost)+' = '+peso(i.qty*i.cost)));
@@ -2435,8 +2615,8 @@ function reportData(k){
   const catList=Object.entries(cats).sort((x,y)=>y[1]-x[1]);
   const ex={};S.expenses.filter(e=>inM(e.ts)).forEach(e=>{const c=e.cat||'Other';ex[c]=(ex[c]||0)+e.amount});
   const exList=Object.entries(ex).sort((x,y)=>y[1]-x[1]);
-  const given=r2(S.ledger.filter(l=>l.type==='utang'&&inM(l.ts)).reduce((a,l)=>a+l.amount,0));
-  const collected=r2(S.ledger.filter(l=>l.type==='bayad'&&inM(l.ts)).reduce((a,l)=>a+l.amount,0));
+  const given=r2(S.ledger.filter(l=>l.type==='utang'&&inM(l.ts)).reduce((a,l)=>a+l.amount,0)-S.ledger.filter(l=>l.dp&&inM(l.ts)).reduce((a,l)=>a+l.amount,0));
+  const collected=r2(S.ledger.filter(l=>l.type==='bayad'&&!l.ret&&inM(l.ts)).reduce((a,l)=>a+l.amount,0));
   const owed=r2(S.customers.reduce((a,c)=>a+Math.max(0,bal(c.id)),0));
   const purchases=r2(S.deliveries.filter(d=>inM(d.ts)).reduce((a,d)=>a+d.total,0));
   const shorts=S.closings.filter(c=>inM(new Date(c.day+'T12:00:00').getTime())&&c.diff<0);
@@ -2448,7 +2628,7 @@ function reportData(k){
 function reportHTML(k){
   const D=reportData(k),{R,cur}=D,P=R.hasPrev?R.prev:null;
   const tile=(lab,val,ch)=>`<div class="tile"><div class="k">${esc(lab)}</div><div class="v">${val}</div>${ch||''}</div>`;
-  if(!cur.n)return `<div id="rptdoc" class="rpt"><div class="rh"><div class="dshop">${esc(S.shop)}</div><div class="dt">${esc(t('rpt_title'))} · ${esc(monthLabel(k))}</div></div><div class="empty">${esc(t('rpt_none'))}</div></div>`;
+  if(!cur.n)return `<div id="rptdoc" class="rpt"><div class="rh">${rptHead()}<div class="dt">${esc(t('rpt_title'))} · ${esc(monthLabel(k))}</div></div><div class="empty">${esc(t('rpt_none'))}</div></div>`;
   const mx=Math.max(1,...D.days);
   const bars=`<div class="mbars" role="img" aria-label="${esc(t('rpt_daily'))}">${D.days.map((v,i)=>`<i style="height:${Math.max(2,Math.round(v/mx*100))}%" ${i===D.best?'class="best"':''} title="${i+1}: ${peso(v)}"></i>`).join('')}</div><div class="mlab"><span>1</span><span>${D.days.length}</span></div>`;
   const tot=Math.max(1,cur.sales),cmax=Math.max(1,...D.catList.map(x=>x[1]));
@@ -2456,7 +2636,7 @@ function reportHTML(k){
   const good=R.F.filter(f=>f.lvl==='good'),imp=R.F.filter(f=>f.lvl==='bad'||f.lvl==='warn');
   const fl=(arr)=>arr.map(f=>`<div class="find"><span class="dot ${f.lvl}" aria-hidden="true">${f.lvl==='good'?'✓':f.lvl==='bad'?'✕':'!'}</span><div><b>${esc(f.msg)}</b>${f.tip?`<small>${esc(f.tip)}</small>`:''}</div></div>`).join('');
   return `<div id="rptdoc" class="rpt">
-  <div class="rh"><div class="dshop">${esc(S.shop)}</div><div class="dt">${esc(t('rpt_title'))} · ${esc(monthLabel(k))}</div><div class="dd">${esc(t('rpt_generated',{d:dateStr(Date.now(),{month:'short',day:'numeric',year:'numeric'})}))}</div></div>
+  <div class="rh">${rptHead()}<div class="dt">${esc(t('rpt_title'))} · ${esc(monthLabel(k))}</div><div class="dd">${esc(t('rpt_generated',{d:dateStr(Date.now(),{month:'short',day:'numeric',year:'numeric'})}))}</div></div>
   ${R.v?`<div class="sign" style="margin-top:12px"><div class="k">${esc(t('ins_title'))}</div><div class="big" style="font-size:24px">${esc(t('ins_'+R.v))}</div></div>`:''}
   <div class="tiles">${tile(t('sales'),peso(cur.sales),P&&dchip(cur.sales,P.sales))}${tile(t('profit'),peso(cur.profit),P&&dchip(cur.profit,P.profit))}${tile(t('expenses'),peso(cur.exp),'')}${tile(t('net_profit'),peso(cur.net),P&&dchip(cur.net,P.net))}${tile(t('margin'),cur.margin===null?'—':(Math.round(cur.margin*10)/10)+'%','')}${tile(t('ins_count'),String(cur.n),P&&dchip(cur.n,P.n))}</div>
   ${R.hasPrev?`<p class="sub" style="margin:-6px 0 12px">${esc(t('rpt_vs_note'))}</p>`:''}
@@ -2476,7 +2656,7 @@ function reportHTML(k){
   <p class="sub" style="margin-top:12px">${esc(t('ins_note'))}</p></div>`;
 }
 function reportText(k){
-  const D=reportData(k),{R,cur}=D,L=[S.shop+' - '+t('rpt_title'),monthLabel(k),'------------------------'];
+  const D=reportData(k),{R,cur}=D,L=[S.shop,...infoLines(),t('rpt_title')+' - '+monthLabel(k),'------------------------'];
   if(!cur.n){L.push(t('rpt_none'));return L.join('\n')}
   L.push(t('sales')+': '+peso(cur.sales),t('profit')+': '+peso(cur.profit),t('expenses')+': '+peso(cur.exp),t('net_profit')+': '+peso(cur.net));
   if(cur.margin!==null)L.push(t('margin')+': '+(Math.round(cur.margin*10)/10)+'%');
@@ -2782,6 +2962,331 @@ Object.assign(A,{
 'pin-set':d=>{const sh=ui.sheet;if(sh&&sh.type==='pin')pinPut(d.id,sh.pos,sh.nrm)}
 });
 ['mv-file','mv-remove','mv-add','pin-for','pin-move','pin-del','pin-set'].forEach(k=>OWNER.add(k));
+
+/* ----- Stage A: discounts, down payments, returns, price tiers, utang limits and due dates, loose items ----- */
+const tierPrice=p=>(ui.tier==='contractor'&&p.price2>0)?p.price2:p.price;
+const parentOf=p=>p.parent?S.products.find(x=>x.id===p.parent):null;
+const availOf=p=>{const pr=parentOf(p);if(pr&&p.per>0){return pr.stock===null?null:Math.max(0,Math.floor(r3(pr.stock*p.per)+1e-9))}return p.stock};
+function takeStock(p,qty,type,note,saleId){
+  const pr=parentOf(p);
+  if(pr&&p.per>0){if(pr.stock===null)return;const d=r3(qty/p.per);pr.stock=Math.max(0,r3(pr.stock-d));logMove(pr,-d,type,(note?note+' · ':'')+fq(Math.abs(qty))+' '+p.unit+' '+p.name,saleId);return}
+  if(p.stock===null)return;
+  p.stock=Math.max(0,r3(p.stock-qty));logMove(p,-qty,type,note||'',saleId);
+}
+function applyTier(){
+  ui.cart.forEach(l=>{if(l.pid&&l.p1!==undefined)l.price=(ui.tier==='contractor'&&l.p2>0)?l.p2:l.p1});
+}
+const hasTier=()=>S.products.some(p=>p.price2>0);
+function tierBar(){
+  if(!hasTier())return '';
+  return `<div class="seg tierbar" role="group" aria-label="${esc(t('price_tier'))}"><button data-act="tier" data-v="retail" aria-pressed="${ui.tier!=='contractor'}">${esc(t('tier_retail'))}</button><button data-act="tier" data-v="contractor" aria-pressed="${ui.tier==='contractor'}">${esc(t('tier_contr'))}</button></div>`;
+}
+const dueTs=s=>s?new Date(s+'T23:59:59').getTime():null;
+const dueStr=ts=>ts?dayKey(ts):'';
+function dueInfo(c){
+  const L=S.ledger.filter(l=>l.cid===c.id).sort((a,b)=>a.ts-b.ts);
+  let pay=L.filter(l=>l.type==='bayad').reduce((a,l)=>a+l.amount,0),next=null,over=0;
+  for(const l of L){
+    if(l.type!=='utang')continue;
+    const use=Math.min(l.amount,pay);pay-=use;const rem=l.amount-use;
+    if(rem>.004&&l.due){if(next===null||l.due<next)next=l.due;if(l.due<Date.now())over+=rem}
+  }
+  return {next,over:r2(over)};
+}
+function dueChip(c){
+  const d=dueInfo(c);if(!d.next||bal(c.id)<=0)return '';
+  const n=Math.floor((Date.now()-d.next)/864e5);
+  return d.next<Date.now()?`<span class="chip out">${esc(t('overdue_chip',{n:Math.max(1,n)}))}</span>`:`<span class="chip ${d.next-Date.now()<=7*864e5?'low':'ok'}">${esc(t('due_chip',{d:dateStr(d.next,{month:'short',day:'numeric'})}))}</span>`;
+}
+function dueFilterBar(){
+  const bs=S.customers.filter(c=>bal(c.id)>0);
+  let over=0,week=0;bs.forEach(c=>{const d=dueInfo(c);if(d.next){if(d.next<Date.now())over++;else if(d.next-Date.now()<=7*864e5)week++}});
+  const ch=(v,l,n)=>`<button class="pick" data-act="ufilter" data-v="${v}" aria-pressed="${ui.uf===v}">${esc(l)}${v?`<small>${n}</small>`:''}</button>`;
+  return `<div class="chips">${ch('',t('f_all'),0)}${ch('over',t('f_over'),over)}${ch('week',t('f_week'),over+week)}</div>`;
+}
+const saleChip=s=>s.ret?`<span class="chip out">${esc(t('ret_t'))}</span>`:`<span class="chip ${s.method==='utang'?'old':''}">${esc(s.method==='utang'?t('on_utang'):t('cash'))}</span>`;
+/* discount block in checkout */
+function discBlock(){
+  if(isStaff())return '';
+  const sh=ui.sheet,sub=cartSub();
+  return `<div class="discrow"><span>${esc(t('disc'))}</span><div class="seg"><button data-act="dtype" data-v="peso" aria-pressed="${sh.dtype!=='pct'}">₱</button><button data-act="dtype" data-v="pct" aria-pressed="${sh.dtype==='pct'}">%</button></div><input id="dval" inputmode="decimal" autocomplete="off" placeholder="0" value="${esc(sh.dval||'')}" data-in="dval" aria-label="${esc(t('disc'))}"></div>
+  <div class="sublines" id="sublines"></div>`;
+}
+function tierBlock(){
+  if(!hasTier())return '';
+  return `<div class="discrow"><span>${esc(t('price_tier'))}</span>${tierBar()}</div>`;
+}
+function downBlock(sh){
+  const c=sh.cid&&S.customers.find(x=>x.id===sh.cid);
+  return `<div class="row2"><label class="field"><span>${esc(t('down_pay'))}</span><input id="down" inputmode="decimal" autocomplete="off" placeholder="${esc(t('down_ph'))}" value="${esc(sh.down||'')}" data-in="down"></label><label class="field"><span>${esc(t('due_date'))}</span><input id="due" type="date" value="${esc(sh.due||'')}" data-in="due"></label></div>
+  <div class="change bad" id="cwarn" style="display:none"></div>${c&&c.limit>0?`<p class="sub" style="margin:-4px 0 10px">${esc(t('limit_info',{l:peso(c.limit),r:peso(Math.max(0,c.limit-bal(c.id)))}))}</p>`:''}`;
+}
+function syncDisc(){
+  const sh=ui.sheet;if(!sh||sh.type!=='checkout')return;
+  const sub=cartSub(),d=discOf(sub),el=$('#sublines');
+  if(el)el.innerHTML=d>0?`<div class="line"><div class="ln">${esc(t('subtotal'))}</div><div class="lt">${peso(sub)}</div></div><div class="line"><div class="ln">${esc(t('disc'))}</div><div class="lt" style="color:var(--green)">−${peso(d)}</div></div>`:'';
+  const w=$('#cwarn'),btn=$('#confirm');
+  if(sh.method==='utang'){
+    const c=sh.cid&&S.customers.find(x=>x.id===sh.cid),total=r2(sub-d),dn=Math.min(Math.max(num(sh.down),0),total);
+    const after=c?r2(bal(c.id)+total-dn):0;
+    const over=!!(c&&c.limit>0&&after>c.limit);
+    if(w){w.style.display=over?'':'none';w.textContent=over?t('over_limit',{a:peso(after),l:peso(c.limit)}):''}
+    if(btn)btn.textContent=over?t('sell_anyway'):t('record_sale');
+  }else if(btn)btn.textContent=t('record_sale');
+}
+function recordSale(){
+  const sh=ui.sheet;
+  ui.cart=ui.cart.filter(l=>l.qty>0);
+  if(!ui.cart.length)return;
+  const sub=cartSub(),disc=discOf(sub),total=r2(sub-disc);let cid=null,down=0,due=null;
+  if(sh.method==='utang'){
+    if(sh.cid)cid=sh.cid;
+    else if(sh.newName.trim()){const c={id:uid(),name:sh.newName.trim(),phone:'',tier:'retail',limit:0,terms:0};S.customers.push(c);cid=c.id}
+    else return;
+    down=r2(Math.min(Math.max(num(sh.down),0),total));due=dueTs(sh.due);
+  }
+  const f=(sub>0&&disc>0)?total/sub:1;
+  const items=ui.cart.map(l=>{const it={pid:l.pid,name:l.name,unit:l.unit||'pc',qty:l.qty,price:f===1?l.price:Math.round(l.price*f*10000)/10000,cost:l.cost};if(f!==1)it.lp=l.price;return it});
+  const sale={id:uid(),ts:Date.now(),items,total,method:sh.method,cid};
+  if(disc>0){sale.sub=sub;sale.disc=disc}
+  if(down>0)sale.down=down;
+  if(ui.tier==='contractor')sale.tier='contractor';
+  ui.cart.forEach(l=>{const p=l.pid&&S.products.find(p=>p.id===l.pid);if(p)takeStock(p,l.qty,'sale','',sale.id)});
+  S.sales.push(sale);
+  if(cid){
+    const led={id:uid(),cid,type:'utang',amount:total,note:summary(items),ts:sale.ts,saleId:sale.id};if(due)led.due=due;S.ledger.push(led);
+    if(down>0)S.ledger.push({id:uid(),cid,type:'bayad',amount:down,note:t('down_note'),ts:sale.ts,saleId:sale.id,dp:true});
+  }
+  if(ui.orderRef&&ui.cart.some(l=>String(l.key).startsWith('ord:'))){const o=S.orders.find(x=>x.id===ui.orderRef);if(o){o.status='done';o.saleId=sale.id;o.doneTs=Date.now()}ui.orderRef=null}
+  ui.orderRef=null;ui.cart=[];ui.tier='retail';closeSheet();save();render();toast(t('sale_saved')+' · '+peso(total));
+}
+function voidSale(id){
+  const s=S.sales.find(x=>x.id===id);if(!s)return;
+  if(!s.ret||s.restocked)s.items.forEach(i=>{const p=i.pid&&S.products.find(p=>p.id===i.pid);if(p)takeStock(p,-i.qty,'void','',id)});
+  S.sales=S.sales.filter(x=>x.id!==id);S.ledger=S.ledger.filter(l=>l.saleId!==id);
+  save();render();
+}
+/* ----- Returns ----- */
+const retKey=i=>(i.pid||'')+'|'+i.name+'|'+(i.unit||'pc');
+function returnedQty(saleId,key){
+  return S.sales.filter(r=>r.ret&&r.refSale===saleId).reduce((a,r)=>a+r.items.filter(i=>retKey(i)===key).reduce((x,i)=>x+Math.abs(i.qty),0),0);
+}
+function openReturn(saleId){
+  const s=saleId&&S.sales.find(x=>x.id===saleId);
+  let lines=[];
+  if(s)lines=s.items.map(i=>{const max=r3(i.qty-returnedQty(s.id,retKey(i)));return {pid:i.pid,name:i.name,unit:i.unit||'pc',price:i.price,cost:i.cost,max,qty:0}}).filter(l=>l.max>0);
+  if(s&&!lines.length){toast(t('ret_none'));return}
+  openSheet({type:'ret',saleId:s?s.id:null,lines,cid:s?s.cid:null,refund:(s&&s.cid&&s.method==='utang')?'credit':'cash',restock:true,note:'',sq:''});
+}
+function retTotal(){return r2(ui.sheet.lines.reduce((a,l)=>a+l.price*l.qty,0))}
+function retHTML(){
+  const sh=ui.sheet,s=sh.saleId&&S.sales.find(x=>x.id===sh.saleId);
+  const rows=sh.lines.map((l,i)=>`<div class="line"><div class="ln"><b>${esc(l.name)}</b><small>${peso(l.price)} ${esc(t('each',{u:l.unit}))}${l.max!==null?' · max '+fq(l.max):''}</small></div><div class="step"><button class="sq" data-act="rdec" data-i="${i}" aria-label="−">−</button><input class="qin" inputmode="decimal" autocomplete="off" value="${fq(l.qty)}" data-in="rqty" data-i="${i}" aria-label="Quantity"><button class="sq" data-act="rinc" data-i="${i}" aria-label="+">+</button></div><div class="lt" id="rlt${i}">${peso(l.price*l.qty)}</div>${sh.saleId?'':`<button class="sq rm" data-act="rrm" data-i="${i}" aria-label="${esc(t('remove'))}">✕</button>`}</div>`).join('');
+  const cs=[...S.customers].sort((a,b)=>a.name.localeCompare(b.name));
+  return `<h3 class="sh-title">${esc(t('ret_title'))}</h3><p class="sh-sub">${s?esc(dateStr(s.ts,{month:'short',day:'numeric'})+' · '+timeStr(s.ts)+(s.cid?' · '+custName(s.cid):'')):esc(t('ret_free'))}</p>
+  ${sh.saleId?'':`<div class="search"><input id="rsq" type="search" autocomplete="off" placeholder="${esc(t('ret_add'))}" value="${esc(sh.sq||'')}" data-in="rsq" data-focus></div><div class="ledger" id="rslist" style="max-height:26vh;overflow:auto"></div>`}
+  ${rows||`<div class="empty">${esc(t('ret_none'))}</div>`}
+  <div class="totalrow"><span>${esc(t('ret_refund'))}</span><strong id="rtotal">${peso(retTotal())}</strong></div>
+  <div class="seg" style="display:flex;margin-bottom:12px" role="group"><button style="flex:1;min-height:44px" data-act="rrefund" data-v="cash" aria-pressed="${sh.refund==='cash'}">${esc(t('ret_cash'))}</button><button style="flex:1;min-height:44px" data-act="rrefund" data-v="credit" aria-pressed="${sh.refund==='credit'}">${esc(t('ret_credit'))}</button></div>
+  ${sh.refund==='credit'?`<div class="chips">${cs.map(c=>`<button class="pick" data-act="rcust" data-id="${esc(c.id)}" aria-pressed="${sh.cid===c.id}">${esc(c.name)}<small>${peso(bal(c.id))}</small></button>`).join('')}</div>`:''}
+  <div class="chips"><button class="pick" data-act="rrestock" aria-pressed="${sh.restock}">${esc(t('ret_restock'))}</button></div>
+  <label class="field"><span>${esc(t('ret_note'))}</span><input id="rnote" autocomplete="off" value="${esc(sh.note)}" data-in="rnote"></label>
+  <div class="row2"><button class="btn" data-act="close">${esc(t('cancel'))}</button><button class="btn primary" id="rconfirm" data-act="ret-save">${esc(t('ret_save'))}</button></div>`;
+}
+function rsList(){
+  const sh=ui.sheet,l=$('#rslist');if(!l)return;
+  const q=(sh.sq||'').trim().toLowerCase();
+  const ps=S.products.filter(p=>q&&matchP(p,q)).sort((a,b)=>a.name.localeCompare(b.name)).slice(0,20);
+  l.innerHTML=ps.map(p=>`<button class="lrow" data-act="rpick" data-id="${esc(p.id)}"><span class="nm"><b>${esc(p.name)}</b><small>${peso(p.price)}/${esc(p.unit)}</small></span><span class="amt">+</span></button>`).join('');
+}
+function retSync(){
+  const sh=ui.sheet;if(!sh||sh.type!=='ret')return;
+  const tt=$('#rtotal');if(tt)tt.textContent=peso(retTotal());
+  sh.lines.forEach((l,i)=>{const e=$('#rlt'+i);if(e)e.textContent=peso(l.price*l.qty)});
+  const b=$('#rconfirm');if(b)b.disabled=!(retTotal()>0)||(sh.refund==='credit'&&!sh.cid);
+}
+function recordReturn(){
+  const sh=ui.sheet,lines=sh.lines.filter(l=>l.qty>0);if(!lines.length)return;
+  const total=retTotal();
+  const items=lines.map(l=>({pid:l.pid,name:l.name,unit:l.unit,qty:-l.qty,price:l.price,cost:l.cost}));
+  const credit=sh.refund==='credit'&&sh.cid;
+  const rec={id:uid(),ts:Date.now(),items,total:-total,method:credit?'utang':'cash',cid:sh.cid||null,ret:true,refSale:sh.saleId||null,restocked:!!sh.restock};
+  if(sh.note.trim())rec.note=sh.note.trim();
+  if(sh.restock)lines.forEach(l=>{const p=l.pid&&S.products.find(x=>x.id===l.pid);if(p)takeStock(p,-l.qty,'return',sh.note.trim(),rec.id)});
+  S.sales.push(rec);
+  if(credit)S.ledger.push({id:uid(),cid:sh.cid,type:'bayad',amount:total,note:t('ret_credit_note'),ts:rec.ts,saleId:rec.id,ret:true});
+  save();closeSheet();render();toast(t('ret_saved')+' · '+peso(total));
+}
+Object.assign(A,{
+tier:d=>{ui.tier=d.v==='contractor'?'contractor':'retail';applyTier();if(ui.sheet&&ui.sheet.type==='checkout')renderSheet();renderList();renderCart()},
+dtype:d=>{ui.sheet.dtype=d.v;renderSheet();},
+ufilter:d=>{ui.uf=d.v;renderMain()},
+'ret-open':d=>openReturn(d.id),
+'ret-free':()=>openReturn(null),
+rdec:d=>{const l=ui.sheet.lines[+d.i];if(!l)return;l.qty=Math.max(0,r3(l.qty-stepOf(l.unit)));$('[data-in="rqty"][data-i="'+d.i+'"]').value=fq(l.qty);retSync()},
+rinc:d=>{const l=ui.sheet.lines[+d.i];if(!l)return;const n=r3(l.qty+stepOf(l.unit));if(l.max!==null&&n>l.max){toast(t('ret_max',{n:fq(l.max)}));return}l.qty=n;$('[data-in="rqty"][data-i="'+d.i+'"]').value=fq(l.qty);retSync()},
+rrm:d=>{ui.sheet.lines.splice(+d.i,1);renderSheet();rsList();retSync()},
+rpick:d=>{const p=S.products.find(x=>x.id===d.id);if(!p)return;const sh=ui.sheet,ex=sh.lines.find(l=>l.pid===p.id);if(ex){ex.qty=r3(ex.qty+1)}else sh.lines.push({pid:p.id,name:p.name,unit:p.unit,price:p.price,cost:p.cost,max:null,qty:1});sh.sq='';renderSheet();rsList();retSync()},
+rrefund:d=>{ui.sheet.refund=d.v;renderSheet();rsList();retSync()},
+rcust:d=>{ui.sheet.cid=d.id;renderSheet();rsList();retSync()},
+rrestock:()=>{ui.sheet.restock=!ui.sheet.restock;renderSheet();rsList();retSync()},
+'ret-save':()=>recordReturn()
+});
+['ret-open','ret-free','ret-save','dtype'].forEach(k=>OWNER.add(k));
+document.addEventListener('input',e=>{
+  const el=e.target,k=el.dataset&&el.dataset.in,sh=ui.sheet;if(!k||!sh)return;
+  if(sh.type==='checkout'){
+    if(k==='dval'){sh.dval=el.value;syncCheckout()}
+    else if(k==='down'){sh.down=el.value;syncCheckout()}
+    else if(k==='due'){sh.due=el.value}
+  }else if(sh.type==='ret'){
+    if(k==='rqty'){const l=sh.lines[+el.dataset.i];if(!l)return;let n=Math.max(0,r3(num(el.value)));if(l.max!==null&&n>l.max){n=l.max;toast(t('ret_max',{n:fq(l.max)}))}l.qty=n;retSync()}
+    else if(k==='rsq'){sh.sq=el.value;rsList()}
+    else if(k==='rnote')sh.note=el.value;
+  }
+});
+
+/* ----- Delivery and pickup orders ----- */
+const ORD_ST=['preparing','ready','done'];
+const ordTotal=o=>r2(o.items.reduce((a,i)=>a+i.price*i.qty,0)+(+o.fee||0));
+const ordWhen=o=>o.when?new Date(o.when).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';
+const ordStLabel=o=>o.status==='done'?t(o.kind==='delivery'?'ord_delivered':'ord_pickedup'):t('ord_'+o.status);
+const ordActive=()=>S.orders.filter(o=>o.status!=='done');
+const toLocalDT=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())};
+function ordChip(o){
+  const late=o.status!=='done'&&o.when&&o.when<Date.now();
+  return `<span class="chip ${o.status==='done'?'ok':late?'out':o.status==='ready'?'low':''}">${esc(late?t('ord_late'):ordStLabel(o))}</span>`;
+}
+function ordersBtn(){
+  const n=ordActive().length;
+  return `<div class="chips"><button class="pick" data-act="orders">${esc(t('orders_btn',{n}))}</button></div>`;
+}
+function ordersHTML(){
+  const sh=ui.sheet,f=sh.f||'active';
+  const list=S.orders.filter(o=>f==='active'?o.status!=='done':o.status==='done').sort((a,b)=>f==='active'?((a.when||a.ts)-(b.when||b.ts)):((b.doneTs||b.ts)-(a.doneTs||a.ts)));
+  return `<h3 class="sh-title">${esc(t('orders_title'))}</h3><p class="sh-sub">${esc(t('ord_hint'))}</p>
+  <div class="seg" style="display:flex;margin-bottom:12px" role="group"><button style="flex:1;min-height:44px" data-act="ord-f" data-v="active" aria-pressed="${f==='active'}">${esc(t('ord_active'))}</button><button style="flex:1;min-height:44px" data-act="ord-f" data-v="done" aria-pressed="${f==='done'}">${esc(t('ord_done_f'))}</button></div>
+  <div class="hist" style="max-height:52vh">${list.length?list.map(o=>`<button class="h" data-act="order-open" data-id="${esc(o.id)}"><div><b>${esc(o.name||t('ord_noname'))}</b><small>${esc(t(o.kind==='delivery'?'ord_kind_d':'ord_kind_p'))}${ordWhen(o)?' · '+esc(ordWhen(o)):''} · ${esc(summary(o.items))}</small></div><span class="amt">${peso(ordTotal(o))} ${ordChip(o)}</span></button>`).join(''):`<div class="empty">${esc(t('ord_none'))}</div>`}</div>
+  <button class="btn block" style="margin-top:12px" data-act="close">${esc(t('close'))}</button>`;
+}
+function orderText(o){
+  const L=[S.shop,...infoLines(),t('ord_title_t')+' · '+t(o.kind==='delivery'?'ord_kind_d':'ord_kind_p')];
+  if(o.name)L.push(o.name+(o.phone?' · '+o.phone:''));
+  if(o.kind==='delivery'&&o.addr)L.push(o.addr);
+  if(o.when)L.push(ordWhen(o));
+  L.push('------------------------');
+  o.items.forEach(i=>L.push(fq(i.qty)+(i.unit&&i.unit!=='pc'?' '+i.unit:'')+' '+i.name+' @ '+peso(i.price)+' = '+peso(i.qty*i.price)));
+  if(+o.fee>0)L.push(t('ord_fee_line')+': '+peso(o.fee));
+  L.push('------------------------',t('total')+': '+peso(ordTotal(o)));
+  if(o.note)L.push(o.note);
+  return L.join('\n');
+}
+function orderHTML(){
+  const sh=ui.sheet,d=sh.d,o=sh.id&&S.orders.find(x=>x.id===sh.id),items=o?o.items:sh.items;
+  const fee=num(d.fee),total=r2(items.reduce((a,i)=>a+i.price*i.qty,0)+fee);
+  const cs=[...S.customers].sort((a,b)=>a.name.localeCompare(b.name));
+  const stBtns=o?`<div class="seg" style="display:flex;margin:10px 0" role="group">${ORD_ST.map(k=>`<button style="flex:1;min-height:44px;font-size:13px" data-act="order-st" data-v="${k}" aria-pressed="${o.status===k}">${esc(k==='done'?t(o.kind==='delivery'?'ord_delivered':'ord_pickedup'):t('ord_'+k))}</button>`).join('')}</div>`:'';
+  return `<h3 class="sh-title">${esc(o?t('ord_title_t'):t('ord_new'))}</h3>
+  <div class="seg" style="display:flex;margin-bottom:12px" role="group"><button style="flex:1;min-height:44px" data-act="ord-kind" data-v="delivery" aria-pressed="${d.kind==='delivery'}">${esc(t('ord_kind_d'))}</button><button style="flex:1;min-height:44px" data-act="ord-kind" data-v="pickup" aria-pressed="${d.kind==='pickup'}">${esc(t('ord_kind_p'))}</button></div>
+  ${cs.length?`<div class="chips">${cs.map(c=>`<button class="pick" data-act="ord-cust" data-id="${esc(c.id)}" aria-pressed="${d.cid===c.id}">${esc(c.name)}</button>`).join('')}</div>`:''}
+  <div class="row2"><label class="field"><span>${esc(t('ord_name'))}</span><input id="oname" autocomplete="off" value="${esc(d.name)}" data-in="oname"></label><label class="field"><span>${esc(t('phone'))}</span><input id="ophone" inputmode="tel" autocomplete="off" value="${esc(d.phone)}" data-in="ophone"></label></div>
+  ${d.kind==='delivery'?`<label class="field"><span>${esc(t('ord_addr'))}</span><input id="oaddr" autocomplete="off" value="${esc(d.addr)}" data-in="oaddr"></label>`:''}
+  <div class="row2"><label class="field"><span>${esc(t('ord_when'))}</span><input id="owhen" type="datetime-local" value="${esc(d.when)}" data-in="owhen"></label>${d.kind==='delivery'?`<label class="field"><span>${esc(t('ord_fee'))}</span><input id="ofee" inputmode="decimal" autocomplete="off" value="${esc(d.fee)}" data-in="ofee"></label>`:''}</div>
+  <label class="field"><span>${esc(t('ord_note'))}</span><input id="onote" autocomplete="off" value="${esc(d.note)}" data-in="onote"></label>
+  <div class="card" style="padding:8px 12px;margin:0 0 10px">${items.map(i=>`<div class="line"><div class="ln"><b>${esc(i.name)}</b><small>${fq(i.qty)}${i.unit&&i.unit!=='pc'?' '+esc(i.unit):''} × ${peso(i.price)}</small></div><div class="lt">${peso(i.qty*i.price)}</div></div>`).join('')}${d.kind==='delivery'&&fee>0?`<div class="line"><div class="ln">${esc(t('ord_fee_line'))}</div><div class="lt">${peso(fee)}</div></div>`:''}</div>
+  <div class="totalrow"><span>${esc(t('ord_total'))}</span><strong id="ototal">${peso(d.kind==='delivery'?total:r2(total-fee))}</strong></div>
+  ${stBtns}
+  ${o&&o.status!=='done'?`<button class="btn primary block" data-act="order-complete">${esc(t('ord_complete'))}</button>`:''}
+  <div class="row2" style="margin-top:10px"><button class="btn" data-act="${o?'orders':'close'}">${esc(o?t('back'):t('cancel'))}</button><button class="btn ${o?'':'primary'}" data-act="order-save">${esc(t('ord_save'))}</button></div>
+  ${o?`<div class="row2" style="margin-top:10px"><button class="btn" data-act="order-copy">${esc(t('ord_copy'))}</button>${isStaff()?'':`<button class="btn ghost-red" data-act="order-del">${esc(sh.confirmDel?t('confirm_delete'):t('delete'))}</button>`}</div>`:''}`;
+}
+function ordFromSheet(){
+  const sh=ui.sheet,d=sh.d;
+  return {kind:d.kind,name:d.name.trim(),phone:d.phone.trim(),addr:d.kind==='delivery'?d.addr.trim():'',when:d.when?new Date(d.when).getTime():null,fee:d.kind==='delivery'?r2(num(d.fee)):0,note:d.note.trim(),cid:d.cid||null};
+}
+Object.assign(A,{
+orders:()=>openSheet({type:'orders',f:'active'}),
+'ord-f':d=>{ui.sheet.f=d.v;renderSheet()},
+'make-order':()=>{
+  if(!ui.cart.filter(l=>l.qty>0).length)return;
+  const items=ui.cart.filter(l=>l.qty>0).map(l=>({pid:l.pid,name:l.name,unit:l.unit||'pc',qty:l.qty,price:l.price,cost:l.cost}));
+  openSheet({type:'order',id:null,items,d:{kind:'delivery',name:'',phone:'',addr:'',when:'',fee:'',note:'',cid:null}});
+},
+'order-open':d=>{const o=S.orders.find(x=>x.id===d.id);if(!o)return;openSheet({type:'order',id:o.id,d:{kind:o.kind,name:o.name,phone:o.phone,addr:o.addr,when:o.when?toLocalDT(o.when):'',fee:o.fee>0?String(o.fee):'',note:o.note,cid:o.cid}})},
+'ord-kind':d=>{ui.sheet.d.kind=d.v;renderSheet()},
+'ord-cust':d=>{const c=S.customers.find(x=>x.id===d.id);if(!c)return;const dd=ui.sheet.d;dd.cid=c.id;dd.name=c.name;if(c.phone)dd.phone=c.phone;renderSheet()},
+'order-save':()=>{
+  const sh=ui.sheet,f=ordFromSheet();
+  if(sh.id){const o=S.orders.find(x=>x.id===sh.id);if(o)Object.assign(o,f)}
+  else{
+    S.orders.push(Object.assign({id:uid(),ts:Date.now(),items:sh.items,status:'preparing'},f));
+    ui.cart=[];ui.tier='retail';
+  }
+  save();closeSheet();render();toast(t('ord_saved'));
+},
+'order-st':d=>{const sh=ui.sheet,o=S.orders.find(x=>x.id===sh.id);if(!o)return;Object.assign(o,ordFromSheet());o.status=d.v;if(d.v==='done')o.doneTs=Date.now();save();renderSheet();renderMain()},
+'order-complete':()=>{
+  const sh=ui.sheet,o=S.orders.find(x=>x.id===sh.id);if(!o)return;
+  Object.assign(o,ordFromSheet());save();
+  ui.cart=o.items.map(i=>({key:'ord:'+uid(),pid:i.pid,name:i.name,unit:i.unit,price:i.price,cost:i.cost,qty:i.qty}));
+  if(o.fee>0)ui.cart.push({key:'ord:'+uid(),pid:null,name:t('ord_fee_line'),unit:'pc',price:o.fee,cost:null,qty:1});
+  ui.orderRef=o.id;ui.tier='retail';
+  openSheet({type:'checkout',method:'cash',given:'',cid:null,newName:'',dtype:'peso',dval:''});
+  renderCart();
+},
+'order-copy':()=>{const sh=ui.sheet,o=S.orders.find(x=>x.id===sh.id);if(!o)return;Object.assign(o,ordFromSheet());save();shareText(orderText(o))},
+'order-del':()=>{const sh=ui.sheet;if(!sh.confirmDel){sh.confirmDel=true;renderSheet();return}S.orders=S.orders.filter(x=>x.id!==sh.id);save();A.orders();renderMain()}
+});
+['order-del'].forEach(k=>OWNER.add(k));
+document.addEventListener('input',e=>{
+  const el=e.target,k=el.dataset&&el.dataset.in,sh=ui.sheet;if(!k||!sh||sh.type!=='order')return;
+  const map={oname:'name',ophone:'phone',oaddr:'addr',owhen:'when',ofee:'fee',onote:'note'};
+  if(map[k]){sh.d[map[k]]=el.value;if(k==='ofee'){const o=sh.id&&S.orders.find(x=>x.id===sh.id),items=o?o.items:sh.items;const tt=$('#ototal');if(tt)tt.textContent=peso(items.reduce((a,i)=>a+i.price*i.qty,0)+num(el.value))}}
+});
+
+/* ----- Store header and logo for receipts and reports ----- */
+const rptHead=()=>`${S.info.logo?`<img class="dlogo" src="${S.info.logo}" alt="">`:''}<div class="dshop">${esc(S.shop)}</div>${infoLines().map(x=>`<div class="dd">${esc(x)}</div>`).join('')}`;
+function shopInfoHTML(){
+  const i=S.info;
+  return `<h3 class="sh-title">${esc(t('si_title'))}</h3><p class="sh-sub">${esc(t('si_hint'))}</p>
+  <div class="field"><span>${esc(t('si_logo'))}</span>${i.logo?`<img class="dlogo" style="margin:6px 0" src="${i.logo}" alt="">`:''}<div class="row2"><label class="btn" style="display:grid;place-items:center;cursor:pointer">${esc(i.logo?t('si_logo_change'):t('si_logo_pick'))}<input id="sifile" type="file" accept="image/*" hidden></label>${i.logo?`<button class="btn ghost-red" data-act="si-logo-del">${esc(t('remove_img'))}</button>`:''}</div></div>
+  <label class="field"><span>${esc(t('si_addr'))}</span><input id="siaddr" autocomplete="off" value="${esc(i.addr)}" data-in="si-addr"></label>
+  <label class="field"><span>${esc(t('phone'))}</span><input id="siphone" inputmode="tel" autocomplete="off" value="${esc(i.phone)}" data-in="si-phone"></label>
+  <label class="field"><span>${esc(t('si_line'))}</span><input id="siline" autocomplete="off" value="${esc(i.line)}" data-in="si-line" placeholder="${esc(t('si_line_ph'))}"></label>
+  <label class="field"><span>${esc(t('si_foot'))}</span><input id="sifoot" autocomplete="off" value="${esc(i.foot)}" data-in="si-foot" placeholder="${esc(t('thanks'))}"></label>
+  <button class="btn primary block" data-act="close">${esc(t('done'))}</button>`;
+}
+function importLogo(file){
+  const fr=new FileReader();
+  fr.onload=()=>{
+    const im=new Image();
+    im.onload=()=>{
+      const max=360,sc=Math.min(1,max/Math.max(im.width,im.height));
+      const c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*sc));c.height=Math.max(1,Math.round(im.height*sc));
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      let url=c.toDataURL('image/png');
+      if(url.length>90000){const x=document.createElement('canvas');x.width=c.width;x.height=c.height;const g=x.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,x.width,x.height);g.drawImage(im,0,0,x.width,x.height);url=x.toDataURL('image/jpeg',.8)}
+      const old=S.info.logo;S.info.logo=url;
+      if(!save()){S.info.logo=old;toast(t('img_fail'));return}
+      renderSheet();
+    };
+    im.onerror=()=>toast(t('img_fail'));
+    im.src=String(fr.result);
+  };
+  fr.readAsDataURL(file);
+}
+Object.assign(A,{
+'shopinfo':()=>openSheet({type:'shopinfo'}),
+'si-logo-del':()=>{S.info.logo='';save();renderSheet()}
+});
+['shopinfo','si-logo-del'].forEach(k=>OWNER.add(k));
+document.addEventListener('input',e=>{
+  const el=e.target,k=el.dataset&&el.dataset.in;if(!k||k.indexOf('si-')!==0)return;
+  S.info[k.slice(3)]=el.value;save();
+});
+document.addEventListener('change',e=>{
+  const el=e.target;if(el&&el.id==='sifile'&&el.files&&el.files[0]){importLogo(el.files[0]);el.value=''}
+});
 
 /* ---------- Events ---------- */
 document.addEventListener('click',e=>{
